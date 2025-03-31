@@ -6,6 +6,8 @@ import { Search, Menu } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { ThemeToggle } from "@/components/ThemeToggle";
 
+import Image from "next/image";
+
 export default function Header() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isSearchOpen, setIsSearchOpen] = useState(false);
@@ -25,12 +27,19 @@ export default function Header() {
           <div className="container nav-container">
             <nav className="flex items-center justify-between py-3 px-0">
               <Link href="/" className="flex items-center space-x-2">
-                <img
+                {/* <img
                   className="logo-thumb-sm rounded-full"
-                  src="https://ext.same-assets.com/281259435/3736915175.png"
-                  alt="古古的後端筆記"
+                  src=""
+                  alt=""
+                /> */}
+                <Image
+                  src="/logo.svg"
+                  alt="披薩筆記"
+                  width={40}
+                  height={40}
+                  className=""
                 />
-                <span className="hidden md:inline-block font-medium text-lg">古古的後端筆記</span>
+                <span className="hidden md:inline-block font-medium text-lg">披薩筆記</span>
               </Link>
 
               <div className="hidden md:flex space-x-4">

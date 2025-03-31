@@ -16,8 +16,8 @@ const raleway = Raleway({
 });
 
 export const metadata: Metadata = {
-  title: "古古的後端筆記",
-  description: "哈囉，我是古古！這裡是我的後端技術筆記，內容涵蓋 Spring Boot、後端開發、微服務架構、系統設計、雲端服務...等等的知識分享",
+  title: "披薩筆記",
+  description: "這裡是披薩的學習紀錄",
 };
 
 export default function RootLayout({

@@ -44,7 +44,7 @@ export default function Footer() {
               )}
               {subscriptionStatus === "error" && (
                 <div className="error bg-red-100 text-red-800 dark:bg-red-950 dark:text-red-300 p-3 rounded mb-4">
-                  訂閱失敗，請檢查 Email 是否輸入錯誤，或是聯繫 service@kucw.io 取得協助
+                  訂閱失敗，請檢查 Email 是否輸入錯誤，或是聯繫 pizza6inch@gmail.com 取得協助
                 </div>
               )}
               {subscriptionStatus === "maintenance" && (
@@ -71,36 +71,36 @@ export default function Footer() {
           </div>
 
           <div className="lg:col-span-4 pb-3">
-            <h5 className="text-lg font-medium mb-4">追蹤古古</h5>
+            <h5 className="text-lg font-medium mb-4">追蹤</h5>
             <ul className="flex space-x-4 mb-4">
               <li>
-                <Link href="https://github.com/kucw" target="_blank" rel="noopener">
+                <Link href="https://github.com/pizza6inch" target="_blank" rel="noopener">
                   <Button variant="outline" size="icon" className="rounded-full dark:bg-card dark:hover:bg-accent">
                     <Github className="h-5 w-5" />
                   </Button>
                 </Link>
               </li>
               <li>
-                <Link href="https://www.facebook.com/kucw.io" target="_blank" rel="noopener">
+                <Link href="https://www.facebook.com" target="_blank" rel="noopener">
                   <Button variant="outline" size="icon" className="rounded-full dark:bg-card dark:hover:bg-accent">
                     <Facebook className="h-5 w-5" />
                   </Button>
                 </Link>
               </li>
               <li>
-                <Link href="https://www.instagram.com/kucw.io/" target="_blank" rel="noopener">
+                <Link href="https://www.instagram.com" target="_blank" rel="noopener">
                   <Button variant="outline" size="icon" className="rounded-full dark:bg-card dark:hover:bg-accent">
                     <Instagram className="h-5 w-5" />
                   </Button>
                 </Link>
               </li>
             </ul>
-            <p className="dark:text-gray-300">聯絡信箱: service@kucw.io</p>
+            <p className="dark:text-gray-300">聯絡信箱: pizza6inch@gmail.com</p>
           </div>
         </div>
 
         <div className="border-t py-4 text-center text-sm text-gray-600 dark:text-gray-400 dark:border-border">
-          © 2020-2025 古古的後端筆記 | All Rights Reserved.
+          © 2025-2025 披薩筆記 | All Rights Reserved.
         </div>
       </div>
     </footer>

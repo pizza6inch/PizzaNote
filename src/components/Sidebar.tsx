@@ -10,7 +10,7 @@ export default function Sidebar() {
         <h4 className="widget-title">關於我</h4>
         <p className="mb-2 font-bold">3.1 K Followers</p>
         <p className="mb-4 dark:text-gray-300">
-          我是古君葳（古古），畢業於台大資工所，曾在 Garmin 擔任資深軟體工程師，目前是自由工作者。已在 Hahow 開設 3 堂線上課程，累積 5000+ 位同學一起學習成長💪
+          {/* 我是古君葳（古古），畢業於台大資工所，曾在 Garmin 擔任資深軟體工程師，目前是自由工作者。已在 Hahow 開設 3 堂線上課程，累積 5000+ 位同學一起學習成長💪 */}
         </p>
         <Link href="/about">
           <Button variant="outline" className="w-full sm:w-auto dark:bg-card dark:hover:bg-accent">
@@ -122,7 +122,7 @@ export default function Sidebar() {
         <ul className="flex space-x-4">
           <li>
             <Link
-              href="https://github.com/kucw"
+              href="https://github.com/pizza6inch"
               target="_blank"
               rel="noopener"
               className="hover:text-primary transition-colors dark:text-gray-300 dark:hover:text-primary"
@@ -146,7 +146,7 @@ export default function Sidebar() {
           </li>
           <li>
             <Link
-              href="https://www.facebook.com/kucw.io"
+              href="https://www.facebook.com"
               target="_blank"
               rel="noopener"
               className="hover:text-primary transition-colors dark:text-gray-300 dark:hover:text-primary"
@@ -169,7 +169,7 @@ export default function Sidebar() {
           </li>
           <li>
             <Link
-              href="https://www.instagram.com/kucw.io/"
+              href="https://www.instagram.com"
               target="_blank"
               rel="noopener"
               className="hover:text-primary transition-colors dark:text-gray-300 dark:hover:text-primary"

@@ -1,4 +1,5 @@
 import type { Config } from "tailwindcss";
+import tailwindcssAnimate from "tailwindcss-animate";
 
 export default {
     darkMode: ["class"],
@@ -47,6 +48,11 @@ export default {
         border: 'hsl(var(--border))',
         input: 'hsl(var(--input))',
         ring: 'hsl(var(--ring))',
+        red: '#E61919', // 熱情、披薩醬、烤爐的感覺
+        yellow: '#F7C400', // 起司、麵包的香氣
+        brown: '#8B5A2B', // 木質烤爐、麵包皮
+        beige: '#F5E6C4', // 麵包皮
+        white: '#FFFFFF', // 保持清爽，避免視覺過載
       },
       borderRadius: {
         lg: 'var(--radius)',
@@ -72,5 +78,5 @@ export default {
       },
     }
   },
-  plugins: [require("tailwindcss-animate")],
+  plugins: [tailwindcssAnimate],
 } satisfies Config;

@@ -13,16 +13,16 @@ export default function AboutPage() {
               <h4 className="widget-title text-center mx-auto mb-8">關於我</h4>
 
               <div className="flex justify-center mb-8">
-                <img
+                {/* <img
                   src="https://ext.same-assets.com/281259435/4230116617.png"
-                  alt="古古"
+                  alt=""
                   className="rounded-full w-48 h-48 object-cover"
-                />
+                /> */}
               </div>
 
               <div className="content mb-12" id="introduction">
                 <p className="mb-4">
-                  我是古君葳（古古），畢業於台大資工所，曾在 Garmin 擔任資深軟體工程師，目前是自由工作者。已在 Hahow 開設 3 堂線上課程，累積 5000+ 位同學一起學習成長💪
+                  {/* 我是古君葳（古古），畢業於台大資工所，曾在 Garmin 擔任資深軟體工程師，目前是自由工作者。已在 Hahow 開設 3 堂線上課程，累積 5000+ 位同學一起學習成長💪 */}
                 </p>
               </div>
 
@@ -207,13 +207,13 @@ export default function AboutPage() {
               </div>
 
               <div className="social-links flex justify-center space-x-4 mb-8">
-                <Link href="https://github.com/kucw" target="_blank" rel="noreferrer">
+                <Link href="https://github.com/pizza6inch" target="_blank" rel="noreferrer">
                   <Github className="w-6 h-6 text-gray-600 hover:text-primary transition-colors" />
                 </Link>
-                <Link href="https://www.facebook.com/kucw.io" target="_blank" rel="noreferrer">
+                <Link href="https://www.facebook.com" target="_blank" rel="noreferrer">
                   <Facebook className="w-6 h-6 text-gray-600 hover:text-primary transition-colors" />
                 </Link>
-                <Link href="https://www.instagram.com/kucw.io/" target="_blank" rel="noreferrer">
+                <Link href="https://www.instagram.com" target="_blank" rel="noreferrer">
                   <Instagram className="w-6 h-6 text-gray-600 hover:text-primary transition-colors" />
                 </Link>
               </div>
