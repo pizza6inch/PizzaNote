@@ -4,6 +4,7 @@ import React, { useState } from "react";
 import Link from "next/link";
 import { Search, Menu } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import { ThemeToggle } from "@/components/ThemeToggle";
 
 export default function Header() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -20,7 +21,7 @@ export default function Header() {
   return (
     <>
       <header className="navigation">
-        <div className="container-fluid border-bottom fixed-top nav-background-color">
+        <div className="container-fluid border-bottom fixed-top bg-background dark:border-border z-10">
           <div className="container nav-container">
             <nav className="flex items-center justify-between py-3 px-0">
               <Link href="/" className="flex items-center space-x-2">
@@ -50,10 +51,10 @@ export default function Header() {
                       />
                     </svg>
                   </button>
-                  <div className="absolute left-0 mt-2 w-48 bg-white shadow-md rounded-md overflow-hidden z-10 hidden group-hover:block">
+                  <div className="absolute left-0 mt-2 w-48 bg-background dark:bg-card shadow-md rounded-md overflow-hidden z-10 hidden group-hover:block">
                     <Link
                       href="/blog/springboot/1"
-                      className="block px-4 py-2 text-sm text-gray-700 hover:bg-primary hover:text-white"
+                      className="block px-4 py-2 text-sm text-foreground hover:bg-primary hover:text-primary-foreground"
                     >
                       Spring Boot 零基礎入門
                     </Link>
@@ -77,10 +78,10 @@ export default function Header() {
                       />
                     </svg>
                   </button>
-                  <div className="absolute left-0 mt-2 w-56 bg-white shadow-md rounded-md overflow-hidden z-10 hidden group-hover:block">
+                  <div className="absolute left-0 mt-2 w-56 bg-background dark:bg-card shadow-md rounded-md overflow-hidden z-10 hidden group-hover:block">
                     <Link
                       href="/blog/as-a-content-creator/1"
-                      className="block px-4 py-2 text-sm text-gray-700 hover:bg-primary hover:text-white"
+                      className="block px-4 py-2 text-sm text-foreground hover:bg-primary hover:text-primary-foreground"
                     >
                       軟體工程師的自媒體之路
                     </Link>
@@ -101,9 +102,12 @@ export default function Header() {
                 >
                   <Search size={20} />
                 </button>
+
+                <ThemeToggle />
               </div>
 
               <div className="md:hidden flex items-center">
+                <ThemeToggle />
                 <Button
                   variant="ghost"
                   size="icon"
@@ -127,13 +131,13 @@ export default function Header() {
 
       {isMenuOpen && (
         <div className="md:hidden fixed inset-0 bg-black bg-opacity-50 z-40">
-          <div className="bg-white h-screen w-[70%] p-4 absolute right-0 z-50">
+          <div className="bg-background dark:bg-card h-screen w-[70%] p-4 absolute right-0 z-50">
             <div className="space-y-4 mt-16">
               <div className="border-b pb-2">
                 <div className="text-lg font-medium mb-2">後端技術專欄</div>
                 <Link
                   href="/blog/springboot/1"
-                  className="block py-2 px-4 hover:bg-gray-100"
+                  className="block py-2 px-4 hover:bg-muted"
                   onClick={() => setIsMenuOpen(false)}
                 >
                   Spring Boot 零基礎入門
@@ -144,7 +148,7 @@ export default function Header() {
                 <div className="text-lg font-medium mb-2">自媒體 &amp; 敗家專區</div>
                 <Link
                   href="/blog/as-a-content-creator/1"
-                  className="block py-2 px-4 hover:bg-gray-100"
+                  className="block py-2 px-4 hover:bg-muted"
                   onClick={() => setIsMenuOpen(false)}
                 >
                   軟體工程師的自媒體之路
@@ -177,7 +181,7 @@ export default function Header() {
 
       {isSearchOpen && (
         <div className="fixed inset-0 bg-black bg-opacity-50 z-50 flex items-start justify-center pt-20">
-          <div className="bg-white p-6 rounded-lg w-full max-w-2xl">
+          <div className="bg-background dark:bg-card p-6 rounded-lg w-full max-w-2xl">
             <div className="mb-4 flex justify-between items-center">
               <h3 className="text-lg font-medium">搜尋文章</h3>
               <Button
@@ -192,12 +196,12 @@ export default function Header() {
               <input
                 type="search"
                 placeholder="搜尋文章"
-                className="w-full p-3 border rounded-md"
+                className="w-full p-3 border rounded-md dark:bg-card dark:border-border"
               />
             </div>
-            <div className="mt-4 h-64 overflow-y-auto border-t pt-4">
+            <div className="mt-4 h-64 overflow-y-auto border-t pt-4 dark:border-border">
               {/* Search results would go here */}
-              <div className="text-center text-gray-500 py-8">
+              <div className="text-center text-muted-foreground py-8">
                 請輸入關鍵字進行搜尋
               </div>
             </div>

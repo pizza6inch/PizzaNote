@@ -3,6 +3,7 @@ import { Raleway } from "next/font/google";
 import "./globals.css";
 import ClientBody from "./ClientBody";
 import { cn } from "@/lib/utils";
+import { ThemeProvider } from "@/components/ThemeProvider";
 
 // Import Noto Sans TC for traditional Chinese
 const notoSansTC = {
@@ -26,9 +27,11 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="zh-TW" className={cn(raleway.variable, notoSansTC.variable)}>
-      <ClientBody>
-        {children}
-      </ClientBody>
+      <ThemeProvider defaultTheme="light">
+        <ClientBody>
+          {children}
+        </ClientBody>
+      </ThemeProvider>
     </html>
   );
 }

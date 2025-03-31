@@ -9,11 +9,11 @@ export default function Sidebar() {
       <div className="mb-8">
         <h4 className="widget-title">關於我</h4>
         <p className="mb-2 font-bold">3.1 K Followers</p>
-        <p className="mb-4">
+        <p className="mb-4 dark:text-gray-300">
           我是古君葳（古古），畢業於台大資工所，曾在 Garmin 擔任資深軟體工程師，目前是自由工作者。已在 Hahow 開設 3 堂線上課程，累積 5000+ 位同學一起學習成長💪
         </p>
         <Link href="/about">
-          <Button variant="outline" className="w-full sm:w-auto">
+          <Button variant="outline" className="w-full sm:w-auto dark:bg-card dark:hover:bg-accent">
             了解更多
           </Button>
         </Link>
@@ -22,13 +22,13 @@ export default function Sidebar() {
       <div className="mb-8">
         <h4 className="widget-title">訂閱電子報</h4>
         <div className="px-0 sm:px-3">
-          <p className="mb-4">免費訂閱電子報，每週二學習後端技術🚀</p>
+          <p className="mb-4 dark:text-gray-300">免費訂閱電子報，每週二學習後端技術🚀</p>
           <div className="newsletter">
             <form className="space-y-4">
               <Input
                 type="email"
                 placeholder="輸入你的 Email"
-                className="w-full"
+                className="w-full dark:bg-card"
                 required
               />
               <Button type="submit" className="w-full">
@@ -45,7 +45,7 @@ export default function Sidebar() {
           <li>
             <Link
               href="/categories/elastic-search"
-              className="hover:text-primary transition-colors"
+              className="hover:text-primary transition-colors dark:text-gray-300 dark:hover:text-primary"
             >
               Elastic Search
             </Link>
@@ -53,7 +53,7 @@ export default function Sidebar() {
           <li>
             <Link
               href="/categories/intellij"
-              className="hover:text-primary transition-colors"
+              className="hover:text-primary transition-colors dark:text-gray-300 dark:hover:text-primary"
             >
               Intellij
             </Link>
@@ -61,7 +61,7 @@ export default function Sidebar() {
           <li>
             <Link
               href="/categories/java"
-              className="hover:text-primary transition-colors"
+              className="hover:text-primary transition-colors dark:text-gray-300 dark:hover:text-primary"
             >
               Java
             </Link>
@@ -69,7 +69,7 @@ export default function Sidebar() {
           <li>
             <Link
               href="/categories/life"
-              className="hover:text-primary transition-colors"
+              className="hover:text-primary transition-colors dark:text-gray-300 dark:hover:text-primary"
             >
               Life
             </Link>
@@ -77,7 +77,7 @@ export default function Sidebar() {
           <li>
             <Link
               href="/categories/linux"
-              className="hover:text-primary transition-colors"
+              className="hover:text-primary transition-colors dark:text-gray-300 dark:hover:text-primary"
             >
               Linux
             </Link>
@@ -85,7 +85,7 @@ export default function Sidebar() {
           <li>
             <Link
               href="/categories/spring-boot"
-              className="hover:text-primary transition-colors"
+              className="hover:text-primary transition-colors dark:text-gray-300 dark:hover:text-primary"
             >
               Spring Boot
             </Link>
@@ -93,7 +93,7 @@ export default function Sidebar() {
           <li>
             <Link
               href="/categories/其他技術分享"
-              className="hover:text-primary transition-colors"
+              className="hover:text-primary transition-colors dark:text-gray-300 dark:hover:text-primary"
             >
               其他技術分享
             </Link>
@@ -101,7 +101,7 @@ export default function Sidebar() {
           <li>
             <Link
               href="/categories/職涯相關"
-              className="hover:text-primary transition-colors"
+              className="hover:text-primary transition-colors dark:text-gray-300 dark:hover:text-primary"
             >
               職涯相關
             </Link>
@@ -109,7 +109,7 @@ export default function Sidebar() {
           <li>
             <Link
               href="/categories/自媒體經營"
-              className="hover:text-primary transition-colors"
+              className="hover:text-primary transition-colors dark:text-gray-300 dark:hover:text-primary"
             >
               自媒體經營
             </Link>
@@ -125,7 +125,7 @@ export default function Sidebar() {
               href="https://github.com/kucw"
               target="_blank"
               rel="noopener"
-              className="hover:text-primary transition-colors"
+              className="hover:text-primary transition-colors dark:text-gray-300 dark:hover:text-primary"
             >
               <svg
                 xmlns="http://www.w3.org/2000/svg"
@@ -149,7 +149,7 @@ export default function Sidebar() {
               href="https://www.facebook.com/kucw.io"
               target="_blank"
               rel="noopener"
-              className="hover:text-primary transition-colors"
+              className="hover:text-primary transition-colors dark:text-gray-300 dark:hover:text-primary"
             >
               <svg
                 xmlns="http://www.w3.org/2000/svg"
@@ -172,7 +172,7 @@ export default function Sidebar() {
               href="https://www.instagram.com/kucw.io/"
               target="_blank"
               rel="noopener"
-              className="hover:text-primary transition-colors"
+              className="hover:text-primary transition-colors dark:text-gray-300 dark:hover:text-primary"
             >
               <svg
                 xmlns="http://www.w3.org/2000/svg"
