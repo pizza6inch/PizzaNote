@@ -4,9 +4,16 @@ import { Moon, Sun } from "lucide-react";
 import { useTheme } from "@/components/ThemeProvider";
 import { Button } from "@/components/ui/button";
 
-export function ThemeToggle() {
+export function ThemeToggle({ size }: { size?: number }) {
   const { theme, setTheme } = useTheme();
 
+  if (size) {
+    return (
+      <button onClick={() => setTheme(theme === "dark" ? "light" : "dark")}>
+        {theme === "dark" ? <Sun size={size} /> : <Moon size={size} />}
+      </button>
+    );
+  }
   return (
     <Button
       variant="ghost"
@@ -15,9 +22,9 @@ export function ThemeToggle() {
       aria-label="Toggle theme"
     >
       {theme === "dark" ? (
-        <Sun className="h-5 w-5" />
+        <Sun className="h-6 w-6" />
       ) : (
-        <Moon className="h-5 w-5" />
+        <Moon className="h-6 w-6" />
       )}
     </Button>
   );
