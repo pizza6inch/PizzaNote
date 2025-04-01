@@ -14,24 +14,22 @@ import Logo from "@/components/Logo";
 
 import { useState } from "react";
 
-import { Menu } from "lucide-react";
+import { Menu, ChevronDown } from "lucide-react";
 import Link from "next/link";
 
-type menuContentType = [
-  {
-    title: string;
-    links: string;
-    content: { href: string; text: string }[];
-  }
-];
+type menuContentType = {
+  title: string;
+  links: string;
+  content: { links: string; text: string }[];
+}[];
 
-export default function TopDrawerMenu({
-  content,
-}: {
-  content: menuContentType;
-}) {
+export default function TopDrawerMenu({ content }: { content: menuContentType }) {
   // TODO: 用state來控制內容的開關
-  const [contentOpened, setContentOpened] = useState<number | null>(null);
+  const [openIndex, setOpenIndex] = useState<null | number>(null);
+
+  const toggleDropdown = (index: number) => {
+    setOpenIndex(openIndex === index ? null : index);
+  };
 
   return (
     <Drawer direction="bottom">
@@ -42,32 +40,36 @@ export default function TopDrawerMenu({
         <DrawerOverlay className="fixed inset-0 bg-black/40" />
         <DrawerContent className="bg-background h-fit fixed bottom-0 left-0 right-0 outline-none">
           <DrawerHeader>
-            <DrawerTitle className="text-center text-2xl font-bold">
-              菜單
-            </DrawerTitle>
-            <DrawerDescription className="text-center text-sm text-muted-foreground">
-              OWO
-            </DrawerDescription>
+            <DrawerTitle className="text-center text-2xl font-bold">菜單</DrawerTitle>
+            <DrawerDescription className="text-center text-sm text-muted-foreground">OWO</DrawerDescription>
           </DrawerHeader>
           <nav className="flex flex-col gap-4 p-6 text-lg">
             {content.map((item, index) => (
               <div key={index} className="relative group">
-                <Link
-                  href={item.links}
-                  className="flex items-center px-2 py-2 text-foreground hover:text-primary"
-                >
-                  {item.title}
-                  {item.content.length > 0 && (
-                    <span className="ml-auto">▼</span>
-                  )}
-                </Link>
-                {item.content.length > 0 && (
-                  <div className="absolute left-0 top-full w-64 bg-background dark:bg-card shadow-2xl rounded-lg overflow-hidden z-10 hidden group-hover:block transition-opacity duration-200">
+                {item.content.length === 0 ? (
+                  <Link
+                    className="flex items-center justify-start px-2 py-2 text-foreground hover:text-primary"
+                    href={item.links}
+                  >
+                    {item.title}
+                  </Link>
+                ) : (
+                  <button
+                    onClick={() => toggleDropdown(index)}
+                    className="flex items-center justify-start px-2 py-2 text-foreground hover:text-primary"
+                  >
+                    <text>{item.title}</text>
+                    {item.content.length > 0 && <ChevronDown />}
+                  </button>
+                )}
+
+                {openIndex === index && item.content.length > 0 && (
+                  <div className="ml-4 mt-2 flex flex-col gap-2">
                     {item.content.map((link, idx) => (
                       <Link
                         key={idx}
-                        href={link.href}
-                        className="block px-4 py-4 text-sm text-foreground hover:bg-primary hover:text-primary-foreground"
+                        href={link.links}
+                        className="block px-4 py-2 text-sm text-foreground hover:bg-primary hover:text-primary-foreground rounded"
                       >
                         {link.text}
                       </Link>

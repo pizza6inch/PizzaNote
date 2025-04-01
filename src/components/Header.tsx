@@ -2,13 +2,15 @@
 
 import React, { useState } from "react";
 import Link from "next/link";
-import { Search, Menu } from "lucide-react";
+import { Search, Menu,ChevronDown } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { ThemeToggle } from "@/components/ThemeToggle";
 import TopDrawerMenu from "@/components/TopDrawerMenu";
 
 import Image from "next/image";
 import Logo from "./Logo";
+
+
 
 export default function Header() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -27,9 +29,9 @@ export default function Header() {
       title: "後端技術專欄",
       links: "/blog/springboot/1",
       content: [
-        { href: "/blog/springboot/1", text: "Spring Boot 零基礎入門" },
+        { links: "/blog/springboot/1", text: "Spring Boot 零基礎入門" },
         {
-          href: "/blog/as-a-content-creator/1",
+          links: "/blog/as-a-content-creator/1",
           text: "軟體工程師的自媒體之路",
         },
       ],
@@ -38,8 +40,8 @@ export default function Header() {
       title: "自媒體 & 敗家專區",
       links: "/blog/springboot/1",
       content: [
-        { href: "/blog/as-a-content-creator/2", text: "如何經營技術部落格" },
-        { href: "/blog/as-a-content-creator/3", text: "YouTube 自媒體的挑戰" },
+        { links: "/blog/as-a-content-creator/2", text: "如何經營技術部落格" },
+        { links: "/blog/as-a-content-creator/3", text: "YouTube 自媒體的挑戰" },
       ],
     },
     {
@@ -72,14 +74,14 @@ export default function Header() {
                       className="flex items-center px-2 py-2 text-foreground hover:text-primary"
                     >
                       {item.title}
-                      {item.content.length > 0 && <DownArrow />}
+                      {item.content.length > 0 && <ChevronDown />}
                     </Link>
                     {item.content.length > 0 && (
                       <div className="absolute left-0 top-full w-64 bg-background dark:bg-card shadow-2xl rounded-lg overflow-hidden z-10 hidden group-hover:block transition-opacity duration-200">
                         {item.content.map((link, idx) => (
                           <Link
                             key={idx}
-                            href={link.href}
+                            href={link.links}
                             className="block px-4 py-4 text-sm text-foreground hover:bg-primary hover:text-primary-foreground"
                           >
                             {link.text}
