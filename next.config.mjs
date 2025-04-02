@@ -1,8 +1,8 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
   /* config options here */
-  output: 'export',
-  distDir: 'out',
+  // output: 'export',
+  distDir: "out",
   typescript: {
     // !! WARN !!
     // Dangerously allow production builds to successfully complete even if
@@ -11,12 +11,7 @@ const nextConfig = {
   },
   images: {
     unoptimized: true,
-    domains: [
-      "source.unsplash.com",
-      "images.unsplash.com",
-      "ext.same-assets.com",
-      "ugc.same-assets.com",
-    ],
+    domains: ["source.unsplash.com", "images.unsplash.com", "ext.same-assets.com", "ugc.same-assets.com"],
     remotePatterns: [
       {
         protocol: "https",

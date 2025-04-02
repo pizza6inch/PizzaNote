@@ -9,6 +9,8 @@ export default function Home() {
   const posts = blogPosts.slice(0, 6);
   const totalPages = Math.ceil(blogPosts.length / 6);
 
+  // TODO:: 測試sanity fetch、研究useCdn設定 看看要不要開兩個sanityClient
+
   return (
     <MainLayout>
       <section className="section-sm py-8">
@@ -22,7 +24,7 @@ export default function Home() {
                     key={post.id}
                     title={post.title}
                     slug={post.slug}
-                    author={post.author}
+                    author={"披薩本薩"}
                     date={post.date}
                     category={post.category}
                     description={post.description}
@@ -39,10 +41,7 @@ export default function Home() {
 
             {/* Pagination */}
             <div className="lg:col-span-12 mt-8 flex justify-center">
-              <BlogPagination
-                currentPage={1}
-                totalPages={totalPages}
-              />
+              <BlogPagination currentPage={1} totalPages={totalPages} />
             </div>
           </div>
         </div>

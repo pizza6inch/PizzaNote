@@ -7,7 +7,7 @@ import { ThemeProvider } from "@/components/ThemeProvider";
 
 // Import Noto Sans TC for traditional Chinese
 const notoSansTC = {
-  variable: "--font-noto-sans-tc"
+  variable: "--font-noto-sans-tc",
 };
 
 const raleway = Raleway({
@@ -28,9 +28,7 @@ export default function RootLayout({
   return (
     <html lang="zh-TW" className={cn(raleway.variable, notoSansTC.variable)}>
       <ThemeProvider defaultTheme="light">
-        <ClientBody>
-          {children}
-        </ClientBody>
+        <ClientBody>{children}</ClientBody>
       </ThemeProvider>
     </html>
   );
