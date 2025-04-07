@@ -4,6 +4,7 @@ import "./globals.css";
 import ClientBody from "./ClientBody";
 import { cn } from "@/lib/utils";
 import { ThemeProvider } from "@/components/ThemeProvider";
+import { SanityLive } from "@/sanity/lib/live";
 
 // Import Noto Sans TC for traditional Chinese
 const notoSansTC = {
@@ -28,7 +29,10 @@ export default function RootLayout({
   return (
     <html lang="zh-TW" className={cn(raleway.variable, notoSansTC.variable)}>
       <ThemeProvider defaultTheme="light">
-        <ClientBody>{children}</ClientBody>
+        <ClientBody>
+          {children}
+          <SanityLive />
+        </ClientBody>
       </ThemeProvider>
     </html>
   );

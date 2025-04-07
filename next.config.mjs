@@ -33,6 +33,11 @@ const nextConfig = {
         hostname: "ugc.same-assets.com",
         pathname: "/**",
       },
+      {
+        protocol: "https",
+        hostname: "cdn.sanity.io",
+      },
+      { protocol: "https", hostname: "placehold.co" },
     ],
   },
   trailingSlash: true,

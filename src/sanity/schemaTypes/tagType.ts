@@ -1,8 +1,8 @@
 import { defineArrayMember, defineField, defineType } from "sanity";
 
-export const topicType = defineType({
-  name: "topic",
-  title: "Topic",
+export const tagType = defineType({
+  name: "tag",
+  title: "Tag",
   type: "document",
   fields: [
     defineField({
@@ -15,13 +15,12 @@ export const topicType = defineType({
       type: "slug",
       options: {
         source: "title",
-        maxLength: 96,
       },
-      validation: (Rule) => Rule.required(),
     }),
-    defineField({
-      name: "description",
-      type: "text",
-    }),
+    // defineField({
+    //   name: "color",
+    //   type: "color",
+    //   validation: (Rule) => Rule.required(),
+    // }),
   ],
 });

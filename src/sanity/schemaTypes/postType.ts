@@ -1,5 +1,6 @@
 import { DocumentTextIcon } from "@sanity/icons";
 import { defineArrayMember, defineField, defineType } from "sanity";
+import { categoryType } from "./categoryType";
 
 export const postType = defineType({
   name: "post",
@@ -9,6 +10,7 @@ export const postType = defineType({
     defineField({
       name: "title",
       type: "string",
+      validation: (Rule) => Rule.required(),
     }),
     defineField({
       name: "slug",
@@ -16,6 +18,12 @@ export const postType = defineType({
       options: {
         source: "title",
       },
+      validation: (Rule) => Rule.required(),
+    }),
+    defineField({
+      name: "tags",
+      type: "array",
+      of: [{ type: "reference", to: [{ type: "tag" }] }],
     }),
     defineField({
       name: "mainImage",
@@ -32,21 +40,32 @@ export const postType = defineType({
       ],
     }),
     defineField({
-      name: "categories",
-      type: "array",
-      of: [defineArrayMember({ type: "reference", to: { type: "category" } })],
+      name: "category",
+      type: "reference",
+      to: [{ type: "category" }],
+      validation: (Rule) => Rule.required(),
     }),
     defineField({
       name: "publishedAt",
       type: "datetime",
+      initialValue: () => new Date().toISOString(),
+      validation: (Rule) => Rule.required(),
     }),
     defineField({
       name: "lastEdAt",
       type: "datetime",
+      initialValue: () => new Date().toISOString(),
+      validation: (Rule) => Rule.required(),
+    }),
+    defineField({
+      name: "description",
+      type: "string",
+      validation: (Rule) => Rule.required(),
     }),
     defineField({
       name: "body",
       type: "blockContent",
+      validation: (Rule) => Rule.required(),
     }),
   ],
 });
