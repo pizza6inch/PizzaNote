@@ -2,7 +2,7 @@
 const nextConfig = {
   /* config options here */
   // output: 'export',
-  distDir: "out",
+  // distDir: "out",
   typescript: {
     // !! WARN !!
     // Dangerously allow production builds to successfully complete even if
