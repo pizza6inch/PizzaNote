@@ -308,7 +308,7 @@ export type AllSanitySchemaTypes = SanityImagePaletteSwatch | SanityImagePalette
 export declare const internalGroqTypeReferenceTo: unique symbol;
 // Source: src/app/page.tsx
 // Variable: postsQuery
-// Query: *[_type == "post"]    | order(publishedAt desc)    {      category->{        title,        "slug":slug.current,        topic->{          title,          "slug":slug.current        }      },        _id,        title,        "slug": slug.current,        publishedAt,        lastEdAt,        description    }
+// Query: *[_type == "post"]    | order(publishedAt desc)    {      category->{        title,        "slug":slug.current,        topic->{          title,          "slug":slug.current        }      },        _id,        title,        "slug": slug.current,        publishedAt,        lastEdAt,        description,        tags->{          title,          "slug":slug.current        }    }
 export type PostsQueryResult = Array<{
   category: {
     title: string | null;
@@ -324,12 +324,13 @@ export type PostsQueryResult = Array<{
   publishedAt: string | null;
   lastEdAt: string | null;
   description: string | null;
+  tags: null;
 }>;
 
 // Query TypeMap
 import "@sanity/client";
 declare module "@sanity/client" {
   interface SanityQueries {
-    "*[_type == \"post\"]\n    | order(publishedAt desc)\n    {\n      category->{\n        title,\n        \"slug\":slug.current,\n        topic->{\n          title,\n          \"slug\":slug.current\n        }\n      },\n        _id,\n        title,\n        \"slug\": slug.current,\n        publishedAt,\n        lastEdAt,\n        description\n    }\n    ": PostsQueryResult;
+    "*[_type == \"post\"]\n    | order(publishedAt desc)\n    {\n      category->{\n        title,\n        \"slug\":slug.current,\n        topic->{\n          title,\n          \"slug\":slug.current\n        }\n      },\n        _id,\n        title,\n        \"slug\": slug.current,\n        publishedAt,\n        lastEdAt,\n        description,\n        tags->{\n          title,\n          \"slug\":slug.current\n        }\n    }\n    ": PostsQueryResult;
   }
 }

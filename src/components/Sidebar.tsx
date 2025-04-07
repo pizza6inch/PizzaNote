@@ -4,13 +4,17 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 
 export default function Sidebar() {
+  // TODO::文章分類去sanity 抓category
   return (
     <div>
       <div className="mb-8">
         <h4 className="widget-title">關於我</h4>
         <p className="mb-2 font-bold">3.1 K Followers</p>
         <p className="mb-4 dark:text-gray-300">
-          {/* 我是古君葳（古古），畢業於台大資工所，曾在 Garmin 擔任資深軟體工程師，目前是自由工作者。已在 Hahow 開設 3 堂線上課程，累積 5000+ 位同學一起學習成長💪 */}
+          我是 Ewan（Pizza），就讀於北科資工大四，目前在易遊網擔任實習軟體工程師。
+          這個部落格不只是紀錄技術的地方，更是我成長軌跡的延伸。
+          我希望透過每一篇分享，把學習中的困惑與突破、實作中的反思與靈感，真實地傳遞給正在努力成長的你。
+          無論你是剛踏上工程師這條路，還是在追夢途中迷了路，希望這裡的內容能成為你的助力，一起學習、一起前進，為未來點亮更多可能！
         </p>
         <Link href="/about">
           <Button variant="outline" className="w-full sm:w-auto dark:bg-card dark:hover:bg-accent">
@@ -19,25 +23,21 @@ export default function Sidebar() {
         </Link>
       </div>
 
-      <div className="mb-8">
+      {/* <div className="mb-8">
         <h4 className="widget-title">訂閱電子報</h4>
         <div className="px-0 sm:px-3">
           <p className="mb-4 dark:text-gray-300">免費訂閱電子報，每週二學習後端技術🚀</p>
           <div className="newsletter">
             <form className="space-y-4">
-              <Input
-                type="email"
-                placeholder="輸入你的 Email"
-                className="w-full dark:bg-card"
-                required
-              />
+              <Input type="email" placeholder="輸入你的 Email" className="w-full dark:bg-card" required />
               <Button type="submit" className="w-full">
                 訂閱
               </Button>
             </form>
           </div>
         </div>
-      </div>
+      </div> */}
+      <div className="mb-8"></div>
 
       <div className="mb-8">
         <h4 className="widget-title">文章分類</h4>

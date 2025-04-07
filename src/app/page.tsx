@@ -35,7 +35,11 @@ export default async function Home() {
         "slug": slug.current,
         publishedAt,
         lastEdAt,
-        description
+        description,
+        tags->{
+          title,
+          "slug":slug.current
+        }
     }
     `);
 
@@ -73,7 +77,7 @@ export default async function Home() {
                     date={post.publishedAt}
                     category={post.category}
                     description={post.description}
-                    tags={["web開發", "前端優化"]}
+                    tags={post.tags}
                   />
                 ))}
               </div>

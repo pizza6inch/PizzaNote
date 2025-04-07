@@ -8,7 +8,8 @@
     "start": "next start",
     "lint": "next lint",
     "export": "next build && next export -o out",
-    "static": "bun run build && bun run export"
+    "static": "bun run build && bun run export",
+    "type": "npx sanity@latest schema extract && npx sanity@latest typegen generate"
   },
   "dependencies": {
     "@hookform/resolvers": "^4.1.3",

@@ -2,15 +2,13 @@
 
 import React, { useState } from "react";
 import Link from "next/link";
-import { Search, Menu,ChevronDown } from "lucide-react";
+import { Search, Menu, ChevronDown } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { ThemeToggle } from "@/components/ThemeToggle";
 import TopDrawerMenu from "@/components/TopDrawerMenu";
 
 import Image from "next/image";
 import Logo from "./Logo";
-
-
 
 export default function Header() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -58,8 +56,8 @@ export default function Header() {
 
   return (
     <>
-      <header className="navigation">
-        <div className="container-fluid border-bottom fixed-top bg-background dark:border-border z-10">
+      <header className="navigation w-full fixed top-0 z-10 shadow-sm shadow-yellow">
+        <div className="container-fluid border-bottom fixed-top bg-background dark:border-border ">
           <div className="container nav-container">
             <nav className="flex items-end justify-between py-3 px-0">
               <Link href="/" className="flex items-center space-x-4">
@@ -69,10 +67,7 @@ export default function Header() {
               <div className="hidden lg:flex space-x-4">
                 {menuContent.map((item, index) => (
                   <div key={index} className="relative group">
-                    <Link
-                      href={item.links}
-                      className="flex items-center px-2 py-2 text-foreground hover:text-primary"
-                    >
+                    <Link href={item.links} className="flex items-center px-2 py-2 text-foreground hover:text-primary">
                       {item.title}
                       {item.content.length > 0 && <ChevronDown />}
                     </Link>
@@ -92,10 +87,7 @@ export default function Header() {
                   </div>
                 ))}
 
-                <button
-                  onClick={toggleSearch}
-                  className=" text-foreground hover:text-primary"
-                >
+                <button onClick={toggleSearch} className=" text-foreground hover:text-primary">
                   <Search size={24} />
                 </button>
 
@@ -105,11 +97,7 @@ export default function Header() {
               <div className="lg:hidden flex items-center gap-3 md:gap-6">
                 <ThemeToggle size={36} />
 
-                <Search
-                  size={36}
-                  className=" cursor-pointer"
-                  onClick={toggleSearch}
-                />
+                <Search size={36} className=" cursor-pointer" onClick={toggleSearch} />
 
                 <TopDrawerMenu content={menuContent} />
               </div>
@@ -191,9 +179,7 @@ export default function Header() {
             </div>
             <div className="mt-4 h-64 overflow-y-auto border-t pt-4 dark:border-border">
               {/* Search results would go here */}
-              <div className="text-center text-muted-foreground py-8">
-                請輸入關鍵字進行搜尋
-              </div>
+              <div className="text-center text-muted-foreground py-8">請輸入關鍵字進行搜尋</div>
             </div>
           </div>
         </div>
@@ -203,17 +189,7 @@ export default function Header() {
 }
 
 const DownArrow = () => (
-  <svg
-    className="h-4 w-4 ml-1"
-    fill="none"
-    viewBox="0 0 24 24"
-    stroke="currentColor"
-  >
-    <path
-      strokeLinecap="round"
-      strokeLinejoin="round"
-      strokeWidth={2}
-      d="M19 9l-7 7-7-7"
-    />
+  <svg className="h-4 w-4 ml-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
   </svg>
 );
