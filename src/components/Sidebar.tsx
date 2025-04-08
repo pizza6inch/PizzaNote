@@ -3,6 +3,8 @@ import Link from "next/link";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 
+import PizzaPlayground from "./PizzaPlayground";
+
 export default function Sidebar() {
   // TODO::文章分類去sanity 抓category
   return (
@@ -37,8 +39,13 @@ export default function Sidebar() {
           </div>
         </div>
       </div> */}
-      <div className="mb-8"></div>
-
+      {/* <div className="mb-8">
+        <h4 className="widget-title">最新文章</h4>
+      </div> */}
+      <div className="mb-8">
+        <h4 className="widget-title">披薩心臟</h4>
+        <PizzaPlayground />
+      </div>
       <div className="mb-8">
         <h4 className="widget-title">文章分類</h4>
         <ul className="list-none space-y-2">

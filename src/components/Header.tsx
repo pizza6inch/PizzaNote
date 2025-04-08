@@ -56,7 +56,7 @@ export default function Header() {
 
   return (
     <>
-      <header className="navigation w-full fixed top-0 z-10 shadow-sm shadow-yellow">
+      <header className="navigation w-full fixed top-0 z-50 shadow-sm shadow-yellow">
         <div className="container-fluid border-bottom fixed-top bg-background dark:border-border ">
           <div className="container nav-container">
             <nav className="flex items-end justify-between py-3 px-0">
