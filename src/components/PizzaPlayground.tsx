@@ -1,9 +1,7 @@
 "use client";
 import React, { useState, useEffect, useRef } from "react";
-import { motion } from "framer-motion";
 import { animate, createScope, createSpring, createDraggable, utils } from "animejs";
 import Image from "next/image";
-import PizzaSvg from "../assests/pizza.svg";
 
 const PizzaPlayground = () => {
   const root = useRef<any>(null);
@@ -42,8 +40,7 @@ const PizzaPlayground = () => {
   return (
     <div ref={root}>
       <div className="flex gap-4 justify-center">
-        {/* <Image src={PizzaSvg} width={100} height={100} className="logoA " alt="React logo" /> */}
-        <Image src={PizzaSvg} width={80} height={80} className="logoB " alt="React logo" />
+        <Image src={"/logo.svg"} width={80} height={80} className="logoB " alt="React logo" />
       </div>
     </div>
   );

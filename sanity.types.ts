@@ -327,10 +327,24 @@ export type PostsQueryResult = Array<{
   tags: null;
 }>;
 
+// Source: src/components/Sidebar.tsx
+// Variable: categoriesQuery
+// Query: *[_type == "category"]  | order(title asc)  {    "slug":slug.current,    title,    _id,    description,    topic->{      "slug":slug.current    }  }
+export type CategoriesQueryResult = Array<{
+  slug: string | null;
+  title: string | null;
+  _id: string;
+  description: string | null;
+  topic: {
+    slug: string | null;
+  } | null;
+}>;
+
 // Query TypeMap
 import "@sanity/client";
 declare module "@sanity/client" {
   interface SanityQueries {
     "*[_type == \"post\"]\n    | order(publishedAt desc)\n    {\n      category->{\n        title,\n        \"slug\":slug.current,\n        topic->{\n          title,\n          \"slug\":slug.current\n        }\n      },\n        _id,\n        title,\n        \"slug\": slug.current,\n        publishedAt,\n        lastEdAt,\n        description,\n        tags->{\n          title,\n          \"slug\":slug.current\n        }\n    }\n    ": PostsQueryResult;
+    "*[_type == \"category\"]\n  | order(title asc)\n  {\n    \"slug\":slug.current,\n    title,\n    _id,\n    description,\n    topic->{\n      \"slug\":slug.current\n    }\n  }\n  ": CategoriesQueryResult;
   }
 }

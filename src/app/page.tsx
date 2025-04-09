@@ -47,7 +47,7 @@ export default async function Home() {
 
   const { data: testPosts } = await sanityFetch({ query: postsQuery });
 
-  console.log(testPosts);
+  // console.log(testPosts);
 
   // const { data: testTopics } = await sanityFetch({ query: topicsQuery });
   // console.log(testTopics);
@@ -58,8 +58,8 @@ export default async function Home() {
   // const { data: testPostsByCategory } = await sanityFetch({ query: postsByCategoryQuery("testcategory") });
   // console.log(testPostsByCategory);
 
-  const { data: testPostDetailBySlugQuery } = await sanityFetch({ query: postDetailBySlugQuery("test-post") });
-  console.log(testPostDetailBySlugQuery);
+  // const { data: testPostDetailBySlugQuery } = await sanityFetch({ query: postDetailBySlugQuery("test-post") });
+  // console.log(testPostDetailBySlugQuery);
 
   return (
     <MainLayout>

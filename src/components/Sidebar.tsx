@@ -2,21 +2,47 @@ import React from "react";
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
+import Image from "next/image";
 
 import PizzaPlayground from "./PizzaPlayground";
+import Avatar from "./Avatar";
 
-export default function Sidebar() {
-  // TODO::文章分類去sanity 抓category
+import { defineQuery } from "next-sanity";
+import { sanityFetch } from "@/sanity/lib/live";
+
+const categoriesQuery = defineQuery(`*[_type == "category"]
+  | order(title asc)
+  {
+    "slug":slug.current,
+    title,
+    _id,
+    description,
+    topic->{
+      "slug":slug.current
+    }
+  }
+  `);
+const launchDateQuery = defineQuery(`*[_type == "siteInfo"][0]{
+  launchDate
+}`);
+
+export default async function Sidebar() {
+  // TODO:: 測試sanity fetch、研究useCdn設定 看看要不要開兩個sanityClient
+
+  const { data: categories } = await sanityFetch({ query: categoriesQuery });
+  const { data: siteInfo } = await sanityFetch({ query: launchDateQuery });
+  const diffDays = Math.abs(new Date().getTime() - new Date(siteInfo.launchDate).getTime()) / (1000 * 60 * 60 * 24);
+  const daysSinceLaunch = Math.round(diffDays);
   return (
     <div>
       <div className="mb-8">
         <h4 className="widget-title">關於我</h4>
-        <p className="mb-2 font-bold">3.1 K Followers</p>
+        {/* <p className="mb-2 font-bold">3.1 K Followers</p> */}
+        {/* <Image src={"/avatar.png"} width={150} height={150} alt="avatar" className="mx-auto my-4 rounded-full" /> */}
+        <Avatar />
         <p className="mb-4 dark:text-gray-300">
-          我是 Ewan（Pizza），就讀於北科資工大四，目前在易遊網擔任實習軟體工程師。
-          這個部落格不只是紀錄技術的地方，更是我成長軌跡的延伸。
-          我希望透過每一篇分享，把學習中的困惑與突破、實作中的反思與靈感，真實地傳遞給正在努力成長的你。
-          無論你是剛踏上工程師這條路，還是在追夢途中迷了路，希望這裡的內容能成為你的助力，一起學習、一起前進，為未來點亮更多可能！
+          我是
+          Ewan（Pizza），北科資工大四生，目前在易遊網實習。這個部落格紀錄的不只是技術，更是成長的足跡。我想把學習中的困惑與突破、實作中的靈感與反思，真實分享給正在努力的你。希望這裡的內容能陪你一起前進，一起成長，為未來點亮更多可能！
         </p>
         <Link href="/about">
           <Button variant="outline" className="w-full sm:w-auto dark:bg-card dark:hover:bg-accent">
@@ -25,102 +51,24 @@ export default function Sidebar() {
         </Link>
       </div>
 
-      {/* <div className="mb-8">
-        <h4 className="widget-title">訂閱電子報</h4>
-        <div className="px-0 sm:px-3">
-          <p className="mb-4 dark:text-gray-300">免費訂閱電子報，每週二學習後端技術🚀</p>
-          <div className="newsletter">
-            <form className="space-y-4">
-              <Input type="email" placeholder="輸入你的 Email" className="w-full dark:bg-card" required />
-              <Button type="submit" className="w-full">
-                訂閱
-              </Button>
-            </form>
-          </div>
-        </div>
-      </div> */}
-      {/* <div className="mb-8">
-        <h4 className="widget-title">最新文章</h4>
-      </div> */}
       <div className="mb-8">
-        <h4 className="widget-title">披薩心臟</h4>
+        <h4 className="widget-title">披薩心臟！</h4>
         <PizzaPlayground />
+        <p className="mt-8">本站已存活:{daysSinceLaunch}天!</p>
       </div>
       <div className="mb-8">
         <h4 className="widget-title">文章分類</h4>
         <ul className="list-none space-y-2">
-          <li>
-            <Link
-              href="/categories/elastic-search"
-              className="hover:text-primary transition-colors dark:text-gray-300 dark:hover:text-primary"
-            >
-              Elastic Search
-            </Link>
-          </li>
-          <li>
-            <Link
-              href="/categories/intellij"
-              className="hover:text-primary transition-colors dark:text-gray-300 dark:hover:text-primary"
-            >
-              Intellij
-            </Link>
-          </li>
-          <li>
-            <Link
-              href="/categories/java"
-              className="hover:text-primary transition-colors dark:text-gray-300 dark:hover:text-primary"
-            >
-              Java
-            </Link>
-          </li>
-          <li>
-            <Link
-              href="/categories/life"
-              className="hover:text-primary transition-colors dark:text-gray-300 dark:hover:text-primary"
-            >
-              Life
-            </Link>
-          </li>
-          <li>
-            <Link
-              href="/categories/linux"
-              className="hover:text-primary transition-colors dark:text-gray-300 dark:hover:text-primary"
-            >
-              Linux
-            </Link>
-          </li>
-          <li>
-            <Link
-              href="/categories/spring-boot"
-              className="hover:text-primary transition-colors dark:text-gray-300 dark:hover:text-primary"
-            >
-              Spring Boot
-            </Link>
-          </li>
-          <li>
-            <Link
-              href="/categories/其他技術分享"
-              className="hover:text-primary transition-colors dark:text-gray-300 dark:hover:text-primary"
-            >
-              其他技術分享
-            </Link>
-          </li>
-          <li>
-            <Link
-              href="/categories/職涯相關"
-              className="hover:text-primary transition-colors dark:text-gray-300 dark:hover:text-primary"
-            >
-              職涯相關
-            </Link>
-          </li>
-          <li>
-            <Link
-              href="/categories/自媒體經營"
-              className="hover:text-primary transition-colors dark:text-gray-300 dark:hover:text-primary"
-            >
-              自媒體經營
-            </Link>
-          </li>
+          {categories.map((category, index) => (
+            <li key={index}>
+              <Link
+                href={`/${category?.topic?.slug}/${category.slug}`}
+                className="hover:text-primary transition-colors dark:text-gray-300 dark:hover:text-primary"
+              >
+                {category.title}
+              </Link>
+            </li>
+          ))}
         </ul>
       </div>
 
@@ -151,29 +99,7 @@ export default function Sidebar() {
               </svg>
             </Link>
           </li>
-          <li>
-            <Link
-              href="https://www.facebook.com"
-              target="_blank"
-              rel="noopener"
-              className="hover:text-primary transition-colors dark:text-gray-300 dark:hover:text-primary"
-            >
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                width="24"
-                height="24"
-                viewBox="0 0 24 24"
-                fill="none"
-                stroke="currentColor"
-                strokeWidth="2"
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                className="lucide lucide-facebook"
-              >
-                <path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z" />
-              </svg>
-            </Link>
-          </li>
+
           <li>
             <Link
               href="https://www.instagram.com"
