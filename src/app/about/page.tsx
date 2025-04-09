@@ -6,6 +6,12 @@ import Link from "next/link";
 export default function AboutPage() {
   return (
     <MainLayout>
+      <div>123</div>
+    </MainLayout>
+  );
+
+  return (
+    <MainLayout>
       <section className="section-sm">
         <div className="container">
           <div className="row">
