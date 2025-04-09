@@ -58,7 +58,7 @@ export default function TopDrawerMenu({ content }: { content: menuContentType })
                     onClick={() => toggleDropdown(index)}
                     className="flex items-center justify-start px-2 py-2 text-foreground hover:text-primary"
                   >
-                    <text>{item.title}</text>
+                    <p>{item.title}</p>
                     {item.content.length > 0 && <ChevronDown />}
                   </button>
                 )}

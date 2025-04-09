@@ -47,7 +47,7 @@ const Avatar = () => {
           width={150}
           height={150}
           alt="avatar"
-          className={`mx-auto my-4 rounded-full avatar autoRotate ${isAutoRotate ? "autoRotate" : ""}`}
+          className={`mx-auto my-4 rounded-full avatar shadow-lg dark:shadow-white shadow-black ${isAutoRotate ? "autoRotate" : ""}`}
         />
       </div>
     </div>

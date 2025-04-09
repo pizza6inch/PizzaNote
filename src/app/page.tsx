@@ -52,7 +52,9 @@ export default async function Home() {
     <MainLayout>
       <section className="section-sm py-8">
         <div className="container">
-          <PingPongGame />
+          <div className="h-[60vh]">
+            <PingPongGame />
+          </div>
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 mt-10">
             {/* Blog Posts */}
             <div className="lg:col-span-8">
