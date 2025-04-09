@@ -17,10 +17,11 @@ import {
   // categoriesBySlugQuery,
   postDetailBySlugQuery,
 } from "@/sanity/queries";
+import PingPongGame from "@/components/PingPongGame";
 
 export default async function Home() {
   const postsQuery = defineQuery(`*[_type == "post"]
-    | order(publishedAt desc)
+    | order(publishedAt desc)[0...6]
     {
       category->{
         title,
@@ -47,25 +48,12 @@ export default async function Home() {
 
   const { data: testPosts } = await sanityFetch({ query: postsQuery });
 
-  // console.log(testPosts);
-
-  // const { data: testTopics } = await sanityFetch({ query: topicsQuery });
-  // console.log(testTopics);
-
-  // const { data: testCategoriesByTopic } = await sanityFetch({ query: categoriesByTopicQuery("test-topic") });
-  // console.log(testCategoriesByTopic);
-
-  // const { data: testPostsByCategory } = await sanityFetch({ query: postsByCategoryQuery("testcategory") });
-  // console.log(testPostsByCategory);
-
-  // const { data: testPostDetailBySlugQuery } = await sanityFetch({ query: postDetailBySlugQuery("test-post") });
-  // console.log(testPostDetailBySlugQuery);
-
   return (
     <MainLayout>
       <section className="section-sm py-8">
         <div className="container">
-          <div className="grid grid-cols-1 lg:grid-cols-12 gap-8">
+          <PingPongGame />
+          <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 mt-10">
             {/* Blog Posts */}
             <div className="lg:col-span-8">
               <div className="grid grid-cols-1 gap-6">
@@ -89,9 +77,9 @@ export default async function Home() {
             </div>
 
             {/* Pagination */}
-            <div className="lg:col-span-12 mt-8 flex justify-center">
+            {/* <div className="lg:col-span-12 mt-8 flex justify-center">
               <BlogPagination currentPage={1} totalPages={4} />
-            </div>
+            </div> */}
           </div>
         </div>
       </section>

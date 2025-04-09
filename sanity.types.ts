@@ -68,6 +68,15 @@ export type Geopoint = {
   alt?: number;
 };
 
+export type SiteInfo = {
+  _id: string;
+  _type: "siteInfo";
+  _createdAt: string;
+  _updatedAt: string;
+  _rev: string;
+  launchDate?: string;
+};
+
 export type Tag = {
   _id: string;
   _type: "tag";
@@ -304,11 +313,11 @@ export type HslaColor = {
   a?: number;
 };
 
-export type AllSanitySchemaTypes = SanityImagePaletteSwatch | SanityImagePalette | SanityImageDimensions | SanityFileAsset | Geopoint | Tag | Post | Category | Topic | Slug | BlockContent | SanityImageCrop | SanityImageHotspot | SanityImageAsset | SanityAssetSourceData | SanityImageMetadata | Color | RgbaColor | HsvaColor | HslaColor;
+export type AllSanitySchemaTypes = SanityImagePaletteSwatch | SanityImagePalette | SanityImageDimensions | SanityFileAsset | Geopoint | SiteInfo | Tag | Post | Category | Topic | Slug | BlockContent | SanityImageCrop | SanityImageHotspot | SanityImageAsset | SanityAssetSourceData | SanityImageMetadata | Color | RgbaColor | HsvaColor | HslaColor;
 export declare const internalGroqTypeReferenceTo: unique symbol;
 // Source: src/app/page.tsx
 // Variable: postsQuery
-// Query: *[_type == "post"]    | order(publishedAt desc)    {      category->{        title,        "slug":slug.current,        topic->{          title,          "slug":slug.current        }      },        _id,        title,        "slug": slug.current,        publishedAt,        lastEdAt,        description,        tags->{          title,          "slug":slug.current        }    }
+// Query: *[_type == "post"]    | order(publishedAt desc)[0...6]    {      category->{        title,        "slug":slug.current,        topic->{          title,          "slug":slug.current        }      },        _id,        title,        "slug": slug.current,        publishedAt,        lastEdAt,        description,        tags->{          title,          "slug":slug.current        }    }
 export type PostsQueryResult = Array<{
   category: {
     title: string | null;
@@ -339,12 +348,18 @@ export type CategoriesQueryResult = Array<{
     slug: string | null;
   } | null;
 }>;
+// Variable: launchDateQuery
+// Query: *[_type == "siteInfo"][0]{  launchDate}
+export type LaunchDateQueryResult = {
+  launchDate: string | null;
+} | null;
 
 // Query TypeMap
 import "@sanity/client";
 declare module "@sanity/client" {
   interface SanityQueries {
-    "*[_type == \"post\"]\n    | order(publishedAt desc)\n    {\n      category->{\n        title,\n        \"slug\":slug.current,\n        topic->{\n          title,\n          \"slug\":slug.current\n        }\n      },\n        _id,\n        title,\n        \"slug\": slug.current,\n        publishedAt,\n        lastEdAt,\n        description,\n        tags->{\n          title,\n          \"slug\":slug.current\n        }\n    }\n    ": PostsQueryResult;
+    "*[_type == \"post\"]\n    | order(publishedAt desc)[0...6]\n    {\n      category->{\n        title,\n        \"slug\":slug.current,\n        topic->{\n          title,\n          \"slug\":slug.current\n        }\n      },\n        _id,\n        title,\n        \"slug\": slug.current,\n        publishedAt,\n        lastEdAt,\n        description,\n        tags->{\n          title,\n          \"slug\":slug.current\n        }\n    }\n    ": PostsQueryResult;
     "*[_type == \"category\"]\n  | order(title asc)\n  {\n    \"slug\":slug.current,\n    title,\n    _id,\n    description,\n    topic->{\n      \"slug\":slug.current\n    }\n  }\n  ": CategoriesQueryResult;
+    "*[_type == \"siteInfo\"][0]{\n  launchDate\n}": LaunchDateQueryResult;
   }
 }

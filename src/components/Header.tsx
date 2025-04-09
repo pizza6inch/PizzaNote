@@ -24,22 +24,22 @@ export default function Header() {
 
   const menuContent = [
     {
-      title: "後端技術專欄",
-      links: "/blog/springboot/1",
+      title: "前端",
+      links: "/test-topic/test-category/1",
       content: [
-        { links: "/blog/springboot/1", text: "Spring Boot 零基礎入門" },
+        { links: "/blog/springboot/1", text: "測試選項1" },
         {
           links: "/blog/as-a-content-creator/1",
-          text: "軟體工程師的自媒體之路",
+          text: "測試選項2",
         },
       ],
     },
     {
-      title: "自媒體 & 敗家專區",
+      title: "生活相關",
       links: "/blog/springboot/1",
       content: [
-        { links: "/blog/as-a-content-creator/2", text: "如何經營技術部落格" },
-        { links: "/blog/as-a-content-creator/3", text: "YouTube 自媒體的挑戰" },
+        { links: "/blog/as-a-content-creator/2", text: "測試選項1" },
+        { links: "/blog/as-a-content-creator/3", text: "測試選項2" },
       ],
     },
     {
@@ -73,6 +73,12 @@ export default function Header() {
                     </Link>
                     {item.content.length > 0 && (
                       <div className="absolute left-0 top-full w-64 bg-background dark:bg-card shadow-2xl rounded-lg overflow-hidden z-10 hidden group-hover:block transition-opacity duration-200">
+                        <Link
+                          href={item.links}
+                          className="block px-4 py-4 text-sm text-foreground hover:bg-primary hover:text-primary-foreground"
+                        >
+                          總覽
+                        </Link>
                         {item.content.map((link, idx) => (
                           <Link
                             key={idx}

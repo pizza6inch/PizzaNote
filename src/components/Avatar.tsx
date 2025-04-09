@@ -17,6 +17,7 @@ const Avatar = () => {
         x: { mapTo: "rotateY" },
         y: { mapTo: "rotateX" },
         trigger: ".dragArea",
+        releaseMass: 0.1,
         onDrag: () => {
           setIsAutoRotate(false);
         },

@@ -10,6 +10,8 @@ import Avatar from "./Avatar";
 import { defineQuery } from "next-sanity";
 import { sanityFetch } from "@/sanity/lib/live";
 
+import { Mail } from "lucide-react";
+
 const categoriesQuery = defineQuery(`*[_type == "category"]
   | order(title asc)
   {
@@ -27,11 +29,10 @@ const launchDateQuery = defineQuery(`*[_type == "siteInfo"][0]{
 }`);
 
 export default async function Sidebar() {
-  // TODO:: 測試sanity fetch、研究useCdn設定 看看要不要開兩個sanityClient
-
   const { data: categories } = await sanityFetch({ query: categoriesQuery });
   const { data: siteInfo } = await sanityFetch({ query: launchDateQuery });
-  const diffDays = Math.abs(new Date().getTime() - new Date(siteInfo.launchDate).getTime()) / (1000 * 60 * 60 * 24);
+  const launchDate = siteInfo?.launchDate ? new Date(siteInfo.launchDate) : null;
+  const diffDays = launchDate ? Math.abs(new Date().getTime() - launchDate.getTime()) / (1000 * 60 * 60 * 24) : 0;
   const daysSinceLaunch = Math.round(diffDays);
   return (
     <div>
@@ -123,6 +124,16 @@ export default async function Sidebar() {
                 <path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z" />
                 <line x1="17.5" x2="17.51" y1="6.5" y2="6.5" />
               </svg>
+            </Link>
+          </li>
+          <li>
+            <Link
+              href="https://www.instagram.com"
+              target="_blank"
+              rel="noopener"
+              className="hover:text-primary transition-colors dark:text-gray-300 dark:hover:text-primary"
+            >
+              <Mail />
             </Link>
           </li>
         </ul>

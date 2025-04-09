@@ -4,73 +4,30 @@ import React, { useState } from "react";
 import Link from "next/link";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
-import { Github, Facebook, Instagram } from "lucide-react";
+import { Github, Facebook, Instagram, Mail } from "lucide-react";
+import Logo from "./Logo";
 
 export default function Footer() {
-  const [email, setEmail] = useState("");
-  const [subscriptionStatus, setSubscriptionStatus] = useState<"idle" | "success" | "error" | "maintenance">("idle");
+  // const [email, setEmail] = useState("");
+  // const [subscriptionStatus, setSubscriptionStatus] = useState<"idle" | "success" | "error" | "maintenance">("idle");
 
-  const handleSubscribe = (e: React.FormEvent) => {
-    e.preventDefault();
-    // Simulate subscription success
-    setSubscriptionStatus("success");
+  // const handleSubscribe = (e: React.FormEvent) => {
+  //   e.preventDefault();
+  //   // Simulate subscription success
+  //   setSubscriptionStatus("success");
 
-    // Reset after 3 seconds
-    setTimeout(() => {
-      setSubscriptionStatus("idle");
-      setEmail("");
-    }, 3000);
-  };
+  //   // Reset after 3 seconds
+  //   setTimeout(() => {
+  //     setSubscriptionStatus("idle");
+  //     setEmail("");
+  //   }, 3000);
+  // };
 
   return (
     <footer className="mt-12 bg-background dark:bg-background border-t dark:border-border">
       <div className="container">
-        <div className="row justify-content-center pb-4">
-          <div className="col-12 text-center mb-5">
-            <Link href="/">
-              {/* Logo would go here if needed */}
-            </Link>
-          </div>
-        </div>
-
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 pb-4">
-          <div className="lg:col-span-8 text-center">
-            <h4 className="text-xl font-medium mb-6">免費訂閱電子報，每週二學習後端技術🚀</h4>
-            <div className="newsletter max-w-xl mx-auto">
-              {subscriptionStatus === "success" && (
-                <div className="success bg-green-100 text-green-800 dark:bg-green-950 dark:text-green-300 p-3 rounded mb-4">
-                  已發送 Email 驗證信！請前往信箱驗證你的訂閱
-                </div>
-              )}
-              {subscriptionStatus === "error" && (
-                <div className="error bg-red-100 text-red-800 dark:bg-red-950 dark:text-red-300 p-3 rounded mb-4">
-                  訂閱失敗，請檢查 Email 是否輸入錯誤，或是聯繫 pizza6inch@gmail.com 取得協助
-                </div>
-              )}
-              {subscriptionStatus === "maintenance" && (
-                <div className="maintenance bg-yellow-100 text-yellow-800 dark:bg-yellow-950 dark:text-yellow-300 p-3 rounded mb-4">
-                  電子報伺服器正在維護中，請稍後再試
-                </div>
-              )}
-              <form onSubmit={handleSubscribe} className="flex flex-col sm:flex-row gap-2 justify-center">
-                <div className="flex-grow max-w-md">
-                  <Input
-                    type="email"
-                    placeholder="輸入你的 Email"
-                    value={email}
-                    onChange={(e) => setEmail(e.target.value)}
-                    required
-                    className="w-full dark:bg-card"
-                  />
-                </div>
-                <Button type="submit" className="bg-primary hover:bg-primary/90">
-                  免費訂閱
-                </Button>
-              </form>
-            </div>
-          </div>
-
-          <div className="lg:col-span-4 pb-3">
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 py-10">
+          <div className="lg:col-span-6 pb-3">
             <h5 className="text-lg font-medium mb-4">追蹤</h5>
             <ul className="flex space-x-4 mb-4">
               <li>
@@ -80,13 +37,7 @@ export default function Footer() {
                   </Button>
                 </Link>
               </li>
-              <li>
-                <Link href="https://www.facebook.com" target="_blank" rel="noopener">
-                  <Button variant="outline" size="icon" className="rounded-full dark:bg-card dark:hover:bg-accent">
-                    <Facebook className="h-5 w-5" />
-                  </Button>
-                </Link>
-              </li>
+
               <li>
                 <Link href="https://www.instagram.com" target="_blank" rel="noopener">
                   <Button variant="outline" size="icon" className="rounded-full dark:bg-card dark:hover:bg-accent">
@@ -94,8 +45,19 @@ export default function Footer() {
                   </Button>
                 </Link>
               </li>
+              <li>
+                <Link href="mailto:pizza6inch@gmail.com" target="_blank" rel="noopener">
+                  <Button variant="outline" size="icon" className="rounded-full dark:bg-card dark:hover:bg-accent">
+                    <Mail className="h-5 w-5" />
+                  </Button>
+                </Link>
+              </li>
             </ul>
-            <p className="dark:text-gray-300">聯絡信箱: pizza6inch@gmail.com</p>
+          </div>
+          <div className="lg:col-span-6 text-center flex justify-center items-center">
+            <Link href="/" className=" flex items-center gap-2">
+              <Logo />
+            </Link>
           </div>
         </div>
 
