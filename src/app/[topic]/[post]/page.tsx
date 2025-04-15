@@ -31,6 +31,11 @@ export async function generateStaticParams() {
 
 export default async function Page({ params }: { params: Promise<{ topic: string; post: string }> }) {
   const { topic, post } = await params;
+
+  // 寫query fetch post detail
+
+  // 寫query fetch 同個category下的post 按照subCategory分類
+
   return (
     <MainLayout>
       <div className=" grid grid-cols-12">

@@ -46,6 +46,12 @@ export const postType = defineType({
       validation: (Rule) => Rule.required(),
     }),
     defineField({
+      name: "subCategory",
+      type: "reference",
+      to: [{ type: "subCategory" }],
+      validation: (Rule) => Rule.required(),
+    }),
+    defineField({
       name: "publishedAt",
       type: "datetime",
       initialValue: () => new Date().toISOString(),
