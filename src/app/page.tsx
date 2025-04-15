@@ -84,4 +84,4 @@ export default async function Home() {
   );
 }
 
-export const revalidate = 60; // ISR，每 60 秒重新生成一次
+export const revalidate = 60 * 60 * 12; // ISR，每 12 小時重新生成一次
