@@ -50,7 +50,7 @@ export default async function Home() {
 
   return (
     <MainLayout>
-      <section className="section-sm py-8">
+      <section className="py-6">
         <div className="container">
           <div className="h-[60vh]">
             <PingPongGame />

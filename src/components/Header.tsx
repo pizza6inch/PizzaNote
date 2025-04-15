@@ -64,7 +64,7 @@ export default function Header() {
                 <Logo />
               </Link>
 
-              <div className="hidden lg:flex space-x-4">
+              <div className="hidden md:flex space-x-4">
                 {menuContent.map((item, index) => (
                   <div key={index} className="relative group">
                     <Link href={item.links} className="flex items-center px-2 py-2 text-foreground hover:text-primary">
@@ -100,7 +100,7 @@ export default function Header() {
                 <ThemeToggle />
               </div>
 
-              <div className="lg:hidden flex items-center gap-3 md:gap-6">
+              <div className="md:hidden flex items-center gap-3 md:gap-6">
                 <ThemeToggle size={36} />
 
                 <Search size={36} className=" cursor-pointer" onClick={toggleSearch} />
@@ -193,9 +193,3 @@ export default function Header() {
     </>
   );
 }
-
-const DownArrow = () => (
-  <svg className="h-4 w-4 ml-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
-  </svg>
-);

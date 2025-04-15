@@ -33,8 +33,22 @@ export default async function Page({ params }: { params: Promise<{ topic: string
   const { topic, post } = await params;
   return (
     <MainLayout>
-      <div>{topic}</div>
-      <div>{post}</div>
+      <div className=" grid grid-cols-12">
+        <div className="md:block hidden col-span-3 ">
+          <nav>
+            <ul>
+              <li>
+                <h2>目錄</h2>
+                <ul>
+                  <h2></h2>
+                </ul>
+              </li>
+            </ul>
+          </nav>
+        </div>
+        <div className=" col-span-12 md:col-span-9 lg:col-span-6 ">Center</div>
+        <div className="lg:block hidden col-span-3 ">Right </div>
+      </div>
     </MainLayout>
   );
 }

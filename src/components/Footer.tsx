@@ -26,9 +26,9 @@ export default function Footer() {
   return (
     <footer className="mt-12 bg-background dark:bg-background border-t dark:border-border">
       <div className="container">
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 py-10">
-          <div className="lg:col-span-6 pb-3">
-            <h5 className="text-lg font-medium mb-4">追蹤</h5>
+        <div className="grid grid-cols-1 md:grid-cols-12 gap-8 py-10">
+          <div className="md:col-span-6 pb-3 flex flex-col justify-center items-center">
+            <h5 className="text-md font-medium mb-4">追蹤</h5>
             <ul className="flex space-x-4 mb-4">
               <li>
                 <Link href="https://github.com/pizza6inch" target="_blank" rel="noopener">
@@ -54,7 +54,7 @@ export default function Footer() {
               </li>
             </ul>
           </div>
-          <div className="lg:col-span-6 text-center flex justify-center items-center">
+          <div className="md:col-span-6 text-center flex justify-center items-center">
             <Link href="/" className=" flex items-center gap-2">
               <Logo />
             </Link>
