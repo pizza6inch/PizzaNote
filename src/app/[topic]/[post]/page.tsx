@@ -58,4 +58,4 @@ export default async function Page({ params }: { params: Promise<{ topic: string
   );
 }
 
-export const revalidate = 60 * 60 * 12; // ISR，每 12 小時重新生成一次
+export const revalidate = 43200; // ISR，每 12 小時重新生成一次
