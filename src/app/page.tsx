@@ -2,44 +2,16 @@ import MainLayout from "@/components/MainLayout";
 import PostCard from "@/components/PostCard";
 import Sidebar from "@/components/Sidebar";
 
-import { defineQuery } from "next-sanity";
 // import { sanityFetch } from "@/sanity/lib/live";
 
 import { client } from "@/sanity/lib/client";
 
 import PingPongGame from "@/components/PingPongGame";
 
-async function fetchPosts() {
-  const postsQuery = defineQuery(`*[_type == "post"]
-    | order(publishedAt desc)[0...6]
-    {
-      category->{
-        title,
-        "slug":slug.current,
-        topic->{
-          title,
-          "slug":slug.current
-        }
-      },
-      _id,
-      title,
-      "slug": slug.current,
-      publishedAt,
-      lastEdAt,
-      description,
-      tags->{
-        title,
-        "slug":slug.current
-      }
-    }`);
-
-  const posts = await client.fetch(postsQuery);
-
-  return posts;
-}
+import { POSTS_QUERY } from "@/sanity/lib/queries";
 
 export default async function Home() {
-  const posts = await fetchPosts();
+  const posts = await client.fetch(POSTS_QUERY);
 
   // TODO:: 測試sanity fetch、研究useCdn設定 看看要不要開兩個sanityClient
 

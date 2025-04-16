@@ -2,35 +2,38 @@ import React from "react";
 import MainLayout from "@/components/MainLayout";
 import { sanityFetch } from "@/sanity/lib/live";
 import { client } from "@/sanity/lib/client";
-import { defineQuery } from "next-sanity";
-// This function generates all the static pages at build time
+import NotFound from "@/app/not-found";
+
+import { POST_ROUTE_QUERY, POST_DETAIL_BY_SLUG, POSTS_BY_CATEGORY } from "@/sanity/lib/queries";
 
 export const dynamicParams = false;
 
 export async function generateStaticParams() {
-  const postRoutesQuery = defineQuery(`*[_type == "post"]{
-    category->{
-      topic->{
-        "slug":slug.current
-      }
-    },
-    "slug":slug.current
-  }`);
-
-  const posts = await client.fetch(postRoutesQuery);
+  const posts = await client.fetch(POST_ROUTE_QUERY);
 
   const postRoutes = posts.map((post) => {
     return {
-      topic: post.category?.topic?.slug || null,
-      post: post?.slug || null,
+      topicSlug: post.category?.topic?.slug || null,
+      postSlug: post?.slug || null,
     };
   });
 
   return postRoutes;
 }
 
-export default async function Page({ params }: { params: Promise<{ topic: string; post: string }> }) {
-  const { topic, post } = await params;
+export default async function Page({ params }: { params: Promise<{ topicSlug: string; postSlug: string }> }) {
+  const { topicSlug, postSlug } = await params;
+
+  // const postDetail = await sanityFetch({ query: postDetailQuery });
+  const postDetail = await client.fetch(POST_DETAIL_BY_SLUG, { postSlug });
+  if (!postDetail) return NotFound;
+
+  const categoryPosts = await client.fetch(POSTS_BY_CATEGORY, { categoryRef: postDetail.categoryRef });
+
+  console.log(postDetail);
+  console.log(categoryPosts);
+
+  // const categoryPosts =
 
   // 寫query fetch post detail
 

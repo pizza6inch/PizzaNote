@@ -336,22 +336,10 @@ export type HslaColor = {
 
 export type AllSanitySchemaTypes = SanityImagePaletteSwatch | SanityImagePalette | SanityImageDimensions | SanityFileAsset | Geopoint | SiteInfo | Tag | Post | SubCategory | Category | Topic | Slug | BlockContent | SanityImageCrop | SanityImageHotspot | SanityImageAsset | SanityAssetSourceData | SanityImageMetadata | Color | RgbaColor | HsvaColor | HslaColor;
 export declare const internalGroqTypeReferenceTo: unique symbol;
-// Source: src/app/[topic]/[post]/page.tsx
-// Variable: postRoutesQuery
-// Query: *[_type == "post"]{    category->{      topic->{        "slug":slug.current      }    },    "slug":slug.current  }
-export type PostRoutesQueryResult = Array<{
-  category: {
-    topic: {
-      slug: string | null;
-    } | null;
-  } | null;
-  slug: string | null;
-}>;
-
-// Source: src/app/page.tsx
-// Variable: postsQuery
-// Query: *[_type == "post"]    | order(publishedAt desc)[0...6]    {      category->{        title,        "slug":slug.current,        topic->{          title,          "slug":slug.current        }      },      _id,      title,      "slug": slug.current,      publishedAt,      lastEdAt,      description,      tags->{        title,        "slug":slug.current      }    }
-export type PostsQueryResult = Array<{
+// Source: src/sanity/lib/queries.ts
+// Variable: POSTS_QUERY
+// Query: *[_type == "post"]  | order(publishedAt desc)[0...6]  {    category->{      title,      "slug":slug.current,      topic->{        title,        "slug":slug.current      }    },    _id,    title,    "slug": slug.current,    publishedAt,    lastEdAt,    description,    tags->{      title,      "slug":slug.current    }  }
+export type POSTS_QUERYResult = Array<{
   category: {
     title: string | null;
     slug: string | null;
@@ -368,32 +356,73 @@ export type PostsQueryResult = Array<{
   description: string | null;
   tags: null;
 }>;
-
-// Source: src/components/Sidebar.tsx
-// Variable: categoriesQuery
-// Query: *[_type == "category"]  | order(title asc)  {    "slug":slug.current,    title,    _id,    description,    topic->{      "slug":slug.current    }  }
-export type CategoriesQueryResult = Array<{
-  slug: string | null;
-  title: string | null;
-  _id: string;
-  description: string | null;
-  topic: {
-    slug: string | null;
+// Variable: POST_ROUTE_QUERY
+// Query: *[_type == "post"]{  category->{    topic->{      "slug":slug.current    }  },  "slug":slug.current}
+export type POST_ROUTE_QUERYResult = Array<{
+  category: {
+    topic: {
+      slug: string | null;
+    } | null;
   } | null;
+  slug: string | null;
 }>;
-// Variable: launchDateQuery
-// Query: *[_type == "siteInfo"][0]{  launchDate}
-export type LaunchDateQueryResult = {
-  launchDate: string | null;
+// Variable: POST_DETAIL_BY_SLUG
+// Query: *[_type == "post" && slug.current == $postSlug]  {    'categoryRef':category._ref,    slug,    title,    body,    lastEdAt,    description  }[0]
+export type POST_DETAIL_BY_SLUGResult = {
+  categoryRef: string | null;
+  slug: Slug | null;
+  title: string | null;
+  body: Array<{
+    children?: Array<{
+      marks?: Array<string>;
+      text?: string;
+      _type: "span";
+      _key: string;
+    }>;
+    style?: "blockquote" | "h1" | "h2" | "h3" | "h4" | "normal";
+    listItem?: "bullet";
+    markDefs?: Array<{
+      href?: string;
+      _type: "link";
+      _key: string;
+    }>;
+    level?: number;
+    _type: "block";
+    _key: string;
+  } | {
+    asset?: {
+      _ref: string;
+      _type: "reference";
+      _weak?: boolean;
+      [internalGroqTypeReferenceTo]?: "sanity.imageAsset";
+    };
+    media?: unknown;
+    hotspot?: SanityImageHotspot;
+    crop?: SanityImageCrop;
+    alt?: string;
+    _type: "image";
+    _key: string;
+  }> | null;
+  lastEdAt: string | null;
+  description: string | null;
 } | null;
+// Variable: POSTS_BY_CATEGORY
+// Query: *[_type == "subCategory" && category._ref == $categoryRef]{  title,  "posts": *[_type == "post" && references(^._id)]{    title,    slug  }}
+export type POSTS_BY_CATEGORYResult = Array<{
+  title: string | null;
+  posts: Array<{
+    title: string | null;
+    slug: Slug | null;
+  }>;
+}>;
 
 // Query TypeMap
 import "@sanity/client";
 declare module "@sanity/client" {
   interface SanityQueries {
-    "*[_type == \"post\"]{\n    category->{\n      topic->{\n        \"slug\":slug.current\n      }\n    },\n    \"slug\":slug.current\n  }": PostRoutesQueryResult;
-    "*[_type == \"post\"]\n    | order(publishedAt desc)[0...6]\n    {\n      category->{\n        title,\n        \"slug\":slug.current,\n        topic->{\n          title,\n          \"slug\":slug.current\n        }\n      },\n      _id,\n      title,\n      \"slug\": slug.current,\n      publishedAt,\n      lastEdAt,\n      description,\n      tags->{\n        title,\n        \"slug\":slug.current\n      }\n    }": PostsQueryResult;
-    "*[_type == \"category\"]\n  | order(title asc)\n  {\n    \"slug\":slug.current,\n    title,\n    _id,\n    description,\n    topic->{\n      \"slug\":slug.current\n    }\n  }\n  ": CategoriesQueryResult;
-    "*[_type == \"siteInfo\"][0]{\n  launchDate\n}": LaunchDateQueryResult;
+    "*[_type == \"post\"]\n  | order(publishedAt desc)[0...6]\n  {\n    category->{\n      title,\n      \"slug\":slug.current,\n      topic->{\n        title,\n        \"slug\":slug.current\n      }\n    },\n    _id,\n    title,\n    \"slug\": slug.current,\n    publishedAt,\n    lastEdAt,\n    description,\n    tags->{\n      title,\n      \"slug\":slug.current\n    }\n  }": POSTS_QUERYResult;
+    "*[_type == \"post\"]{\n  category->{\n    topic->{\n      \"slug\":slug.current\n    }\n  },\n  \"slug\":slug.current\n}": POST_ROUTE_QUERYResult;
+    "*[_type == \"post\" && slug.current == $postSlug]\n  {\n    'categoryRef':category._ref,\n    slug,\n    title,\n    body,\n    lastEdAt,\n    description\n  }[0]": POST_DETAIL_BY_SLUGResult;
+    "*[_type == \"subCategory\" && category._ref == $categoryRef]{\n  title,\n  \"posts\": *[_type == \"post\" && references(^._id)]{\n    title,\n    slug\n  }\n}": POSTS_BY_CATEGORYResult;
   }
 }
