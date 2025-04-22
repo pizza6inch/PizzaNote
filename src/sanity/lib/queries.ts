@@ -52,9 +52,9 @@ export const POST_ROUTE_QUERY = defineQuery(`*[_type == "post"]{
 export const POST_DETAIL_BY_SLUG = defineQuery(`*[_type == "post" && slug.current == $postSlug]
   {
     'categoryRef':category._ref,
-    slug,
+    "slug":slug.current,
     title,
-    body,
+    content,
     lastEdAt,
     description
   }[0]`);
@@ -63,6 +63,6 @@ export const POSTS_BY_CATEGORY = defineQuery(`*[_type == "subCategory" && catego
   title,
   "posts": *[_type == "post" && references(^._id)]{
     title,
-    slug
+    "slug":slug.current
   }
 }`);

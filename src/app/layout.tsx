@@ -5,6 +5,7 @@ import ClientBody from "./ClientBody";
 import { cn } from "@/lib/utils";
 import { ThemeProvider } from "@/components/ThemeProvider";
 import { SanityLive } from "@/sanity/lib/live";
+import "easymde/dist/easymde.min.css";
 
 // Import Noto Sans TC for traditional Chinese
 const notoSansTC = {

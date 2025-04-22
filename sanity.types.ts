@@ -130,37 +130,7 @@ export type Post = {
   publishedAt?: string;
   lastEdAt?: string;
   description?: string;
-  body?: Array<{
-    children?: Array<{
-      marks?: Array<string>;
-      text?: string;
-      _type: "span";
-      _key: string;
-    }>;
-    style?: "normal" | "h1" | "h2" | "h3" | "h4" | "blockquote";
-    listItem?: "bullet";
-    markDefs?: Array<{
-      href?: string;
-      _type: "link";
-      _key: string;
-    }>;
-    level?: number;
-    _type: "block";
-    _key: string;
-  } | {
-    asset?: {
-      _ref: string;
-      _type: "reference";
-      _weak?: boolean;
-      [internalGroqTypeReferenceTo]?: "sanity.imageAsset";
-    };
-    media?: unknown;
-    hotspot?: SanityImageHotspot;
-    crop?: SanityImageCrop;
-    alt?: string;
-    _type: "image";
-    _key: string;
-  }>;
+  content?: string;
 };
 
 export type SubCategory = {
@@ -301,6 +271,8 @@ export type SanityImageMetadata = {
   isOpaque?: boolean;
 };
 
+export type Markdown = string;
+
 export type Color = {
   _type: "color";
   hex?: string;
@@ -334,7 +306,7 @@ export type HslaColor = {
   a?: number;
 };
 
-export type AllSanitySchemaTypes = SanityImagePaletteSwatch | SanityImagePalette | SanityImageDimensions | SanityFileAsset | Geopoint | SiteInfo | Tag | Post | SubCategory | Category | Topic | Slug | BlockContent | SanityImageCrop | SanityImageHotspot | SanityImageAsset | SanityAssetSourceData | SanityImageMetadata | Color | RgbaColor | HsvaColor | HslaColor;
+export type AllSanitySchemaTypes = SanityImagePaletteSwatch | SanityImagePalette | SanityImageDimensions | SanityFileAsset | Geopoint | SiteInfo | Tag | Post | SubCategory | Category | Topic | Slug | BlockContent | SanityImageCrop | SanityImageHotspot | SanityImageAsset | SanityAssetSourceData | SanityImageMetadata | Markdown | Color | RgbaColor | HsvaColor | HslaColor;
 export declare const internalGroqTypeReferenceTo: unique symbol;
 // Source: src/sanity/lib/queries.ts
 // Variable: POSTS_QUERY
@@ -383,52 +355,22 @@ export type POST_ROUTE_QUERYResult = Array<{
   slug: string | null;
 }>;
 // Variable: POST_DETAIL_BY_SLUG
-// Query: *[_type == "post" && slug.current == $postSlug]  {    'categoryRef':category._ref,    slug,    title,    body,    lastEdAt,    description  }[0]
+// Query: *[_type == "post" && slug.current == $postSlug]  {    'categoryRef':category._ref,    "slug":slug.current,    title,    content,    lastEdAt,    description  }[0]
 export type POST_DETAIL_BY_SLUGResult = {
   categoryRef: string | null;
-  slug: Slug | null;
+  slug: string | null;
   title: string | null;
-  body: Array<{
-    children?: Array<{
-      marks?: Array<string>;
-      text?: string;
-      _type: "span";
-      _key: string;
-    }>;
-    style?: "blockquote" | "h1" | "h2" | "h3" | "h4" | "normal";
-    listItem?: "bullet";
-    markDefs?: Array<{
-      href?: string;
-      _type: "link";
-      _key: string;
-    }>;
-    level?: number;
-    _type: "block";
-    _key: string;
-  } | {
-    asset?: {
-      _ref: string;
-      _type: "reference";
-      _weak?: boolean;
-      [internalGroqTypeReferenceTo]?: "sanity.imageAsset";
-    };
-    media?: unknown;
-    hotspot?: SanityImageHotspot;
-    crop?: SanityImageCrop;
-    alt?: string;
-    _type: "image";
-    _key: string;
-  }> | null;
+  content: string | null;
   lastEdAt: string | null;
   description: string | null;
 } | null;
 // Variable: POSTS_BY_CATEGORY
-// Query: *[_type == "subCategory" && category._ref == $categoryRef]{  title,  "posts": *[_type == "post" && references(^._id)]{    title,    slug  }}
+// Query: *[_type == "subCategory" && category._ref == $categoryRef]{  title,  "posts": *[_type == "post" && references(^._id)]{    title,    "slug":slug.current  }}
 export type POSTS_BY_CATEGORYResult = Array<{
   title: string | null;
   posts: Array<{
     title: string | null;
-    slug: Slug | null;
+    slug: string | null;
   }>;
 }>;
 
@@ -440,7 +382,7 @@ declare module "@sanity/client" {
     "*[_type == \"category\"]\n    | order(title asc)\n    {\n      \"slug\":slug.current,\n      title,\n      _id,\n      description,\n      topic->{\n        \"slug\":slug.current\n      }\n    }\n  ": CATEGORIES_QUERYResult;
     "*[_type == \"siteInfo\"][0]{\n  launchDate\n}": LAUNCH_DATE_QUERYResult;
     "*[_type == \"post\"]{\n  category->{\n    topic->{\n      \"slug\":slug.current\n    }\n  },\n  \"slug\":slug.current\n}": POST_ROUTE_QUERYResult;
-    "*[_type == \"post\" && slug.current == $postSlug]\n  {\n    'categoryRef':category._ref,\n    slug,\n    title,\n    body,\n    lastEdAt,\n    description\n  }[0]": POST_DETAIL_BY_SLUGResult;
-    "*[_type == \"subCategory\" && category._ref == $categoryRef]{\n  title,\n  \"posts\": *[_type == \"post\" && references(^._id)]{\n    title,\n    slug\n  }\n}": POSTS_BY_CATEGORYResult;
+    "*[_type == \"post\" && slug.current == $postSlug]\n  {\n    'categoryRef':category._ref,\n    \"slug\":slug.current,\n    title,\n    content,\n    lastEdAt,\n    description\n  }[0]": POST_DETAIL_BY_SLUGResult;
+    "*[_type == \"subCategory\" && category._ref == $categoryRef]{\n  title,\n  \"posts\": *[_type == \"post\" && references(^._id)]{\n    title,\n    \"slug\":slug.current\n  }\n}": POSTS_BY_CATEGORYResult;
   }
 }

@@ -5,7 +5,10 @@ import { client } from "@/sanity/lib/client";
 import NotFound from "@/app/not-found";
 
 import { POST_ROUTE_QUERY, POST_DETAIL_BY_SLUG, POSTS_BY_CATEGORY } from "@/sanity/lib/queries";
-import { title } from "process";
+
+import MarkdownBlock from "@/components/MarkdownBlock";
+
+import Link from "next/link";
 
 export const dynamicParams = false;
 
@@ -85,10 +88,12 @@ export default async function Page({ params }: { params: Promise<{ topicSlug: st
                   <ul className="pl-4 space-y-2">
                     {category.posts.map((post) => (
                       <li key={post.title} className="group">
-                        <p className="text-gray-600 dark:text-gray-400 hover:text-gray-900 hover:dark:text-gray-200 cursor-pointer transition-colors relative">
-                          {post.title}
-                          <span className="absolute right-0 bottom-0 w-0 h-[2px] bg-primary transition-all duration-500 group-hover:w-full group-hover:left-0"></span>
-                        </p>
+                        <Link href={`/${topicSlug}/${post.slug}`}>
+                          <p className="text-gray-600 dark:text-gray-400 hover:text-gray-900 hover:dark:text-gray-200 cursor-pointer transition-colors relative">
+                            {post.title}
+                            <span className="absolute right-0 bottom-0 w-0 h-[2px] bg-primary transition-all duration-500 group-hover:w-full group-hover:left-0"></span>
+                          </p>
+                        </Link>
                       </li>
                     ))}
                   </ul>
@@ -97,7 +102,9 @@ export default async function Page({ params }: { params: Promise<{ topicSlug: st
             </ul>
           </nav>
         </div>
-        <div className=" col-span-12 md:col-span-8 lg:col-span-6 ">Center</div>
+        <div className=" col-span-12 md:col-span-8 lg:col-span-6 ">
+          {postDetail.content && <MarkdownBlock content={postDetail.content} />}
+        </div>
         <div className="lg:block hidden col-span-2 ">Right </div>
       </div>
     </MainLayout>
