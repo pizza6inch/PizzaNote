@@ -7,30 +7,19 @@ import Image from "next/image";
 import PizzaPlayground from "./PizzaPlayground";
 import Avatar from "./Avatar";
 
-import { defineQuery } from "next-sanity";
-import { sanityFetch } from "@/sanity/lib/live";
+// import { sanityFetch } from "@/sanity/lib/live";
+
+import { client } from "@/sanity/lib/client";
 
 import { Mail } from "lucide-react";
 
-const categoriesQuery = defineQuery(`*[_type == "category"]
-  | order(title asc)
-  {
-    "slug":slug.current,
-    title,
-    _id,
-    description,
-    topic->{
-      "slug":slug.current
-    }
-  }
-  `);
-const launchDateQuery = defineQuery(`*[_type == "siteInfo"][0]{
-  launchDate
-}`);
+import { CATEGORIES_QUERY, LAUNCH_DATE_QUERY } from "@/sanity/lib/queries";
 
 export default async function Sidebar() {
-  const { data: categories } = await sanityFetch({ query: categoriesQuery });
-  const { data: siteInfo } = await sanityFetch({ query: launchDateQuery });
+  const categories = await client.fetch(CATEGORIES_QUERY);
+  const siteInfo = await client.fetch(LAUNCH_DATE_QUERY);
+  // const { data: categories } = await sanityFetch({ query: CATEGORIES_QUERY }); // server side fetch
+  // const { data: siteInfo } = await sanityFetch({ query: LAUNCH_DATE_QUERY });
   const launchDate = siteInfo?.launchDate ? new Date(siteInfo.launchDate) : null;
   const diffDays = launchDate ? Math.abs(new Date().getTime() - launchDate.getTime()) / (1000 * 60 * 60 * 24) : 0;
   const daysSinceLaunch = Math.round(diffDays);

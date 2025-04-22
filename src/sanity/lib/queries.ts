@@ -23,6 +23,23 @@ export const POSTS_QUERY = defineQuery(`*[_type == "post"]
     }
   }`);
 
+export const CATEGORIES_QUERY = defineQuery(`*[_type == "category"]
+    | order(title asc)
+    {
+      "slug":slug.current,
+      title,
+      _id,
+      description,
+      topic->{
+        "slug":slug.current
+      }
+    }
+  `);
+
+export const LAUNCH_DATE_QUERY = defineQuery(`*[_type == "siteInfo"][0]{
+  launchDate
+}`);
+
 export const POST_ROUTE_QUERY = defineQuery(`*[_type == "post"]{
   category->{
     topic->{

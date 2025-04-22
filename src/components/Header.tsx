@@ -114,58 +114,6 @@ export default function Header() {
 
       {/* Mobile Header */}
 
-      {/* {false && (
-        <div className="md:hidden fixed inset-0 bg-black bg-opacity-50 z-40">
-          <div className="bg-background dark:bg-card h-screen w-[70%] p-4 absolute right-0 z-50">
-            <div className="space-y-4 mt-16">
-              <div className="border-b pb-2">
-                <div className="text-lg font-medium mb-2">後端技術專欄</div>
-                <Link
-                  href="/blog/springboot/1"
-                  className="block py-2 px-4 hover:bg-muted"
-                  onClick={() => setIsMenuOpen(false)}
-                >
-                  Spring Boot 零基礎入門
-                </Link>
-              </div>
-
-              <div className="border-b pb-2">
-                <div className="text-lg font-medium mb-2">
-                  自媒體 &amp; 敗家專區
-                </div>
-                <Link
-                  href="/blog/as-a-content-creator/1"
-                  className="block py-2 px-4 hover:bg-muted"
-                  onClick={() => setIsMenuOpen(false)}
-                >
-                  軟體工程師的自媒體之路
-                </Link>
-              </div>
-
-              <div className="border-b pb-2">
-                <Link
-                  href="/"
-                  className="block py-2 text-lg"
-                  onClick={() => setIsMenuOpen(false)}
-                >
-                  所有文章
-                </Link>
-              </div>
-
-              <div className="border-b pb-2">
-                <Link
-                  href="/about"
-                  className="block py-2 text-lg"
-                  onClick={() => setIsMenuOpen(false)}
-                >
-                  關於我
-                </Link>
-              </div>
-            </div>
-          </div>
-        </div>
-      )} */}
-
       {/* Search Bar */}
       {isSearchOpen && (
         <div className="fixed inset-0 bg-black bg-opacity-50 z-50 flex items-start justify-center pt-20">
