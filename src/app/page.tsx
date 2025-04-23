@@ -16,7 +16,7 @@ export default async function Home() {
   // TODO:: 測試sanity fetch、研究useCdn設定 看看要不要開兩個sanityClient
 
   return (
-    <>
+    <MainLayout>
       <section className="py-6">
         <div className="container">
           <div className="h-[60vh]">
@@ -52,7 +52,7 @@ export default async function Home() {
           </div>
         </div>
       </section>
-    </>
+    </MainLayout>
   );
 }
 

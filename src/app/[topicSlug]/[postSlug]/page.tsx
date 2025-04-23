@@ -107,9 +107,9 @@ export default async function Page({ params }: { params: Promise<{ topicSlug: st
   ];
 
   return (
-    <>
+    <MainLayout>
       <div className="flex">
-        <div className="md:block hidden sticky top-[10vh] w-60 overflow-y-auto h-[90vh] py-10 px-5 bg-gray-100 dark:bg-gray-900 custom-scrollbar ">
+        <div className="md:block hidden sticky top-[10vh] w-[320px] overflow-y-auto h-[90vh] py-10 px-5 bg-gray-100 dark:bg-gray-900 custom-scrollbar ">
           <nav className="p-5 bg-gray-100 dark:bg-gray-900 rounded-lg shadow-md dark:shadow-gray-700">
             <h2 className="text-2xl font-bold mb-4 border-b-2 text-foreground border-gray-300 dark:border-gray-700 pb-2">
               目錄
@@ -189,7 +189,7 @@ export default async function Page({ params }: { params: Promise<{ topicSlug: st
 
       {/* comment */}
       <div className="h-60 bg-black">comment section</div>
-    </>
+    </MainLayout>
   );
 }
 
