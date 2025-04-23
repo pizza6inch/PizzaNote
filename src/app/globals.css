@@ -55,14 +55,62 @@
   }
   body {
     @apply bg-background text-foreground;
-    font-family: 'Noto Sans TC', sans-serif;
+    font-family: "Noto Sans TC", sans-serif;
   }
-  h1, h2, h3, h4, h5, h6 {
-    font-family: var(--font-raleway), 'Noto Sans TC', sans-serif;
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6 {
+    font-family: var(--font-raleway), "Noto Sans TC", sans-serif;
   }
 }
 
 /* Custom styles */
+
+/* 自定義捲軸樣式 */
+.custom-scrollbar {
+  scrollbar-width: auto; /* 適用於 Firefox */
+  scrollbar-color: #d1d5db #f3f4f6; /* 滑塊顏色和軌道顏色 */
+}
+
+.custom-scrollbar::-webkit-scrollbar {
+  width: 8px; /* 捲軸寬度 */
+  height: 8px; /* 捲軸高度 */
+}
+
+.custom-scrollbar::-webkit-scrollbar-thumb {
+  background-color: #d1d5db; /* 滑塊顏色 */
+  border-radius: 4px; /* 滑塊圓角 */
+}
+
+.custom-scrollbar::-webkit-scrollbar-track {
+  background-color: #f3f4f6; /* 軌道顏色 */
+}
+
+/* Dark 模式下的捲軸樣式 */
+.dark .custom-scrollbar {
+  scrollbar-color: #4b5563 #1f2937; /* 滑塊顏色和軌道顏色 */
+}
+
+.dark .custom-scrollbar::-webkit-scrollbar-thumb {
+  background-color: #4b5563; /* 滑塊顏色 */
+}
+
+.dark .custom-scrollbar::-webkit-scrollbar-track {
+  background-color: #1f2937; /* 軌道顏色 */
+}
+
+.dark .markdown-body {
+  background-color: transparent; /* 設定背景顏色 */
+}
+
+.light .markdown-body {
+  background-color: transparent; /* 設定背景顏色 */
+  color: #222;
+}
+
 .nav-background-color {
   background-color: white;
 }

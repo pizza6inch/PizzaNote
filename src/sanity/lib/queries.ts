@@ -52,6 +52,8 @@ export const POST_ROUTE_QUERY = defineQuery(`*[_type == "post"]{
 export const POST_DETAIL_BY_SLUG = defineQuery(`*[_type == "post" && slug.current == $postSlug]
   {
     'categoryRef':category._ref,
+    'categoryTitle':category->title,
+    'categorySlug':category->slug.current,
     "slug":slug.current,
     title,
     content,
@@ -66,3 +68,8 @@ export const POSTS_BY_CATEGORY = defineQuery(`*[_type == "subCategory" && catego
     "slug":slug.current
   }
 }`);
+
+export const TOPIC_BY_SLUG = defineQuery(`*[_type == "topic" && slug.current == $topicSlug]{
+  title,
+  "slug":slug.current
+}[0]`);

@@ -6,7 +6,7 @@ import "github-markdown-css/github-markdown-dark.css";
 
 export default function MarkdownBlock({ content }: Readonly<{ content: string }>) {
   return (
-    <div className="markdown-body">
+    <div className="markdown-body ">
       <ReactMarkdown remarkPlugins={[remarkGfm]} rehypePlugins={[rehypeHighlight]}>
         {content}
       </ReactMarkdown>

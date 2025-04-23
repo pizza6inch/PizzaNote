@@ -1,6 +1,7 @@
 import React from "react";
 import Link from "next/link";
 import { Card, CardContent } from "@/components/ui/card";
+import { formatDate } from "@/lib/utils";
 
 export interface PostCardProps {
   title: string | null;
@@ -26,15 +27,7 @@ export default function PostCard({
   description,
   tags = [],
 }: PostCardProps) {
-  const dateObj = date ? new Date(date) : new Date();
-
-  // 格式化為 yyyy/mm/dd
-  const formattedDate =
-    dateObj.getFullYear() +
-    "/" +
-    (dateObj.getMonth() + 1).toString().padStart(2, "0") +
-    "/" +
-    dateObj.getDate().toString().padStart(2, "0");
+  const formattedDate = formatDate(date);
 
   return (
     <Card className="mb-4 shadow-sm dark:bg-card">
