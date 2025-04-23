@@ -111,6 +111,23 @@
   color: #222;
 }
 
+.arrow {
+  transition: transform 0.3s ease;
+}
+
+.group:hover .arrow {
+  animation: bounce 0.5s infinite alternate ease-in-out;
+}
+
+@keyframes bounce {
+  from {
+    transform: translateX(-5px);
+  }
+  to {
+    transform: translate(5px);
+  }
+}
+
 .nav-background-color {
   background-color: white;
 }
