@@ -345,12 +345,13 @@ export type LAUNCH_DATE_QUERYResult = {
   launchDate: string | null;
 } | null;
 // Variable: POST_ROUTE_QUERY
-// Query: *[_type == "post"]{  category->{    topic->{      "slug":slug.current    }  },  "slug":slug.current}
+// Query: *[_type == "post"]{  category->{    topic->{      "slug":slug.current    },    "slug":slug.current  },  "slug":slug.current}
 export type POST_ROUTE_QUERYResult = Array<{
   category: {
     topic: {
       slug: string | null;
     } | null;
+    slug: string | null;
   } | null;
   slug: string | null;
 }>;
@@ -389,7 +390,7 @@ declare module "@sanity/client" {
     "*[_type == \"post\"]\n  | order(publishedAt desc)[0...6]\n  {\n    category->{\n      title,\n      \"slug\":slug.current,\n      topic->{\n        title,\n        \"slug\":slug.current\n      }\n    },\n    _id,\n    title,\n    \"slug\": slug.current,\n    publishedAt,\n    lastEdAt,\n    description,\n    tags->{\n      title,\n      \"slug\":slug.current\n    }\n  }": POSTS_QUERYResult;
     "*[_type == \"category\"]\n    | order(title asc)\n    {\n      \"slug\":slug.current,\n      title,\n      _id,\n      description,\n      topic->{\n        \"slug\":slug.current\n      }\n    }\n  ": CATEGORIES_QUERYResult;
     "*[_type == \"siteInfo\"][0]{\n  launchDate\n}": LAUNCH_DATE_QUERYResult;
-    "*[_type == \"post\"]{\n  category->{\n    topic->{\n      \"slug\":slug.current\n    }\n  },\n  \"slug\":slug.current\n}": POST_ROUTE_QUERYResult;
+    "*[_type == \"post\"]{\n  category->{\n    topic->{\n      \"slug\":slug.current\n    },\n    \"slug\":slug.current\n  },\n  \"slug\":slug.current\n}": POST_ROUTE_QUERYResult;
     "*[_type == \"post\" && slug.current == $postSlug]\n  {\n    'categoryRef':category._ref,\n    'categoryTitle':category->title,\n    'categorySlug':category->slug.current,\n    \"slug\":slug.current,\n    title,\n    content,\n    lastEdAt,\n    description\n  }[0]": POST_DETAIL_BY_SLUGResult;
     "*[_type == \"subCategory\" && category._ref == $categoryRef]{\n  title,\n  \"posts\": *[_type == \"post\" && references(^._id)]{\n    title,\n    \"slug\":slug.current\n  }\n}": POSTS_BY_CATEGORYResult;
     "*[_type == \"topic\" && slug.current == $topicSlug]{\n  title,\n  \"slug\":slug.current\n}[0]": TOPIC_BY_SLUGResult;

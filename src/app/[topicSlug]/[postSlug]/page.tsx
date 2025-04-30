@@ -25,6 +25,13 @@ export async function generateStaticParams() {
     };
   });
 
+  const categoryRoutes = posts.map((post) => {
+    return {
+      topicSlug: post.category?.topic?.slug || null,
+      postSlug: post.category?.slug || null,
+    };
+  });
+
   return postRoutes;
 }
 

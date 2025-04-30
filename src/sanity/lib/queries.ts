@@ -44,7 +44,8 @@ export const POST_ROUTE_QUERY = defineQuery(`*[_type == "post"]{
   category->{
     topic->{
       "slug":slug.current
-    }
+    },
+    "slug":slug.current
   },
   "slug":slug.current
 }`);
