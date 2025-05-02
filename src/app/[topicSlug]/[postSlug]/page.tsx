@@ -4,7 +4,13 @@ import { sanityFetch } from "@/sanity/lib/live";
 import { client } from "@/sanity/lib/client";
 import NotFound from "@/app/not-found";
 
-import { POST_ROUTE_QUERY, POST_DETAIL_BY_SLUG, POSTS_BY_CATEGORY, TOPIC_BY_SLUG } from "@/sanity/lib/queries";
+import {
+  POST_ROUTE_QUERY,
+  POST_DETAIL_BY_SLUG,
+  POSTS_BY_CATEGORY,
+  TOPIC_BY_SLUG,
+  CATEGORY_BY_SLUG,
+} from "@/sanity/lib/queries";
 
 import MarkdownBlock from "@/components/MarkdownBlock";
 import BreadcrumbLinks from "@/components/BreadcrumbLinks";
@@ -32,17 +38,33 @@ export async function generateStaticParams() {
     };
   });
 
-  return postRoutes;
+  return [...postRoutes, ...categoryRoutes];
 }
 
-export default async function Page({ params }: { params: Promise<{ topicSlug: string; postSlug: string }> }) {
+export default async function Page({
+  params,
+}: {
+  params: Promise<{ topicSlug: string; postSlug: string }>;
+}) {
   const { topicSlug, postSlug } = await params;
-
   // const postDetail = await sanityFetch({ query: postDetailQuery });
-  const postDetail = await client.fetch(POST_DETAIL_BY_SLUG, { postSlug });
-  if (!postDetail) return NotFound;
-
-  const categoryPosts = await client.fetch(POSTS_BY_CATEGORY, { categoryRef: postDetail.categoryRef });
+  let postDetail = await client.fetch(POST_DETAIL_BY_SLUG, { postSlug });
+  const category = await client.fetch(CATEGORY_BY_SLUG, { postSlug });
+  if (!postDetail) {
+    postDetail = {
+      categoryRef: category?.categoryRef || null,
+      categorySlug: category?.categorySlug || null,
+      slug: category?.slug || null,
+      title: category?.title || null,
+      categoryTitle: category?.categoryTitle || null,
+      description: category?.description || null,
+      content: null,
+    };
+  }
+  // TODO:: generate category post content
+  const categoryPosts = await client.fetch(POSTS_BY_CATEGORY, {
+    categoryRef: postDetail.categoryRef,
+  });
 
   const topic = await client.fetch(TOPIC_BY_SLUG, { topicSlug: topicSlug });
 
@@ -57,12 +79,15 @@ export default async function Page({ params }: { params: Promise<{ topicSlug: st
     if (currentIndex === -1) return { prev: null, next: null }; // 沒找到
 
     const prev = currentIndex > 0 ? allPosts[currentIndex - 1] : null;
-    const next = currentIndex < allPosts.length - 1 ? allPosts[currentIndex + 1] : null;
+    const next =
+      currentIndex < allPosts.length - 1 ? allPosts[currentIndex + 1] : null;
 
     return { prev, next };
   };
 
-  const { prev: prevPost, next: nextPost } = findPrevNextPosts(postDetail.slug || "");
+  const { prev: prevPost, next: nextPost } = findPrevNextPosts(
+    postDetail.slug || ""
+  );
 
   const testCategoryPosts = [
     {
@@ -121,10 +146,32 @@ export default async function Page({ params }: { params: Promise<{ topicSlug: st
             <h2 className="text-2xl font-bold mb-4 border-b-2 text-foreground border-gray-300 dark:border-gray-700 pb-2">
               目錄
             </h2>
+            <div className="mb-5">
+              <h3 className="text-lg font-semibold text-foreground mb-2 ">
+                總覽
+              </h3>
+              <div className="group space-y-2 pl-4">
+                <Link href={`/${topicSlug}/${postDetail.categorySlug}`}>
+                  {postDetail.categorySlug === postDetail.slug ? (
+                    <p className="text-primary relative  pb-1">
+                      {postDetail.categorySlug}
+                      <span className="h-[2px] bg-primary absolute right-0 bottom-0 w-full"></span>
+                    </p>
+                  ) : (
+                    <p className="text-gray-600 dark:text-gray-400 hover:text-gray-900 hover:dark:text-gray-200 cursor-pointer transition-colors relative pb-1">
+                      {postDetail.categorySlug}
+                      <span className="absolute right-0 bottom-0 w-0 h-[2px] bg-primary transition-all duration-500 group-hover:w-full group-hover:left-0"></span>
+                    </p>
+                  )}
+                </Link>
+              </div>
+            </div>
             <ul className="space-y-5">
               {categoryPosts.map((category) => (
                 <li key={category.title}>
-                  <h3 className="text-lg font-semibold text-foreground mb-2 ">{category.title}</h3>
+                  <h3 className="text-lg font-semibold text-foreground mb-2 ">
+                    {category.title}
+                  </h3>
                   <ul className="pl-4 space-y-2">
                     {category.posts.map((post) => (
                       <li key={post.title} className="group">
@@ -154,9 +201,13 @@ export default async function Page({ params }: { params: Promise<{ topicSlug: st
           <BreadcrumbLinks items={breadcrumbItems} />
           <div className=" space-y-1">
             <h1 className="text-4xl">{postDetail.title}</h1>
-            <p className="text-sm text-gray-400">{formatDate(postDetail.lastEdAt)}</p>
+            <p className="text-sm text-gray-400">
+              {formatDate(postDetail.lastEdAt)}
+            </p>
           </div>
-          {postDetail.description && <MarkdownBlock content={postDetail.description} />}
+          {postDetail.description && (
+            <MarkdownBlock content={postDetail.description} />
+          )}
           {postDetail.content && <MarkdownBlock content={postDetail.content} />}
           {/* next post & prev post */}
           <hr />
