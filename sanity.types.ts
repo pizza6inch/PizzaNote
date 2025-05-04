@@ -329,6 +329,16 @@ export type POSTS_QUERYResult = Array<{
   description: string | null;
   tags: null;
 }>;
+// Variable: POSTS_BY_PAGE_QUERY
+// Query: *[_type == "post"]   | order(publishedAt desc) {  "slug": slug.current,  title,  description,   publishedAt,  lastEdAt,  tags->{    title,    "slug":slug.current  },}[$start...$end]
+export type POSTS_BY_PAGE_QUERYResult = Array<{
+  slug: string | null;
+  title: string | null;
+  description: string | null;
+  publishedAt: string | null;
+  lastEdAt: string | null;
+  tags: null;
+}>;
 // Variable: CATEGORIES_QUERY
 // Query: *[_type == "category"]    | order(title asc)    {      "slug":slug.current,      title,      _id,      description,      topic->{        "slug":slug.current      }    }
 export type CATEGORIES_QUERYResult = Array<{
@@ -436,6 +446,7 @@ import "@sanity/client";
 declare module "@sanity/client" {
   interface SanityQueries {
     "*[_type == \"post\"]\n  | order(publishedAt desc)[0...6]\n  {\n    category->{\n      title,\n      \"slug\":slug.current,\n      topic->{\n        title,\n        \"slug\":slug.current\n      }\n    },\n    _id,\n    title,\n    \"slug\": slug.current,\n    publishedAt,\n    lastEdAt,\n    description,\n    tags->{\n      title,\n      \"slug\":slug.current\n    }\n  }": POSTS_QUERYResult;
+    "*[_type == \"post\"] \n  | order(publishedAt desc) {\n  \"slug\": slug.current,\n  title,\n  description,\n   publishedAt,\n  lastEdAt,\n  tags->{\n    title,\n    \"slug\":slug.current\n  },\n}[$start...$end]": POSTS_BY_PAGE_QUERYResult;
     "*[_type == \"category\"]\n    | order(title asc)\n    {\n      \"slug\":slug.current,\n      title,\n      _id,\n      description,\n      topic->{\n        \"slug\":slug.current\n      }\n    }\n  ": CATEGORIES_QUERYResult;
     "*[_type == \"siteInfo\"][0]{\n  launchDate\n}": LAUNCH_DATE_QUERYResult;
     "*[_type == \"post\"]{\n  category->{\n    topic->{\n      \"slug\":slug.current\n    },\n    \"slug\":slug.current\n  },\n  \"slug\":slug.current\n}": POST_ROUTE_QUERYResult;

@@ -23,6 +23,19 @@ export const POSTS_QUERY = defineQuery(`*[_type == "post"]
     }
   }`);
 
+export const POSTS_BY_PAGE_QUERY = defineQuery(`*[_type == "post"] 
+  | order(publishedAt desc) {
+  "slug": slug.current,
+  title,
+  description,
+   publishedAt,
+  lastEdAt,
+  tags->{
+    title,
+    "slug":slug.current
+  },
+}[$start...$end]`);
+
 export const CATEGORIES_QUERY = defineQuery(`*[_type == "category"]
     | order(title asc)
     {
