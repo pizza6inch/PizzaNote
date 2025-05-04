@@ -18,6 +18,7 @@ import Link from "next/link";
 import { title } from "process";
 import { formatDate } from "@/lib/utils";
 import { ArrowLeft, ArrowRight } from "lucide-react";
+import { getGeneratedCategoryPostsContent } from "@/lib/markdownUtils";
 
 export const dynamicParams = false;
 
@@ -50,6 +51,10 @@ export default async function Page({
   // const postDetail = await sanityFetch({ query: postDetailQuery });
   let postDetail = await client.fetch(POST_DETAIL_BY_SLUG, { postSlug });
   const category = await client.fetch(CATEGORY_BY_SLUG, { postSlug });
+
+  // if postDetail is not found, it means that the postSlug is actually a category slug
+  // so we need to fetch the category detail instead
+
   if (!postDetail) {
     postDetail = {
       categoryRef: category?.categoryRef || null,
@@ -65,6 +70,13 @@ export default async function Page({
   const categoryPosts = await client.fetch(POSTS_BY_CATEGORY, {
     categoryRef: postDetail.categoryRef,
   });
+
+  if (category) {
+    postDetail.content = getGeneratedCategoryPostsContent(
+      categoryPosts,
+      topicSlug
+    );
+  }
 
   const topic = await client.fetch(TOPIC_BY_SLUG, { topicSlug: topicSlug });
 

@@ -17,3 +17,5 @@ export const formatDate = (date: string | null): string => {
     dateObj.getDate().toString().padStart(2, "0");
   return formattedDate;
 };
+
+export const getGeneratedCategoryPostsContent = (categoryPost) => {};
