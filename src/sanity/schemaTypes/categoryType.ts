@@ -31,5 +31,11 @@ export const categoryType = defineType({
       to: [{ type: "topic" }],
       validation: (Rule) => Rule.required(),
     }),
+    defineField({
+      name: "lastEdAt",
+      type: "datetime",
+      initialValue: () => new Date().toISOString(),
+      validation: (Rule) => Rule.required(),
+    }),
   ],
 });

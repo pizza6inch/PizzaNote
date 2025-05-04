@@ -841,6 +841,13 @@
           "dereferencesTo": "topic"
         },
         "optional": true
+      },
+      "lastEdAt": {
+        "type": "objectAttribute",
+        "value": {
+          "type": "string"
+        },
+        "optional": true
       }
     }
   },

@@ -64,6 +64,7 @@ export default async function Page({
       categoryTitle: category?.categoryTitle || null,
       description: category?.description || null,
       content: null,
+      lastEdAt: category?.lastEdAt || null,
     };
   }
   // TODO:: generate category post content

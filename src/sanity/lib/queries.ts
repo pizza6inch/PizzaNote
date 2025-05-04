@@ -50,6 +50,10 @@ export const POST_ROUTE_QUERY = defineQuery(`*[_type == "post"]{
   "slug":slug.current
 }`);
 
+export const TOPIC_ROUTE_QUERY = defineQuery(`*[_type == "topic"]{
+  "slug":slug.current,
+}`);
+
 export const CATEGORY_BY_SLUG = defineQuery(
   `*[_type == "category" && slug.current == $postSlug]{
     "categoryRef":_id,
@@ -58,6 +62,7 @@ export const CATEGORY_BY_SLUG = defineQuery(
     title,
     "categoryTitle":title,
     description,
+    lastEdAt,
 }[0]`
 );
 
@@ -70,7 +75,8 @@ export const POST_DETAIL_BY_SLUG =
     "slug":slug.current,
     title,
     content,
-    description
+    description,
+    lastEdAt,
   }[0]`);
 
 export const POSTS_BY_CATEGORY =
@@ -82,8 +88,45 @@ export const POSTS_BY_CATEGORY =
   }
 }`);
 
+export const CATEGORY_BY_TOPIC_SLUG = defineQuery(
+  `*[_type == "category" && topic->slug.current == $topicSlug]{
+  title,
+  "slug":slug.current,
+  description,
+  lastEdAt,
+  
+  "topicRef":topic._ref,
+  "topicSlug":topic->slug.current,
+  "topicTitle":topic->title,
+  "posts": *[_type == "post" && references(^._id)]{
+    title,
+    "slug":slug.current,
+    publishedAt,
+    lastEdAt,
+    description,
+    tags->{
+      title,
+      "slug":slug.current
+    }
+  }
+}[0...6]`
+);
+
 export const TOPIC_BY_SLUG =
   defineQuery(`*[_type == "topic" && slug.current == $topicSlug]{
   title,
   "slug":slug.current
 }[0]`);
+
+export const TOPIC_PAGE_CONTENT_BY_TOPIC_SLUG = defineQuery(
+  `*[_type == "topic" && slug.current == $topicSlug]{
+    title,
+    "slug":slug.current,
+    description,
+    "categories": *[_type == "category" && references(^._id)]{
+      title,
+      "slug":slug.current,
+      description,
+    } 
+  }[0]`
+);
