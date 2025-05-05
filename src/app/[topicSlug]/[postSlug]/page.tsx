@@ -2,7 +2,6 @@ import React from "react";
 import MainLayout from "@/components/MainLayout";
 import { sanityFetch } from "@/sanity/lib/live";
 import { client } from "@/sanity/lib/client";
-import NotFound from "@/app/not-found";
 
 import {
   POST_ROUTE_QUERY,
@@ -10,6 +9,7 @@ import {
   POSTS_BY_CATEGORY,
   TOPIC_BY_SLUG,
   CATEGORY_BY_SLUG,
+  COMMENT_BY_POST_SLUG,
 } from "@/sanity/lib/queries";
 
 import MarkdownBlock from "@/components/MarkdownBlock";
@@ -19,6 +19,7 @@ import { title } from "process";
 import { formatDate } from "@/lib/utils";
 import { ArrowLeft, ArrowRight } from "lucide-react";
 import { getGeneratedCategoryPostsContent } from "@/lib/markdownUtils";
+import CommentSection from "@/components/CommentSection";
 
 export const dynamicParams = false;
 
@@ -47,6 +48,8 @@ export default async function Page({ params }: { params: Promise<{ topicSlug: st
   // const postDetail = await sanityFetch({ query: postDetailQuery });
   let postDetail = await client.fetch(POST_DETAIL_BY_SLUG, { postSlug });
   const category = await client.fetch(CATEGORY_BY_SLUG, { postSlug });
+  // const { data: comments } = await sanityFetch({ query: COMMENT_BY_POST_SLUG, params: { postSlug } });
+  const comments = await sanityFetch({ query: COMMENT_BY_POST_SLUG, params: { postSlug } });
 
   // if postDetail is not found, it means that the postSlug is actually a category slug
   // so we need to fetch the category detail instead
@@ -107,10 +110,6 @@ export default async function Page({ params }: { params: Promise<{ topicSlug: st
       title: topic?.title || "error",
       links: `/${topicSlug}`,
     },
-    // {
-    //   title: postDetail?.categoryTitle || "error",
-    //   links: `/${topicSlug}`,
-    // },
     {
       title: postDetail?.title || "error",
       links: `/${topicSlug}/${postDetail.slug}`,
@@ -197,9 +196,9 @@ export default async function Page({ params }: { params: Promise<{ topicSlug: st
           </div>
         </div>
       </div>
-
-      {/* comment */}
-      <div className="h-60 bg-black">comment section</div>
+      <hr />
+      {/* comments */}
+      <CommentSection comments={comments} />
     </MainLayout>
   );
 }

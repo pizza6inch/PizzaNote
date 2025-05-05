@@ -7,6 +7,8 @@ import { Button } from "@/components/ui/button";
 import { ThemeToggle } from "@/components/ThemeToggle";
 import TopDrawerMenu from "@/components/TopDrawerMenu";
 
+import { MainNav, CustomHoverNav } from "@/components/NavMenu";
+
 import Logo from "./Logo";
 
 export default function Header() {
@@ -59,7 +61,7 @@ export default function Header() {
               </Link>
 
               <div className="hidden md:flex space-x-4">
-                {menuContent.map((item, index) => (
+                {/* {menuContent.map((item, index) => (
                   <div key={index} className="relative group">
                     <Link href={item.links} className="flex items-center px-2 py-2 text-foreground hover:text-primary">
                       {item.title}
@@ -85,7 +87,9 @@ export default function Header() {
                       </div>
                     )}
                   </div>
-                ))}
+                ))} */}
+                <MainNav menuContent={menuContent} />
+                {/* <CustomHoverNav /> */}
 
                 <button onClick={toggleSearch} className=" text-foreground hover:text-primary">
                   <Search size={24} />

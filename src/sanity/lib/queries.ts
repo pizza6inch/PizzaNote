@@ -149,3 +149,13 @@ export const TOPIC_PAGE_CONTENT_BY_TOPIC_SLUG = defineQuery(
     }
   }[0]`
 );
+
+export const COMMENT_BY_POST_SLUG = defineQuery(
+  `*[_type == "comment" && post->slug.current == $postSlug] {
+    _id,
+    authorName,
+    content,
+    commentedAt,
+    post->{title, slug}
+  }`
+);

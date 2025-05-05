@@ -8,6 +8,7 @@ import { topicType } from "./topicType";
 import { tagType } from "./tagType";
 import { siteInfoType } from "./siteInfoType";
 import { subCategoryType } from "./subCategoryType";
+import { commentType } from "./commentType";
 export const schema: { types: SchemaTypeDefinition[] } = {
-  types: [blockContentType, categoryType, postType, topicType, tagType, siteInfoType, subCategoryType],
+  types: [blockContentType, categoryType, postType, topicType, tagType, siteInfoType, subCategoryType, commentType],
 };

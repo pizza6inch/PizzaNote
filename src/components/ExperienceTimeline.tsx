@@ -10,13 +10,13 @@ const experienceData = [
   {
     date: "2024.7 ~ Now",
     title: "易遊網實習生",
-    description: "負責開發易遊網的前端和後端功能，包括用戶登錄、註冊、文章分類、文章詳細頁面等。",
+    description: "協助開發易遊網的前端功能，包括商品分類、訂單詳情、訂購驗證、靜態SEO頁面等。",
     icon: Briefcase,
   },
   {
     date: "2025.1 ~ 2025.3",
     title: "學生計算機年會開發組志工",
-    description: "協助開發年會官方網站及大地遊戲。",
+    description: "協助開發年會官方網站及大地遊戲系統。",
     icon: Users,
   },
   {
