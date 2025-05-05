@@ -23,18 +23,27 @@ export const POSTS_QUERY = defineQuery(`*[_type == "post"]
     }
   }`);
 
-export const POSTS_BY_PAGE_QUERY = defineQuery(`*[_type == "post"] 
+export const ALL_POSTS_QUERY = defineQuery(`*[_type == "post"]
   | order(publishedAt desc) {
-  "slug": slug.current,
-  title,
-  description,
-   publishedAt,
-  lastEdAt,
-  tags->{
+    "slug": slug.current,
+    _id,
     title,
-    "slug":slug.current
-  },
-}[$start...$end]`);
+    description,
+    publishedAt,
+    lastEdAt,
+    tags->{
+      title,
+      "slug":slug.current
+    },
+    category->{
+      title,
+      "slug":slug.current,
+      topic->{
+        title,
+        "slug":slug.current
+      }
+    }
+  }`);
 
 export const CATEGORIES_QUERY = defineQuery(`*[_type == "category"]
     | order(title asc)
@@ -79,8 +88,7 @@ export const CATEGORY_BY_SLUG = defineQuery(
 }[0]`
 );
 
-export const POST_DETAIL_BY_SLUG =
-  defineQuery(`*[_type == "post" && slug.current == $postSlug]
+export const POST_DETAIL_BY_SLUG = defineQuery(`*[_type == "post" && slug.current == $postSlug]
   {
     'categoryRef':category._ref,
     'categoryTitle':category->title,
@@ -92,8 +100,7 @@ export const POST_DETAIL_BY_SLUG =
     lastEdAt,
   }[0]`);
 
-export const POSTS_BY_CATEGORY =
-  defineQuery(`*[_type == "subCategory" && category._ref == $categoryRef]{
+export const POSTS_BY_CATEGORY = defineQuery(`*[_type == "subCategory" && category._ref == $categoryRef]{
   title,
   "posts": *[_type == "post" && references(^._id)]{
     title,
@@ -107,7 +114,7 @@ export const CATEGORY_BY_TOPIC_SLUG = defineQuery(
   "slug":slug.current,
   description,
   lastEdAt,
-  
+
   "topicRef":topic._ref,
   "topicSlug":topic->slug.current,
   "topicTitle":topic->title,
@@ -125,8 +132,7 @@ export const CATEGORY_BY_TOPIC_SLUG = defineQuery(
 }[0...6]`
 );
 
-export const TOPIC_BY_SLUG =
-  defineQuery(`*[_type == "topic" && slug.current == $topicSlug]{
+export const TOPIC_BY_SLUG = defineQuery(`*[_type == "topic" && slug.current == $topicSlug]{
   title,
   "slug":slug.current
 }[0]`);
@@ -140,6 +146,6 @@ export const TOPIC_PAGE_CONTENT_BY_TOPIC_SLUG = defineQuery(
       title,
       "slug":slug.current,
       description,
-    } 
+    }
   }[0]`
 );

@@ -329,15 +329,24 @@ export type POSTS_QUERYResult = Array<{
   description: string | null;
   tags: null;
 }>;
-// Variable: POSTS_BY_PAGE_QUERY
-// Query: *[_type == "post"]   | order(publishedAt desc) {  "slug": slug.current,  title,  description,   publishedAt,  lastEdAt,  tags->{    title,    "slug":slug.current  },}[$start...$end]
-export type POSTS_BY_PAGE_QUERYResult = Array<{
+// Variable: ALL_POSTS_QUERY
+// Query: *[_type == "post"]  | order(publishedAt desc) {    "slug": slug.current,    _id,    title,    description,    publishedAt,    lastEdAt,    tags->{      title,      "slug":slug.current    },    category->{      title,      "slug":slug.current,      topic->{        title,        "slug":slug.current      }    }  }
+export type ALL_POSTS_QUERYResult = Array<{
   slug: string | null;
+  _id: string;
   title: string | null;
   description: string | null;
   publishedAt: string | null;
   lastEdAt: string | null;
   tags: null;
+  category: {
+    title: string | null;
+    slug: string | null;
+    topic: {
+      title: string | null;
+      slug: string | null;
+    } | null;
+  } | null;
 }>;
 // Variable: CATEGORIES_QUERY
 // Query: *[_type == "category"]    | order(title asc)    {      "slug":slug.current,      title,      _id,      description,      topic->{        "slug":slug.current      }    }
@@ -404,7 +413,7 @@ export type POSTS_BY_CATEGORYResult = Array<{
   }>;
 }>;
 // Variable: CATEGORY_BY_TOPIC_SLUG
-// Query: *[_type == "category" && topic->slug.current == $topicSlug]{  title,  "slug":slug.current,  description,  lastEdAt,    "topicRef":topic._ref,  "topicSlug":topic->slug.current,  "topicTitle":topic->title,  "posts": *[_type == "post" && references(^._id)]{    title,    "slug":slug.current,    publishedAt,    lastEdAt,    description,    tags->{      title,      "slug":slug.current    }  }}[0...6]
+// Query: *[_type == "category" && topic->slug.current == $topicSlug]{  title,  "slug":slug.current,  description,  lastEdAt,  "topicRef":topic._ref,  "topicSlug":topic->slug.current,  "topicTitle":topic->title,  "posts": *[_type == "post" && references(^._id)]{    title,    "slug":slug.current,    publishedAt,    lastEdAt,    description,    tags->{      title,      "slug":slug.current    }  }}[0...6]
 export type CATEGORY_BY_TOPIC_SLUGResult = Array<{
   title: string | null;
   slug: string | null;
@@ -429,7 +438,7 @@ export type TOPIC_BY_SLUGResult = {
   slug: string | null;
 } | null;
 // Variable: TOPIC_PAGE_CONTENT_BY_TOPIC_SLUG
-// Query: *[_type == "topic" && slug.current == $topicSlug]{    title,    "slug":slug.current,    description,    "categories": *[_type == "category" && references(^._id)]{      title,      "slug":slug.current,      description,    }   }[0]
+// Query: *[_type == "topic" && slug.current == $topicSlug]{    title,    "slug":slug.current,    description,    "categories": *[_type == "category" && references(^._id)]{      title,      "slug":slug.current,      description,    }  }[0]
 export type TOPIC_PAGE_CONTENT_BY_TOPIC_SLUGResult = {
   title: string | null;
   slug: string | null;
@@ -446,7 +455,7 @@ import "@sanity/client";
 declare module "@sanity/client" {
   interface SanityQueries {
     "*[_type == \"post\"]\n  | order(publishedAt desc)[0...6]\n  {\n    category->{\n      title,\n      \"slug\":slug.current,\n      topic->{\n        title,\n        \"slug\":slug.current\n      }\n    },\n    _id,\n    title,\n    \"slug\": slug.current,\n    publishedAt,\n    lastEdAt,\n    description,\n    tags->{\n      title,\n      \"slug\":slug.current\n    }\n  }": POSTS_QUERYResult;
-    "*[_type == \"post\"] \n  | order(publishedAt desc) {\n  \"slug\": slug.current,\n  title,\n  description,\n   publishedAt,\n  lastEdAt,\n  tags->{\n    title,\n    \"slug\":slug.current\n  },\n}[$start...$end]": POSTS_BY_PAGE_QUERYResult;
+    "*[_type == \"post\"]\n  | order(publishedAt desc) {\n    \"slug\": slug.current,\n    _id,\n    title,\n    description,\n    publishedAt,\n    lastEdAt,\n    tags->{\n      title,\n      \"slug\":slug.current\n    },\n    category->{\n      title,\n      \"slug\":slug.current,\n      topic->{\n        title,\n        \"slug\":slug.current\n      }\n    }\n  }": ALL_POSTS_QUERYResult;
     "*[_type == \"category\"]\n    | order(title asc)\n    {\n      \"slug\":slug.current,\n      title,\n      _id,\n      description,\n      topic->{\n        \"slug\":slug.current\n      }\n    }\n  ": CATEGORIES_QUERYResult;
     "*[_type == \"siteInfo\"][0]{\n  launchDate\n}": LAUNCH_DATE_QUERYResult;
     "*[_type == \"post\"]{\n  category->{\n    topic->{\n      \"slug\":slug.current\n    },\n    \"slug\":slug.current\n  },\n  \"slug\":slug.current\n}": POST_ROUTE_QUERYResult;
@@ -454,8 +463,8 @@ declare module "@sanity/client" {
     "*[_type == \"category\" && slug.current == $postSlug]{\n    \"categoryRef\":_id,\n    \"categorySlug\":slug.current,\n    \"slug\":slug.current,\n    title,\n    \"categoryTitle\":title,\n    description,\n    lastEdAt,\n}[0]": CATEGORY_BY_SLUGResult;
     "*[_type == \"post\" && slug.current == $postSlug]\n  {\n    'categoryRef':category._ref,\n    'categoryTitle':category->title,\n    'categorySlug':category->slug.current,\n    \"slug\":slug.current,\n    title,\n    content,\n    description,\n    lastEdAt,\n  }[0]": POST_DETAIL_BY_SLUGResult;
     "*[_type == \"subCategory\" && category._ref == $categoryRef]{\n  title,\n  \"posts\": *[_type == \"post\" && references(^._id)]{\n    title,\n    \"slug\":slug.current\n  }\n}": POSTS_BY_CATEGORYResult;
-    "*[_type == \"category\" && topic->slug.current == $topicSlug]{\n  title,\n  \"slug\":slug.current,\n  description,\n  lastEdAt,\n  \n  \"topicRef\":topic._ref,\n  \"topicSlug\":topic->slug.current,\n  \"topicTitle\":topic->title,\n  \"posts\": *[_type == \"post\" && references(^._id)]{\n    title,\n    \"slug\":slug.current,\n    publishedAt,\n    lastEdAt,\n    description,\n    tags->{\n      title,\n      \"slug\":slug.current\n    }\n  }\n}[0...6]": CATEGORY_BY_TOPIC_SLUGResult;
+    "*[_type == \"category\" && topic->slug.current == $topicSlug]{\n  title,\n  \"slug\":slug.current,\n  description,\n  lastEdAt,\n\n  \"topicRef\":topic._ref,\n  \"topicSlug\":topic->slug.current,\n  \"topicTitle\":topic->title,\n  \"posts\": *[_type == \"post\" && references(^._id)]{\n    title,\n    \"slug\":slug.current,\n    publishedAt,\n    lastEdAt,\n    description,\n    tags->{\n      title,\n      \"slug\":slug.current\n    }\n  }\n}[0...6]": CATEGORY_BY_TOPIC_SLUGResult;
     "*[_type == \"topic\" && slug.current == $topicSlug]{\n  title,\n  \"slug\":slug.current\n}[0]": TOPIC_BY_SLUGResult;
-    "*[_type == \"topic\" && slug.current == $topicSlug]{\n    title,\n    \"slug\":slug.current,\n    description,\n    \"categories\": *[_type == \"category\" && references(^._id)]{\n      title,\n      \"slug\":slug.current,\n      description,\n    } \n  }[0]": TOPIC_PAGE_CONTENT_BY_TOPIC_SLUGResult;
+    "*[_type == \"topic\" && slug.current == $topicSlug]{\n    title,\n    \"slug\":slug.current,\n    description,\n    \"categories\": *[_type == \"category\" && references(^._id)]{\n      title,\n      \"slug\":slug.current,\n      description,\n    }\n  }[0]": TOPIC_PAGE_CONTENT_BY_TOPIC_SLUGResult;
   }
 }
