@@ -7,16 +7,10 @@ import { Button } from "@/components/ui/button";
 import { ThemeToggle } from "@/components/ThemeToggle";
 import TopDrawerMenu from "@/components/TopDrawerMenu";
 
-import Image from "next/image";
 import Logo from "./Logo";
 
 export default function Header() {
-  const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isSearchOpen, setIsSearchOpen] = useState(false);
-
-  const toggleMenu = () => {
-    setIsMenuOpen(!isMenuOpen);
-  };
 
   const toggleSearch = () => {
     setIsSearchOpen(!isSearchOpen);
@@ -25,26 +19,26 @@ export default function Header() {
   const menuContent = [
     {
       title: "前端",
-      links: "/test-topic/test-category/1",
+      links: "/front-end",
       content: [
-        { links: "/blog/springboot/1", text: "測試選項1" },
+        { links: "/front-end/sanity", text: "Sanity整合" },
         {
-          links: "/blog/as-a-content-creator/1",
-          text: "測試選項2",
+          links: "/front-end/performance-optimization",
+          text: "效能優化",
         },
       ],
     },
     {
       title: "生活相關",
-      links: "/blog/springboot/1",
+      links: "/life",
       content: [
-        { links: "/blog/as-a-content-creator/2", text: "測試選項1" },
-        { links: "/blog/as-a-content-creator/3", text: "測試選項2" },
+        { links: "/life/health", text: "健康不只是健康?!" },
+        { links: "/life/enthusiasm", text: "對生活保持熱忱" },
       ],
     },
     {
       title: "所有文章",
-      links: "/",
+      links: "/posts",
       content: [],
     },
     {
@@ -75,7 +69,7 @@ export default function Header() {
                       <div className="absolute left-0 top-full w-64 bg-background dark:bg-card shadow-2xl rounded-lg overflow-hidden z-10 hidden group-hover:block transition-opacity duration-200">
                         <Link
                           href={item.links}
-                          className="block px-4 py-4 text-sm text-foreground hover:bg-primary hover:text-primary-foreground"
+                          className="block px-4 py-4 text-sm font-bold text-foreground hover:bg-primary hover:text-primary-foreground"
                         >
                           總覽
                         </Link>
@@ -83,7 +77,7 @@ export default function Header() {
                           <Link
                             key={idx}
                             href={link.links}
-                            className="block px-4 py-4 text-sm text-foreground hover:bg-primary hover:text-primary-foreground"
+                            className="block px-4 py-4 text-sm font-bold text-foreground hover:bg-primary hover:text-primary-foreground"
                           >
                             {link.text}
                           </Link>
@@ -111,8 +105,6 @@ export default function Header() {
           </div>
         </div>
       </header>
-
-      {/* Mobile Header */}
 
       {/* Search Bar */}
       {isSearchOpen && (

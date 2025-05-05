@@ -28,7 +28,7 @@ const PaginationComponent = ({
     <Pagination>
       <PaginationContent>
         <PaginationItem>
-          <PaginationPrevious href="#" onClick={() => handlePageChange(currentPage - 1)} disabled={currentPage === 1} />
+          <PaginationPrevious href="#" onClick={() => handlePageChange(currentPage - 1)} />
         </PaginationItem>
 
         {/* 显示第一页 */}

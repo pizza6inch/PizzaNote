@@ -42,11 +42,7 @@ export async function generateStaticParams() {
   return [...postRoutes, ...categoryRoutes];
 }
 
-export default async function Page({
-  params,
-}: {
-  params: Promise<{ topicSlug: string; postSlug: string }>;
-}) {
+export default async function Page({ params }: { params: Promise<{ topicSlug: string; postSlug: string }> }) {
   const { topicSlug, postSlug } = await params;
   // const postDetail = await sanityFetch({ query: postDetailQuery });
   let postDetail = await client.fetch(POST_DETAIL_BY_SLUG, { postSlug });
@@ -68,15 +64,16 @@ export default async function Page({
     };
   }
   // TODO:: generate category post content
-  const categoryPosts = await client.fetch(POSTS_BY_CATEGORY, {
+  let categoryPosts = await client.fetch(POSTS_BY_CATEGORY, {
     categoryRef: postDetail.categoryRef,
   });
+  categoryPosts = [
+    { title: "總覽", posts: [{ title: postDetail.categoryTitle, slug: postDetail.categorySlug }] },
+    ...categoryPosts,
+  ];
 
   if (category) {
-    postDetail.content = getGeneratedCategoryPostsContent(
-      categoryPosts,
-      topicSlug
-    );
+    postDetail.content = getGeneratedCategoryPostsContent(categoryPosts, topicSlug);
   }
 
   const topic = await client.fetch(TOPIC_BY_SLUG, { topicSlug: topicSlug });
@@ -87,50 +84,19 @@ export default async function Page({
   const findPrevNextPosts = (postSlug: string) => {
     const allPosts = categoryPosts.flatMap((category) => category.posts);
 
+    console.log(allPosts);
+
     const currentIndex = allPosts.findIndex((post) => post.slug === postSlug);
 
     if (currentIndex === -1) return { prev: null, next: null }; // 沒找到
 
     const prev = currentIndex > 0 ? allPosts[currentIndex - 1] : null;
-    const next =
-      currentIndex < allPosts.length - 1 ? allPosts[currentIndex + 1] : null;
+    const next = currentIndex < allPosts.length - 1 ? allPosts[currentIndex + 1] : null;
 
     return { prev, next };
   };
 
-  const { prev: prevPost, next: nextPost } = findPrevNextPosts(
-    postDetail.slug || ""
-  );
-
-  const testCategoryPosts = [
-    {
-      title: "Test Category 1",
-      posts: [
-        { title: "Test Post 1", slug: "test-post-1" },
-        { title: "Test Post 2", slug: "test-post-2" },
-        { title: "Test Post 3", slug: "test-post-2" },
-        { title: "Test Post 4", slug: "test-post-2" },
-        { title: "Test Post 5", slug: "test-post-2" },
-      ],
-    },
-    {
-      title: "Test Category 2",
-      posts: [
-        { title: "Test Post 2", slug: "test-post-2" },
-        { title: "Test Post 2", slug: "test-post-2" },
-        { title: "Test Post 2", slug: "test-post-2" },
-        { title: "Test Post 2", slug: "test-post-2" },
-      ],
-    },
-    {
-      title: "Test Category 3",
-      posts: [
-        { title: "Test Post 2", slug: "test-post-2" },
-        { title: "Test Post 2", slug: "test-post-2" },
-        { title: "Test Post 2", slug: "test-post-2" },
-      ],
-    },
-  ];
+  const { prev: prevPost, next: nextPost } = findPrevNextPosts(postDetail.slug || "");
 
   const breadcrumbItems = [
     {
@@ -159,32 +125,10 @@ export default async function Page({
             <h2 className="text-2xl font-bold mb-4 border-b-2 text-foreground border-gray-300 dark:border-gray-700 pb-2">
               目錄
             </h2>
-            <div className="mb-5">
-              <h3 className="text-lg font-semibold text-foreground mb-2 ">
-                總覽
-              </h3>
-              <div className="group space-y-2 pl-4">
-                <Link href={`/${topicSlug}/${postDetail.categorySlug}`}>
-                  {postDetail.categorySlug === postDetail.slug ? (
-                    <p className="text-primary relative  pb-1">
-                      {postDetail.categorySlug}
-                      <span className="h-[2px] bg-primary absolute right-0 bottom-0 w-full"></span>
-                    </p>
-                  ) : (
-                    <p className="text-gray-600 dark:text-gray-400 hover:text-gray-900 hover:dark:text-gray-200 cursor-pointer transition-colors relative pb-1">
-                      {postDetail.categorySlug}
-                      <span className="absolute right-0 bottom-0 w-0 h-[2px] bg-primary transition-all duration-500 group-hover:w-full group-hover:left-0"></span>
-                    </p>
-                  )}
-                </Link>
-              </div>
-            </div>
             <ul className="space-y-5">
               {categoryPosts.map((category) => (
                 <li key={category.title}>
-                  <h3 className="text-lg font-semibold text-foreground mb-2 ">
-                    {category.title}
-                  </h3>
+                  <h3 className="text-lg font-semibold text-foreground mb-2 ">{category.title}</h3>
                   <ul className="pl-4 space-y-2">
                     {category.posts.map((post) => (
                       <li key={post.title} className="group">
@@ -214,13 +158,9 @@ export default async function Page({
           <BreadcrumbLinks items={breadcrumbItems} />
           <div className=" space-y-1">
             <h1 className="text-4xl">{postDetail.title}</h1>
-            <p className="text-sm text-gray-400">
-              {formatDate(postDetail.lastEdAt)}
-            </p>
+            <p className="text-sm text-gray-400">{formatDate(postDetail.lastEdAt)}</p>
           </div>
-          {postDetail.description && (
-            <MarkdownBlock content={postDetail.description} />
-          )}
+          {postDetail.description && <MarkdownBlock content={postDetail.description} />}
           {postDetail.content && <MarkdownBlock content={postDetail.content} />}
           {/* next post & prev post */}
           <hr />

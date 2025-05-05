@@ -1,6 +1,5 @@
 import React from "react";
 import { client } from "@/sanity/lib/client";
-import { sanityFetch } from "@/sanity/lib/live";
 import { ALL_POSTS_QUERY } from "@/sanity/lib/queries";
 import PostsPage from "@/components/PostsPage";
 
