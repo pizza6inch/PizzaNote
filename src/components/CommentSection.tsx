@@ -55,7 +55,7 @@ const getColorFromString = (str: string) => {
 
 export default function CommentSection({ comments }: { comments: COMMENT_BY_POST_SLUGResult }) {
   // const [comments, setComments] = useState(initialComments);
-  const [newComment, setNewComment] = useState("");
+  const [content, setContent] = useState("");
   const [authorName, setAuthorName] = useState("");
 
   const handleSubmit = (e: React.FormEvent) => {
@@ -64,8 +64,8 @@ export default function CommentSection({ comments }: { comments: COMMENT_BY_POST
     if (!newComment.trim() || !authorName.trim()) return;
 
     const newCommentObj = {
-      id: comments.length + 1,
-      author: authorName,
+      _type: "comment",
+      authorName,
       content: newComment,
       createdAt: new Date(),
     };

@@ -15,6 +15,11 @@ export default async function Home() {
 
   // TODO:: 測試sanity fetch、研究useCdn設定 看看要不要開兩個sanityClient
 
+  if(!posts) {
+    console.log("posts", posts);
+    
+  }
+
   return (
     <MainLayout>
       <section className="py-6">

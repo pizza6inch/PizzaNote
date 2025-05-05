@@ -1,6 +1,6 @@
 import React from "react";
 import MainLayout from "@/components/MainLayout";
-import { sanityFetch } from "@/sanity/lib/live";
+// import { sanityFetch } from "@/sanity/lib/live";
 import { client } from "@/sanity/lib/client";
 
 import {
@@ -26,6 +26,8 @@ export const dynamicParams = false;
 export async function generateStaticParams() {
   const posts = await client.fetch(POST_ROUTE_QUERY);
 
+  if(!posts) return []
+
   const postRoutes = posts.map((post) => {
     return {
       topicSlug: post.category?.topic?.slug || null,
@@ -48,8 +50,13 @@ export default async function Page({ params }: { params: Promise<{ topicSlug: st
   // const postDetail = await sanityFetch({ query: postDetailQuery });
   let postDetail = await client.fetch(POST_DETAIL_BY_SLUG, { postSlug });
   const category = await client.fetch(CATEGORY_BY_SLUG, { postSlug });
+
+  console.log("postDetail", postDetail);
+  console.log("category", category);
+  console.log("postSlug", postSlug);
+  
   // const { data: comments } = await sanityFetch({ query: COMMENT_BY_POST_SLUG, params: { postSlug } });
-  const comments = await sanityFetch({ query: COMMENT_BY_POST_SLUG, params: { postSlug } });
+  // const { data: comments } = await sanityFetch({ query: COMMENT_BY_POST_SLUG, params: { postSlug } });
 
   // if postDetail is not found, it means that the postSlug is actually a category slug
   // so we need to fetch the category detail instead
@@ -81,8 +88,8 @@ export default async function Page({ params }: { params: Promise<{ topicSlug: st
 
   const topic = await client.fetch(TOPIC_BY_SLUG, { topicSlug: topicSlug });
 
-  console.log(postDetail);
-  console.log(categoryPosts);
+  // console.log(postDetail);
+  // console.log(categoryPosts);
 
   const findPrevNextPosts = (postSlug: string) => {
     const allPosts = categoryPosts.flatMap((category) => category.posts);
@@ -125,7 +132,7 @@ export default async function Page({ params }: { params: Promise<{ topicSlug: st
               目錄
             </h2>
             <ul className="space-y-5">
-              {categoryPosts.map((category) => (
+              {categoryPosts&& categoryPosts.map((category) => (
                 <li key={category.title}>
                   <h3 className="text-lg font-semibold text-foreground mb-2 ">{category.title}</h3>
                   <ul className="pl-4 space-y-2">
@@ -198,7 +205,7 @@ export default async function Page({ params }: { params: Promise<{ topicSlug: st
       </div>
       <hr />
       {/* comments */}
-      <CommentSection comments={comments} />
+      {/* <CommentSection comments={comments} /> */}
     </MainLayout>
   );
 }
