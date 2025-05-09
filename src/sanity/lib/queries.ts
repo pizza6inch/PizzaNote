@@ -88,8 +88,10 @@ export const CATEGORY_BY_SLUG = defineQuery(
 }[0]`
 );
 
-export const POST_DETAIL_BY_SLUG = defineQuery(`*[_type == "post" && slug.current == $postSlug]
+export const POST_DETAIL_BY_SLUG =
+  defineQuery(`*[_type == "post" && slug.current == $postSlug]
   {
+    _id,
     'categoryRef':category._ref,
     'categoryTitle':category->title,
     'categorySlug':category->slug.current,
@@ -100,7 +102,8 @@ export const POST_DETAIL_BY_SLUG = defineQuery(`*[_type == "post" && slug.curren
     lastEdAt,
   }[0]`);
 
-export const POSTS_BY_CATEGORY = defineQuery(`*[_type == "subCategory" && category._ref == $categoryRef]{
+export const POSTS_BY_CATEGORY =
+  defineQuery(`*[_type == "subCategory" && category._ref == $categoryRef]{
   title,
   "posts": *[_type == "post" && references(^._id)]{
     title,
@@ -132,7 +135,8 @@ export const CATEGORY_BY_TOPIC_SLUG = defineQuery(
 }[0...6]`
 );
 
-export const TOPIC_BY_SLUG = defineQuery(`*[_type == "topic" && slug.current == $topicSlug]{
+export const TOPIC_BY_SLUG =
+  defineQuery(`*[_type == "topic" && slug.current == $topicSlug]{
   title,
   "slug":slug.current
 }[0]`);
@@ -151,7 +155,9 @@ export const TOPIC_PAGE_CONTENT_BY_TOPIC_SLUG = defineQuery(
 );
 
 export const COMMENT_BY_POST_SLUG = defineQuery(
-  `*[_type == "comment" && post->slug.current == $postSlug] {
+  `*[_type == "comment" && post->slug.current == $postSlug]
+  | order(commentedAt desc)
+  {
     _id,
     authorName,
     content,

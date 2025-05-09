@@ -17,6 +17,7 @@ import { formatDistanceToNow } from "date-fns";
 import { zhTW } from "date-fns/locale";
 import { User } from "lucide-react";
 import { COMMENT_BY_POST_SLUGResult } from "../../sanity.types";
+import { client } from "../sanity/lib/client";
 
 // 範例留言資料
 const initialComments = [
@@ -61,26 +62,48 @@ const getColorFromString = (str: string) => {
 
 export default function CommentSection({
   comments,
+  postId,
 }: {
   comments: COMMENT_BY_POST_SLUGResult;
+  postId: string | null | undefined;
 }) {
   // const [comments, setComments] = useState(initialComments);
   const [content, setContent] = useState("");
   const [authorName, setAuthorName] = useState("");
+  const [loading, setLoading] = useState(false);
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
+    console.log("postId", postId);
+
     e.preventDefault();
-
+    // Validate input
     if (!content.trim() || !authorName.trim()) return;
-
+    if (!postId) return;
     const newCommentObj = {
       _type: "comment",
       authorName,
       content: content,
-      createdAt: new Date(),
+      commentedAt: new Date().toISOString(), // Use the correct field name
+      post: {
+        _type: "reference",
+        _ref: postId, // Reference to the post ID
+      },
     };
+    try {
+      // Await the creation of the comment
+      setLoading(true);
+      const response = await client.create(newCommentObj);
+      console.log("New comment saved to Sanity:", response);
 
-    console.log("New comment:", newCommentObj);
+      // Clear the input fields
+      setAuthorName("");
+      setContent("");
+    } catch (error) {
+      console.error("Failed to save comment to Sanity:", error);
+      // Optionally, you can show an error message to the user
+      setLoading(false);
+    }
+    setLoading(false);
   };
 
   return (
@@ -149,7 +172,11 @@ export default function CommentSection({
             </div>
           </CardContent>
           <CardFooter>
-            <Button type="submit">發表留言</Button>
+            {loading ? (
+              <Button disabled>發表中...</Button>
+            ) : (
+              <Button type="submit">發表留言</Button>
+            )}
           </CardFooter>
         </form>
       </Card>

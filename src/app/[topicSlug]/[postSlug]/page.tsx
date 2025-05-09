@@ -70,6 +70,7 @@ export default async function Page({
 
   if (!postDetail) {
     postDetail = {
+      _id: "456",
       categoryRef: category?.categoryRef || null,
       categorySlug: category?.categorySlug || null,
       slug: category?.slug || null,
@@ -229,8 +230,9 @@ export default async function Page({
         </div>
       </div>
       <hr />
-      {/* comments */}
-      <CommentSection comments={comments} />
+      {!category && (
+        <CommentSection comments={comments} postId={postDetail._id} />
+      )}
     </MainLayout>
   );
 }

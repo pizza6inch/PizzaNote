@@ -291,40 +291,7 @@ export type SanityImageMetadata = {
 
 export type Markdown = string;
 
-export type Color = {
-  _type: "color";
-  hex?: string;
-  alpha?: number;
-  hsl?: HslaColor;
-  hsv?: HsvaColor;
-  rgb?: RgbaColor;
-};
-
-export type RgbaColor = {
-  _type: "rgbaColor";
-  r?: number;
-  g?: number;
-  b?: number;
-  a?: number;
-};
-
-export type HsvaColor = {
-  _type: "hsvaColor";
-  h?: number;
-  s?: number;
-  v?: number;
-  a?: number;
-};
-
-export type HslaColor = {
-  _type: "hslaColor";
-  h?: number;
-  s?: number;
-  l?: number;
-  a?: number;
-};
-
-export type AllSanitySchemaTypes = SanityImagePaletteSwatch | SanityImagePalette | SanityImageDimensions | SanityFileAsset | Geopoint | Comment | SiteInfo | Tag | Post | SubCategory | Category | Topic | Slug | BlockContent | SanityImageCrop | SanityImageHotspot | SanityImageAsset | SanityAssetSourceData | SanityImageMetadata | Markdown | Color | RgbaColor | HsvaColor | HslaColor;
+export type AllSanitySchemaTypes = SanityImagePaletteSwatch | SanityImagePalette | SanityImageDimensions | SanityFileAsset | Geopoint | Comment | SiteInfo | Tag | Post | SubCategory | Category | Topic | Slug | BlockContent | SanityImageCrop | SanityImageHotspot | SanityImageAsset | SanityAssetSourceData | SanityImageMetadata | Markdown;
 export declare const internalGroqTypeReferenceTo: unique symbol;
 // Source: src/sanity/lib/queries.ts
 // Variable: POSTS_QUERY
@@ -409,8 +376,9 @@ export type CATEGORY_BY_SLUGResult = {
   lastEdAt: string | null;
 } | null;
 // Variable: POST_DETAIL_BY_SLUG
-// Query: *[_type == "post" && slug.current == $postSlug]  {    'categoryRef':category._ref,    'categoryTitle':category->title,    'categorySlug':category->slug.current,    "slug":slug.current,    title,    content,    description,    lastEdAt,  }[0]
+// Query: *[_type == "post" && slug.current == $postSlug]  {    _id,    'categoryRef':category._ref,    'categoryTitle':category->title,    'categorySlug':category->slug.current,    "slug":slug.current,    title,    content,    description,    lastEdAt,  }[0]
 export type POST_DETAIL_BY_SLUGResult = {
+  _id: string;
   categoryRef: string | null;
   categoryTitle: string | null;
   categorySlug: string | null;
@@ -490,7 +458,7 @@ declare module "@sanity/client" {
     "*[_type == \"post\"]{\n  category->{\n    topic->{\n      \"slug\":slug.current\n    },\n    \"slug\":slug.current\n  },\n  \"slug\":slug.current\n}": POST_ROUTE_QUERYResult;
     "*[_type == \"topic\"]{\n  \"slug\":slug.current,\n}": TOPIC_ROUTE_QUERYResult;
     "*[_type == \"category\" && slug.current == $postSlug]{\n    \"categoryRef\":_id,\n    \"categorySlug\":slug.current,\n    \"slug\":slug.current,\n    title,\n    \"categoryTitle\":title,\n    description,\n    lastEdAt,\n}[0]": CATEGORY_BY_SLUGResult;
-    "*[_type == \"post\" && slug.current == $postSlug]\n  {\n    'categoryRef':category._ref,\n    'categoryTitle':category->title,\n    'categorySlug':category->slug.current,\n    \"slug\":slug.current,\n    title,\n    content,\n    description,\n    lastEdAt,\n  }[0]": POST_DETAIL_BY_SLUGResult;
+    "*[_type == \"post\" && slug.current == $postSlug]\n  {\n    _id,\n    'categoryRef':category._ref,\n    'categoryTitle':category->title,\n    'categorySlug':category->slug.current,\n    \"slug\":slug.current,\n    title,\n    content,\n    description,\n    lastEdAt,\n  }[0]": POST_DETAIL_BY_SLUGResult;
     "*[_type == \"subCategory\" && category._ref == $categoryRef]{\n  title,\n  \"posts\": *[_type == \"post\" && references(^._id)]{\n    title,\n    \"slug\":slug.current\n  }\n}": POSTS_BY_CATEGORYResult;
     "*[_type == \"category\" && topic->slug.current == $topicSlug]{\n  title,\n  \"slug\":slug.current,\n  description,\n  lastEdAt,\n\n  \"topicRef\":topic._ref,\n  \"topicSlug\":topic->slug.current,\n  \"topicTitle\":topic->title,\n  \"posts\": *[_type == \"post\" && references(^._id)]{\n    title,\n    \"slug\":slug.current,\n    publishedAt,\n    lastEdAt,\n    description,\n    tags->{\n      title,\n      \"slug\":slug.current\n    }\n  }\n}[0...6]": CATEGORY_BY_TOPIC_SLUGResult;
     "*[_type == \"topic\" && slug.current == $topicSlug]{\n  title,\n  \"slug\":slug.current\n}[0]": TOPIC_BY_SLUGResult;
