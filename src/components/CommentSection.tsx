@@ -4,7 +4,13 @@ import type React from "react";
 
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
-import { Card, CardContent, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
+import {
+  Card,
+  CardContent,
+  CardFooter,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { formatDistanceToNow } from "date-fns";
@@ -53,7 +59,11 @@ const getColorFromString = (str: string) => {
   return color;
 };
 
-export default function CommentSection({ comments }: { comments: COMMENT_BY_POST_SLUGResult }) {
+export default function CommentSection({
+  comments,
+}: {
+  comments: COMMENT_BY_POST_SLUGResult;
+}) {
   // const [comments, setComments] = useState(initialComments);
   const [content, setContent] = useState("");
   const [authorName, setAuthorName] = useState("");
@@ -61,17 +71,16 @@ export default function CommentSection({ comments }: { comments: COMMENT_BY_POST
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
 
-    if (!newComment.trim() || !authorName.trim()) return;
+    if (!content.trim() || !authorName.trim()) return;
 
     const newCommentObj = {
       _type: "comment",
       authorName,
-      content: newComment,
+      content: content,
       createdAt: new Date(),
     };
 
-    // setComments([...comments, newCommentObj]);
-    // setNewComment("");
+    console.log("New comment:", newCommentObj);
   };
 
   return (
@@ -86,7 +95,11 @@ export default function CommentSection({ comments }: { comments: COMMENT_BY_POST
               <div className="flex gap-4">
                 <div
                   className="flex-shrink-0 w-10 h-10 rounded-full flex items-center justify-center"
-                  style={{ backgroundColor: getColorFromString(comment.authorName || "test") }}
+                  style={{
+                    backgroundColor: getColorFromString(
+                      comment.authorName || "test"
+                    ),
+                  }}
                 >
                   <User className="h-6 w-6 text-white" />
                 </div>
@@ -95,7 +108,10 @@ export default function CommentSection({ comments }: { comments: COMMENT_BY_POST
                     <h3 className="font-semibold">{comment.authorName}</h3>
                     <span className="text-sm text-muted-foreground">
                       {comment.commentedAt
-                        ? formatDistanceToNow(new Date(comment.commentedAt), { addSuffix: true, locale: zhTW })
+                        ? formatDistanceToNow(new Date(comment.commentedAt), {
+                            addSuffix: true,
+                            locale: zhTW,
+                          })
                         : "時間未知"}
                     </span>
                   </div>
@@ -125,8 +141,8 @@ export default function CommentSection({ comments }: { comments: COMMENT_BY_POST
             <div>
               <Textarea
                 placeholder="寫下您的留言..."
-                value={newComment}
-                onChange={(e) => setNewComment(e.target.value)}
+                value={content}
+                onChange={(e) => setContent(e.target.value)}
                 rows={4}
                 required
               />

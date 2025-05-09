@@ -1,6 +1,6 @@
 import React from "react";
 import MainLayout from "@/components/MainLayout";
-// import { sanityFetch } from "@/sanity/lib/live";
+import { sanityFetch } from "@/sanity/lib/live";
 import { client } from "@/sanity/lib/client";
 
 import {
@@ -26,7 +26,7 @@ export const dynamicParams = false;
 export async function generateStaticParams() {
   const posts = await client.fetch(POST_ROUTE_QUERY);
 
-  if(!posts) return []
+  if (!posts) return [];
 
   const postRoutes = posts.map((post) => {
     return {
@@ -45,7 +45,11 @@ export async function generateStaticParams() {
   return [...postRoutes, ...categoryRoutes];
 }
 
-export default async function Page({ params }: { params: Promise<{ topicSlug: string; postSlug: string }> }) {
+export default async function Page({
+  params,
+}: {
+  params: Promise<{ topicSlug: string; postSlug: string }>;
+}) {
   const { topicSlug, postSlug } = await params;
   // const postDetail = await sanityFetch({ query: postDetailQuery });
   let postDetail = await client.fetch(POST_DETAIL_BY_SLUG, { postSlug });
@@ -54,8 +58,11 @@ export default async function Page({ params }: { params: Promise<{ topicSlug: st
   console.log("postDetail", postDetail);
   console.log("category", category);
   console.log("postSlug", postSlug);
-  
-  // const { data: comments } = await sanityFetch({ query: COMMENT_BY_POST_SLUG, params: { postSlug } });
+
+  const { data: comments } = await sanityFetch({
+    query: COMMENT_BY_POST_SLUG,
+    params: { postSlug },
+  });
   // const { data: comments } = await sanityFetch({ query: COMMENT_BY_POST_SLUG, params: { postSlug } });
 
   // if postDetail is not found, it means that the postSlug is actually a category slug
@@ -78,12 +85,20 @@ export default async function Page({ params }: { params: Promise<{ topicSlug: st
     categoryRef: postDetail.categoryRef,
   });
   categoryPosts = [
-    { title: "總覽", posts: [{ title: postDetail.categoryTitle, slug: postDetail.categorySlug }] },
+    {
+      title: "總覽",
+      posts: [
+        { title: postDetail.categoryTitle, slug: postDetail.categorySlug },
+      ],
+    },
     ...categoryPosts,
   ];
 
   if (category) {
-    postDetail.content = getGeneratedCategoryPostsContent(categoryPosts, topicSlug);
+    postDetail.content = getGeneratedCategoryPostsContent(
+      categoryPosts,
+      topicSlug
+    );
   }
 
   const topic = await client.fetch(TOPIC_BY_SLUG, { topicSlug: topicSlug });
@@ -101,12 +116,15 @@ export default async function Page({ params }: { params: Promise<{ topicSlug: st
     if (currentIndex === -1) return { prev: null, next: null }; // 沒找到
 
     const prev = currentIndex > 0 ? allPosts[currentIndex - 1] : null;
-    const next = currentIndex < allPosts.length - 1 ? allPosts[currentIndex + 1] : null;
+    const next =
+      currentIndex < allPosts.length - 1 ? allPosts[currentIndex + 1] : null;
 
     return { prev, next };
   };
 
-  const { prev: prevPost, next: nextPost } = findPrevNextPosts(postDetail.slug || "");
+  const { prev: prevPost, next: nextPost } = findPrevNextPosts(
+    postDetail.slug || ""
+  );
 
   const breadcrumbItems = [
     {
@@ -132,30 +150,33 @@ export default async function Page({ params }: { params: Promise<{ topicSlug: st
               目錄
             </h2>
             <ul className="space-y-5">
-              {categoryPosts&& categoryPosts.map((category) => (
-                <li key={category.title}>
-                  <h3 className="text-lg font-semibold text-foreground mb-2 ">{category.title}</h3>
-                  <ul className="pl-4 space-y-2">
-                    {category.posts.map((post) => (
-                      <li key={post.title} className="group">
-                        <Link href={`/${topicSlug}/${post.slug}`}>
-                          {post.slug === postDetail.slug ? (
-                            <p className="text-primary relative  pb-1">
-                              {post.title}
-                              <span className="h-[2px] bg-primary absolute right-0 bottom-0 w-full"></span>
-                            </p>
-                          ) : (
-                            <p className="text-gray-600 dark:text-gray-400 hover:text-gray-900 hover:dark:text-gray-200 cursor-pointer transition-colors relative pb-1">
-                              {post.title}
-                              <span className="absolute right-0 bottom-0 w-0 h-[2px] bg-primary transition-all duration-500 group-hover:w-full group-hover:left-0"></span>
-                            </p>
-                          )}
-                        </Link>
-                      </li>
-                    ))}
-                  </ul>
-                </li>
-              ))}
+              {categoryPosts &&
+                categoryPosts.map((category) => (
+                  <li key={category.title}>
+                    <h3 className="text-lg font-semibold text-foreground mb-2 ">
+                      {category.title}
+                    </h3>
+                    <ul className="pl-4 space-y-2">
+                      {category.posts.map((post) => (
+                        <li key={post.title} className="group">
+                          <Link href={`/${topicSlug}/${post.slug}`}>
+                            {post.slug === postDetail.slug ? (
+                              <p className="text-primary relative  pb-1">
+                                {post.title}
+                                <span className="h-[2px] bg-primary absolute right-0 bottom-0 w-full"></span>
+                              </p>
+                            ) : (
+                              <p className="text-gray-600 dark:text-gray-400 hover:text-gray-900 hover:dark:text-gray-200 cursor-pointer transition-colors relative pb-1">
+                                {post.title}
+                                <span className="absolute right-0 bottom-0 w-0 h-[2px] bg-primary transition-all duration-500 group-hover:w-full group-hover:left-0"></span>
+                              </p>
+                            )}
+                          </Link>
+                        </li>
+                      ))}
+                    </ul>
+                  </li>
+                ))}
             </ul>
           </nav>
         </div>
@@ -164,9 +185,13 @@ export default async function Page({ params }: { params: Promise<{ topicSlug: st
           <BreadcrumbLinks items={breadcrumbItems} />
           <div className=" space-y-1">
             <h1 className="text-4xl">{postDetail.title}</h1>
-            <p className="text-sm text-gray-400">{formatDate(postDetail.lastEdAt)}</p>
+            <p className="text-sm text-gray-400">
+              {formatDate(postDetail.lastEdAt)}
+            </p>
           </div>
-          {postDetail.description && <MarkdownBlock content={postDetail.description} />}
+          {postDetail.description && (
+            <MarkdownBlock content={postDetail.description} />
+          )}
           {postDetail.content && <MarkdownBlock content={postDetail.content} />}
           {/* next post & prev post */}
           <hr />
@@ -205,7 +230,7 @@ export default async function Page({ params }: { params: Promise<{ topicSlug: st
       </div>
       <hr />
       {/* comments */}
-      {/* <CommentSection comments={comments} /> */}
+      <CommentSection comments={comments} />
     </MainLayout>
   );
 }
