@@ -55,7 +55,7 @@
   }
   body {
     @apply bg-background text-foreground;
-    font-family: "Noto Sans TC", sans-serif;
+    font-family: "open sans", "Noto Sans TC", sans-serif;
   }
   h1,
   h2,
@@ -63,7 +63,7 @@
   h4,
   h5,
   h6 {
-    font-family: var(--font-raleway), "Noto Sans TC", sans-serif;
+    font-family: "open sans", "Noto Sans TC", sans-serif;
   }
 }
 
@@ -109,6 +109,16 @@
 .light .markdown-body {
   background-color: transparent; /* 設定背景顏色 */
   color: #222;
+}
+
+.markdown-body img {
+  max-width: 100%;
+  height: auto;
+  display: block;
+}
+
+.markdown-body a {
+  color: hsl(var(--primary)) !important;
 }
 
 .arrow {

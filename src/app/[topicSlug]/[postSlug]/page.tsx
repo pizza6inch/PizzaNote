@@ -20,7 +20,7 @@ import { formatDate } from "@/lib/utils";
 import { ArrowLeft, ArrowRight } from "lucide-react";
 import { getGeneratedCategoryPostsContent } from "@/lib/markdownUtils";
 import CommentSection from "@/components/CommentSection";
-
+import ViewerWidget from "@/components/ViewerWidget";
 export const dynamicParams = false;
 
 export async function generateStaticParams() {
@@ -45,11 +45,7 @@ export async function generateStaticParams() {
   return [...postRoutes, ...categoryRoutes];
 }
 
-export default async function Page({
-  params,
-}: {
-  params: Promise<{ topicSlug: string; postSlug: string }>;
-}) {
+export default async function Page({ params }: { params: Promise<{ topicSlug: string; postSlug: string }> }) {
   const { topicSlug, postSlug } = await params;
   // const postDetail = await sanityFetch({ query: postDetailQuery });
   let postDetail = await readClient.fetch(POST_DETAIL_BY_SLUG, { postSlug });
@@ -63,6 +59,7 @@ export default async function Page({
     query: COMMENT_BY_POST_SLUG,
     params: { postSlug },
   });
+
   // const { data: comments } = await sanityFetch({ query: COMMENT_BY_POST_SLUG, params: { postSlug } });
 
   // if postDetail is not found, it means that the postSlug is actually a category slug
@@ -88,18 +85,13 @@ export default async function Page({
   categoryPosts = [
     {
       title: "總覽",
-      posts: [
-        { title: postDetail.categoryTitle, slug: postDetail.categorySlug },
-      ],
+      posts: [{ title: postDetail.categoryTitle, slug: postDetail.categorySlug }],
     },
     ...categoryPosts,
   ];
 
   if (category) {
-    postDetail.content = getGeneratedCategoryPostsContent(
-      categoryPosts,
-      topicSlug
-    );
+    postDetail.content = getGeneratedCategoryPostsContent(categoryPosts, topicSlug);
   }
 
   const topic = await readClient.fetch(TOPIC_BY_SLUG, { topicSlug: topicSlug });
@@ -117,15 +109,12 @@ export default async function Page({
     if (currentIndex === -1) return { prev: null, next: null }; // 沒找到
 
     const prev = currentIndex > 0 ? allPosts[currentIndex - 1] : null;
-    const next =
-      currentIndex < allPosts.length - 1 ? allPosts[currentIndex + 1] : null;
+    const next = currentIndex < allPosts.length - 1 ? allPosts[currentIndex + 1] : null;
 
     return { prev, next };
   };
 
-  const { prev: prevPost, next: nextPost } = findPrevNextPosts(
-    postDetail.slug || ""
-  );
+  const { prev: prevPost, next: nextPost } = findPrevNextPosts(postDetail.slug || "");
 
   const breadcrumbItems = [
     {
@@ -154,9 +143,7 @@ export default async function Page({
               {categoryPosts &&
                 categoryPosts.map((category) => (
                   <li key={category.title}>
-                    <h3 className="text-lg font-semibold text-foreground mb-2 ">
-                      {category.title}
-                    </h3>
+                    <h3 className="text-lg font-semibold text-foreground mb-2 ">{category.title}</h3>
                     <ul className="pl-4 space-y-2">
                       {category.posts.map((post) => (
                         <li key={post.title} className="group">
@@ -182,17 +169,17 @@ export default async function Page({
           </nav>
         </div>
 
-        <div className=" py-10 px-5 md:px-10 space-y-10 w-full">
-          <BreadcrumbLinks items={breadcrumbItems} />
-          <div className=" space-y-1">
-            <h1 className="text-4xl">{postDetail.title}</h1>
-            <p className="text-sm text-gray-400">
-              {formatDate(postDetail.lastEdAt)}
-            </p>
+        <div className=" py-10 px-5 md:px-10 relative space-y-10 w-[80%]">
+          <div className=" fixed top-15 right-5">
+            <ViewerWidget />
           </div>
-          {postDetail.description && (
-            <MarkdownBlock content={postDetail.description} />
-          )}
+          <BreadcrumbLinks items={breadcrumbItems} />
+          <div className=" space-y-2">
+            <h1 className="text-4xl">{postDetail.title}</h1>
+            <div className="py-4">{postDetail.description && <MarkdownBlock content={postDetail.description} />}</div>
+            <p className="text-sm text-gray-400">{formatDate(postDetail.lastEdAt)}</p>
+          </div>
+          <hr />
           {postDetail.content && <MarkdownBlock content={postDetail.content} />}
           {/* next post & prev post */}
           <hr />
@@ -230,9 +217,7 @@ export default async function Page({
         </div>
       </div>
       <hr />
-      {!category && (
-        <CommentSection comments={comments} postId={postDetail._id} />
-      )}
+      {!category && <CommentSection comments={comments} postId={postDetail._id} />}
     </MainLayout>
   );
 }
