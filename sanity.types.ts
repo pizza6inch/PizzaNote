@@ -112,6 +112,7 @@ export type Post = {
   _rev: string;
   title?: string;
   slug?: Slug;
+  viewer?: number;
   tags?: Array<{
     _ref: string;
     _type: "reference";
@@ -435,7 +436,7 @@ export type TOPIC_PAGE_CONTENT_BY_TOPIC_SLUGResult = {
   }>;
 } | null;
 // Variable: COMMENT_BY_POST_SLUG
-// Query: *[_type == "comment" && post->slug.current == $postSlug] {    _id,    authorName,    content,    commentedAt,    post->{title, slug}  }
+// Query: *[_type == "comment" && post->slug.current == $postSlug]  | order(commentedAt desc)  {    _id,    authorName,    content,    commentedAt,    post->{title, slug}  }
 export type COMMENT_BY_POST_SLUGResult = Array<{
   _id: string;
   authorName: string | null;
@@ -463,6 +464,6 @@ declare module "@sanity/client" {
     "*[_type == \"category\" && topic->slug.current == $topicSlug]{\n  title,\n  \"slug\":slug.current,\n  description,\n  lastEdAt,\n\n  \"topicRef\":topic._ref,\n  \"topicSlug\":topic->slug.current,\n  \"topicTitle\":topic->title,\n  \"posts\": *[_type == \"post\" && references(^._id)]{\n    title,\n    \"slug\":slug.current,\n    publishedAt,\n    lastEdAt,\n    description,\n    tags->{\n      title,\n      \"slug\":slug.current\n    }\n  }\n}[0...6]": CATEGORY_BY_TOPIC_SLUGResult;
     "*[_type == \"topic\" && slug.current == $topicSlug]{\n  title,\n  \"slug\":slug.current\n}[0]": TOPIC_BY_SLUGResult;
     "*[_type == \"topic\" && slug.current == $topicSlug]{\n    title,\n    \"slug\":slug.current,\n    description,\n    \"categories\": *[_type == \"category\" && references(^._id)]{\n      title,\n      \"slug\":slug.current,\n      description,\n    }\n  }[0]": TOPIC_PAGE_CONTENT_BY_TOPIC_SLUGResult;
-    "*[_type == \"comment\" && post->slug.current == $postSlug] {\n    _id,\n    authorName,\n    content,\n    commentedAt,\n    post->{title, slug}\n  }": COMMENT_BY_POST_SLUGResult;
+    "*[_type == \"comment\" && post->slug.current == $postSlug]\n  | order(commentedAt desc)\n  {\n    _id,\n    authorName,\n    content,\n    commentedAt,\n    post->{title, slug}\n  }": COMMENT_BY_POST_SLUGResult;
   }
 }

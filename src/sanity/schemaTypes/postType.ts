@@ -21,6 +21,12 @@ export const postType = defineType({
       validation: (Rule) => Rule.required(),
     }),
     defineField({
+      name: "viewer",
+      type: "number",
+      initialValue: 0,
+      hidden: true,
+    }),
+    defineField({
       name: "tags",
       type: "array",
       of: [{ type: "reference", to: [{ type: "tag" }] }],

@@ -60,6 +60,9 @@ export default async function Page({ params }: { params: Promise<{ topicSlug: st
     params: { postSlug },
   });
 
+  // TODO::在這裡fetch total views
+  // const { data: viewers } = await sanityFetch({});
+
   // const { data: comments } = await sanityFetch({ query: COMMENT_BY_POST_SLUG, params: { postSlug } });
 
   // if postDetail is not found, it means that the postSlug is actually a category slug
@@ -78,7 +81,6 @@ export default async function Page({ params }: { params: Promise<{ topicSlug: st
       lastEdAt: category?.lastEdAt || null,
     };
   }
-  // TODO:: generate category post content
   let categoryPosts = await readClient.fetch(POSTS_BY_CATEGORY, {
     categoryRef: postDetail.categoryRef,
   });
@@ -170,9 +172,11 @@ export default async function Page({ params }: { params: Promise<{ topicSlug: st
         </div>
 
         <div className=" py-10 px-5 md:px-10 relative space-y-10 w-[80%]">
-          <div className=" fixed top-15 right-5">
-            <ViewerWidget />
-          </div>
+          {!category && (
+            <div className=" fixed top-15 right-5">
+              <ViewerWidget />
+            </div>
+          )}
           <BreadcrumbLinks items={breadcrumbItems} />
           <div className=" space-y-2">
             <h1 className="text-4xl">{postDetail.title}</h1>
