@@ -1,7 +1,7 @@
 import React from "react";
 import MainLayout from "@/components/MainLayout";
 import { sanityFetch } from "@/sanity/lib/live";
-import { client } from "@/sanity/lib/client";
+import { readClient } from "@/sanity/lib/client";
 
 import {
   POST_ROUTE_QUERY,
@@ -24,7 +24,7 @@ import CommentSection from "@/components/CommentSection";
 export const dynamicParams = false;
 
 export async function generateStaticParams() {
-  const posts = await client.fetch(POST_ROUTE_QUERY);
+  const posts = await readClient.fetch(POST_ROUTE_QUERY);
 
   if (!posts) return [];
 
@@ -52,8 +52,8 @@ export default async function Page({
 }) {
   const { topicSlug, postSlug } = await params;
   // const postDetail = await sanityFetch({ query: postDetailQuery });
-  let postDetail = await client.fetch(POST_DETAIL_BY_SLUG, { postSlug });
-  const category = await client.fetch(CATEGORY_BY_SLUG, { postSlug });
+  let postDetail = await readClient.fetch(POST_DETAIL_BY_SLUG, { postSlug });
+  const category = await readClient.fetch(CATEGORY_BY_SLUG, { postSlug });
 
   console.log("postDetail", postDetail);
   console.log("category", category);
@@ -82,7 +82,7 @@ export default async function Page({
     };
   }
   // TODO:: generate category post content
-  let categoryPosts = await client.fetch(POSTS_BY_CATEGORY, {
+  let categoryPosts = await readClient.fetch(POSTS_BY_CATEGORY, {
     categoryRef: postDetail.categoryRef,
   });
   categoryPosts = [
@@ -102,7 +102,7 @@ export default async function Page({
     );
   }
 
-  const topic = await client.fetch(TOPIC_BY_SLUG, { topicSlug: topicSlug });
+  const topic = await readClient.fetch(TOPIC_BY_SLUG, { topicSlug: topicSlug });
 
   // console.log(postDetail);
   // console.log(categoryPosts);

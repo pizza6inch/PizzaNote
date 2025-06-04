@@ -1,12 +1,12 @@
 import React from "react";
-import { client } from "@/sanity/lib/client";
+import { readClient } from "@/sanity/lib/client";
 import { ALL_POSTS_QUERY } from "@/sanity/lib/queries";
 import PostsPage from "@/components/PostsPage";
 
 export const dynamicParams = false;
 
 export default async function PostsPageWrapper() {
-  const posts = await client.fetch(ALL_POSTS_QUERY);
+  const posts = await readClient.fetch(ALL_POSTS_QUERY);
 
   console.log("posts", posts);
   

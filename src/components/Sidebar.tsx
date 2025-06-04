@@ -9,15 +9,15 @@ import Avatar from "./Avatar";
 
 // import { sanityFetch } from "@/sanity/lib/live";
 
-import { client } from "@/sanity/lib/client";
+import { readClient } from "@/sanity/lib/client";
 
 import { Mail } from "lucide-react";
 
 import { CATEGORIES_QUERY, LAUNCH_DATE_QUERY } from "@/sanity/lib/queries";
 
 export default async function Sidebar() {
-  const categories = await client.fetch(CATEGORIES_QUERY);
-  const siteInfo = await client.fetch(LAUNCH_DATE_QUERY);
+  const categories = await readClient.fetch(CATEGORIES_QUERY);
+  const siteInfo = await readClient.fetch(LAUNCH_DATE_QUERY);
   // const { data: categories } = await sanityFetch({ query: CATEGORIES_QUERY }); // server side fetch
   // const { data: siteInfo } = await sanityFetch({ query: LAUNCH_DATE_QUERY });
   const launchDate = siteInfo?.launchDate ? new Date(siteInfo.launchDate) : null;

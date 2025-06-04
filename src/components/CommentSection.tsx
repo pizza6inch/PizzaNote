@@ -73,37 +73,39 @@ export default function CommentSection({
   const [loading, setLoading] = useState(false);
 
   const handleSubmit = async (e: React.FormEvent) => {
-    console.log("postId", postId);
-
     e.preventDefault();
-    // Validate input
     if (!content.trim() || !authorName.trim()) return;
     if (!postId) return;
-    const newCommentObj = {
-      _type: "comment",
-      authorName,
-      content: content,
-      commentedAt: new Date().toISOString(), // Use the correct field name
-      post: {
-        _type: "reference",
-        _ref: postId, // Reference to the post ID
-      },
-    };
-    try {
-      // Await the creation of the comment
-      setLoading(true);
-      const response = await client.create(newCommentObj);
-      console.log("New comment saved to Sanity:", response);
 
-      // Clear the input fields
-      setAuthorName("");
-      setContent("");
+    setLoading(true);
+
+    try {
+      const response = await fetch('/api/comments', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          authorName,
+          content,
+          postId,
+        }),
+      });
+
+      if (!response.ok) {
+        throw new Error('Failed to save comment');
+      }
+
+      const data = await response.json();
+      console.log('New comment saved to Sanity:', data);
+
+      setAuthorName('');
+      setContent('');
     } catch (error) {
-      console.error("Failed to save comment to Sanity:", error);
-      // Optionally, you can show an error message to the user
+      console.error('Failed to save comment to Sanity:', error);
+    } finally {
       setLoading(false);
     }
-    setLoading(false);
   };
 
   return (

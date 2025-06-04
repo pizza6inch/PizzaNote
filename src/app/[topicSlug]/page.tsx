@@ -1,6 +1,6 @@
 import React from "react";
 import MainLayout from "@/components/MainLayout";
-import { client } from "@/sanity/lib/client";
+import { readClient } from "@/sanity/lib/client";
 
 import {
   TOPIC_BY_SLUG,
@@ -11,7 +11,7 @@ import Link from "next/link";
 export const dynamicParams = false;
 
 export async function generateStaticParams() {
-  const topics = await client.fetch(`*[_type == "topic"]{
+  const topics = await readClient.fetch(`*[_type == "topic"]{
     "slug": slug.current
   }`);
 
@@ -27,7 +27,7 @@ export default async function Page({
 }) {
   const { topicSlug } = await params;
 
-  const topicDetail = await client.fetch(TOPIC_PAGE_CONTENT_BY_TOPIC_SLUG, {
+  const topicDetail = await readClient.fetch(TOPIC_PAGE_CONTENT_BY_TOPIC_SLUG, {
     topicSlug,
   });
 

@@ -4,14 +4,14 @@ import Sidebar from "@/components/Sidebar";
 
 // import { sanityFetch } from "@/sanity/lib/live";
 
-import { client } from "@/sanity/lib/client";
+import { readClient } from "@/sanity/lib/client";
 
 import PingPongGame from "@/components/PingPongGame";
 
 import { POSTS_QUERY } from "@/sanity/lib/queries";
 
 export default async function Home() {
-  const posts = await client.fetch(POSTS_QUERY);
+  const posts = await readClient.fetch(POSTS_QUERY);
 
   // TODO:: 測試sanity fetch、研究useCdn設定 看看要不要開兩個sanityClient
 
