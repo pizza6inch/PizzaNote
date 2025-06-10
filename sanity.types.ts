@@ -112,7 +112,7 @@ export type Post = {
   _rev: string;
   title?: string;
   slug?: Slug;
-  viewer?: number;
+  views?: number;
   tags?: Array<{
     _ref: string;
     _type: "reference";
@@ -447,6 +447,11 @@ export type COMMENT_BY_POST_SLUGResult = Array<{
     slug: Slug | null;
   } | null;
 }>;
+// Variable: VIEWER_BY_POST_SLUG
+// Query: *[_type =="post" && post->slug.current == $postSlug]  {    views  }[0]
+export type VIEWER_BY_POST_SLUGResult = {
+  views: number | null;
+} | null;
 
 // Query TypeMap
 import "@sanity/client";
@@ -465,5 +470,6 @@ declare module "@sanity/client" {
     "*[_type == \"topic\" && slug.current == $topicSlug]{\n  title,\n  \"slug\":slug.current\n}[0]": TOPIC_BY_SLUGResult;
     "*[_type == \"topic\" && slug.current == $topicSlug]{\n    title,\n    \"slug\":slug.current,\n    description,\n    \"categories\": *[_type == \"category\" && references(^._id)]{\n      title,\n      \"slug\":slug.current,\n      description,\n    }\n  }[0]": TOPIC_PAGE_CONTENT_BY_TOPIC_SLUGResult;
     "*[_type == \"comment\" && post->slug.current == $postSlug]\n  | order(commentedAt desc)\n  {\n    _id,\n    authorName,\n    content,\n    commentedAt,\n    post->{title, slug}\n  }": COMMENT_BY_POST_SLUGResult;
+    "*[_type ==\"post\" && post->slug.current == $postSlug]\n  {\n    views\n  }[0]\n  ": VIEWER_BY_POST_SLUGResult;
   }
 }

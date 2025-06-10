@@ -559,7 +559,7 @@
         },
         "optional": true
       },
-      "viewer": {
+      "views": {
         "type": "objectAttribute",
         "value": {
           "type": "number"

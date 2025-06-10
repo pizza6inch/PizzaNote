@@ -1,7 +1,7 @@
 import React from "react";
 import MainLayout from "@/components/MainLayout";
 import { sanityFetch } from "@/sanity/lib/live";
-import { readClient } from "@/sanity/lib/client";
+import { readClient, writeClient } from "@/sanity/lib/client";
 
 import {
   POST_ROUTE_QUERY,
@@ -10,6 +10,7 @@ import {
   TOPIC_BY_SLUG,
   CATEGORY_BY_SLUG,
   COMMENT_BY_POST_SLUG,
+  VIEWS_BY_POST_SLUG,
 } from "@/sanity/lib/queries";
 
 import MarkdownBlock from "@/components/MarkdownBlock";
@@ -60,10 +61,12 @@ export default async function Page({ params }: { params: Promise<{ topicSlug: st
     params: { postSlug },
   });
 
-  // TODO::在這裡fetch total views
-  // const { data: viewers } = await sanityFetch({});
+  // Increment views by 1 before fetching total views
+  // if (postDetail) await writeClient.patch(postDetail?._id).inc({ views: 1 }).commit();
 
-  // const { data: comments } = await sanityFetch({ query: COMMENT_BY_POST_SLUG, params: { postSlug } });
+  // const totalViews = await sanityFetch({ query: VIEWS_BY_POST_SLUG, params: { postSlug } });
+
+  // TODO::在這裡fetch total views
 
   // if postDetail is not found, it means that the postSlug is actually a category slug
   // so we need to fetch the category detail instead
@@ -174,7 +177,7 @@ export default async function Page({ params }: { params: Promise<{ topicSlug: st
         <div className=" py-10 px-5 md:px-10 relative space-y-10 w-[80%]">
           {!category && (
             <div className=" fixed top-15 right-5">
-              <ViewerWidget />
+              {/* {totalViews.data?.views && <ViewerWidget totalViews={totalViews.data?.views} />} */}
             </div>
           )}
           <BreadcrumbLinks items={breadcrumbItems} />

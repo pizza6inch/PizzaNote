@@ -163,11 +163,8 @@ export const COMMENT_BY_POST_SLUG = defineQuery(
   }`
 );
 
-// TODO::還沒測試 可能要改viewer => total views
-export const VIEWER_BY_POST_SLUG = defineQuery(
-  `*[_type =="post" && post->slug.current == $postSlug]
-  {
-    viewer
-  }[0]
-  `
+export const VIEWS_BY_POST_SLUG = defineQuery(
+  `*[_type == "post" && slug.current == $postSlug] {
+    views
+  }[0]`
 );

@@ -21,10 +21,10 @@ export const postType = defineType({
       validation: (Rule) => Rule.required(),
     }),
     defineField({
-      name: "viewer",
+      name: "views",
       type: "number",
       initialValue: 0,
-      hidden: true,
+      // hidden: true,
     }),
     defineField({
       name: "tags",
