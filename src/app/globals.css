@@ -121,6 +121,20 @@
   color: hsl(var(--primary)) !important;
 }
 
+.markdown-body pre {
+  background-color: transparent !important;
+  padding: 0 !important;
+  margin: 0 !important;
+}
+
+.markdown-body tr {
+  background-color: transparent !important;
+}
+
+.markdown-body p {
+  line-height: 2;
+}
+
 .arrow {
   transition: transform 0.3s ease;
 }
