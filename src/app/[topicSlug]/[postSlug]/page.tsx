@@ -22,6 +22,7 @@ import { ArrowLeft, ArrowRight } from "lucide-react";
 import { getGeneratedCategoryPostsContent } from "@/lib/markdownUtils";
 import CommentSection from "@/components/CommentSection";
 import ViewerWidget from "@/components/ViewerWidget";
+import ViewerWidgetClient from "@/components/ViewerWidgetClient";
 export const dynamicParams = false;
 
 export async function generateStaticParams() {
@@ -60,13 +61,6 @@ export default async function Page({ params }: { params: Promise<{ topicSlug: st
     query: COMMENT_BY_POST_SLUG,
     params: { postSlug },
   });
-
-  // Increment views by 1 before fetching total views
-  // if (postDetail) await writeClient.patch(postDetail?._id).inc({ views: 1 }).commit();
-
-  // const totalViews = await sanityFetch({ query: VIEWS_BY_POST_SLUG, params: { postSlug } });
-
-  // TODO::在這裡fetch total views
 
   // if postDetail is not found, it means that the postSlug is actually a category slug
   // so we need to fetch the category detail instead
@@ -174,15 +168,15 @@ export default async function Page({ params }: { params: Promise<{ topicSlug: st
           </nav>
         </div>
 
-        <div className=" py-10 px-5 md:px-10 relative space-y-10 w-[80%]">
-          {!category && (
-            <div className=" fixed top-15 right-5">
-              {/* {totalViews.data?.views && <ViewerWidget totalViews={totalViews.data?.views} />} */}
-            </div>
-          )}
-          <BreadcrumbLinks items={breadcrumbItems} />
+        <div className=" py-10 px-5 md:px-10 relative space-y-10 md:w-[80%] w-[100%]">
+          <div>
+            <BreadcrumbLinks items={breadcrumbItems} />
+            {postDetail && (
+              <div className=" fixed top-15 right-5">{postDetail && <ViewerWidget postId={postDetail._id} />}</div>
+            )}
+          </div>
           <div className=" space-y-2">
-            <h1 className="text-4xl">{postDetail.title}</h1>
+            <h1 className="text-4xl font-bold">{postDetail.title}</h1>
             <div className="py-4">{postDetail.description && <MarkdownBlock content={postDetail.description} />}</div>
             <p className="text-sm text-gray-400">{formatDate(postDetail.lastEdAt)}</p>
           </div>

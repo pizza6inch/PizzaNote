@@ -4,45 +4,13 @@ import type React from "react";
 
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
-import {
-  Card,
-  CardContent,
-  CardFooter,
-  CardHeader,
-  CardTitle,
-} from "@/components/ui/card";
+import { Card, CardContent, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { formatDistanceToNow } from "date-fns";
 import { zhTW } from "date-fns/locale";
 import { User } from "lucide-react";
 import { COMMENT_BY_POST_SLUGResult } from "../../sanity.types";
-import { client } from "../sanity/lib/client";
-
-// 範例留言資料
-const initialComments = [
-  {
-    id: 1,
-    author: "陳小明",
-    avatar: "/placeholder.svg?height=40&width=40",
-    content: "這個網站設計得非常好，我很喜歡！",
-    createdAt: new Date(Date.now() - 1000 * 60 * 60 * 24 * 2), // 2天前
-  },
-  {
-    id: 2,
-    author: "林美玲",
-    avatar: "/placeholder.svg?height=40&width=40",
-    content: "請問有沒有更多關於這個主題的資訊？我很感興趣。",
-    createdAt: new Date(Date.now() - 1000 * 60 * 60 * 5), // 5小時前
-  },
-  {
-    id: 3,
-    author: "王大華",
-    avatar: "/placeholder.svg?height=40&width=40",
-    content: "謝謝分享，這對我的專案很有幫助！",
-    createdAt: new Date(Date.now() - 1000 * 60 * 30), // 30分鐘前
-  },
-];
 
 // 基於字符串生成一致的顏色
 const getColorFromString = (str: string) => {
@@ -80,10 +48,10 @@ export default function CommentSection({
     setLoading(true);
 
     try {
-      const response = await fetch('/api/comments', {
-        method: 'POST',
+      const response = await fetch("/api/comments", {
+        method: "POST",
         headers: {
-          'Content-Type': 'application/json',
+          "Content-Type": "application/json",
         },
         body: JSON.stringify({
           authorName,
@@ -93,16 +61,16 @@ export default function CommentSection({
       });
 
       if (!response.ok) {
-        throw new Error('Failed to save comment');
+        throw new Error("Failed to save comment");
       }
 
       const data = await response.json();
-      console.log('New comment saved to Sanity:', data);
+      console.log("New comment saved to Sanity:", data);
 
-      setAuthorName('');
-      setContent('');
+      setAuthorName("");
+      setContent("");
     } catch (error) {
-      console.error('Failed to save comment to Sanity:', error);
+      console.error("Failed to save comment to Sanity:", error);
     } finally {
       setLoading(false);
     }
@@ -121,9 +89,7 @@ export default function CommentSection({
                 <div
                   className="flex-shrink-0 w-10 h-10 rounded-full flex items-center justify-center"
                   style={{
-                    backgroundColor: getColorFromString(
-                      comment.authorName || "test"
-                    ),
+                    backgroundColor: getColorFromString(comment.authorName || "test"),
                   }}
                 >
                   <User className="h-6 w-6 text-white" />
@@ -174,11 +140,7 @@ export default function CommentSection({
             </div>
           </CardContent>
           <CardFooter>
-            {loading ? (
-              <Button disabled>發表中...</Button>
-            ) : (
-              <Button type="submit">發表留言</Button>
-            )}
+            {loading ? <Button disabled>發表中...</Button> : <Button type="submit">發表留言</Button>}
           </CardFooter>
         </form>
       </Card>

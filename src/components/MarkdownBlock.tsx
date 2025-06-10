@@ -30,7 +30,6 @@ A table:
     // </div>
     <div className="markdown-body">
       <ReactMarkdown
-        children={content}
         remarkPlugins={[remarkGfm]}
         components={{
           code(props) {
@@ -38,7 +37,7 @@ A table:
             const match = /language-(\w+)/.exec(className || "");
             return match ? (
               <SyntaxHighlighter
-                {...rest}
+                // {...rest}
                 PreTag="div"
                 children={String(children).replace(/\n$/, "")}
                 language={match[1]}
@@ -51,7 +50,9 @@ A table:
             );
           },
         }}
-      />
+      >
+        {content}
+      </ReactMarkdown>
     </div>
   );
 }

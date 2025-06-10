@@ -163,8 +163,8 @@ export const COMMENT_BY_POST_SLUG = defineQuery(
   }`
 );
 
-export const VIEWS_BY_POST_SLUG = defineQuery(
-  `*[_type == "post" && slug.current == $postSlug] {
+export const VIEWS_BY_POST_ID = defineQuery(
+  `*[_type == "post" && _id == $id] {
     views
   }[0]`
 );
