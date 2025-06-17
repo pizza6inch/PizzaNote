@@ -12,7 +12,7 @@ import { POSTS_QUERY } from "@/sanity/lib/queries";
 
 export const metadata = {
   title: "披薩筆記 - 首頁",
-  description: "披薩筆記的首頁，包含最新技術文章與筆記分享。",
+  description: "披薩筆記的首頁，包含最新文章與遊戲。",
 };
 
 export default async function Home() {
@@ -20,8 +20,9 @@ export default async function Home() {
 
   // TODO:: 測試sanity fetch、研究useCdn設定 看看要不要開兩個sanityClient
 
-  if (!posts) {
+  if(!posts) {
     console.log("posts", posts);
+    
   }
 
   return (

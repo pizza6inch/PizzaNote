@@ -111,6 +111,10 @@
   color: #222;
 }
 
+.markdown-body {
+  font-family: "Open Sans", "Noto Sans" !important;
+}
+
 .markdown-body img {
   max-width: 100%;
   height: auto;

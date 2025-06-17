@@ -26,13 +26,18 @@ type menuContentType = {
 export default function TopDrawerMenu({ content }: { content: menuContentType }) {
   // TODO: 用state來控制內容的開關
   const [openIndex, setOpenIndex] = useState<null | number>(null);
+  const [open, setOpen] = useState(false);
 
   const toggleDropdown = (index: number) => {
     setOpenIndex(openIndex === index ? null : index);
   };
 
+  const handleClose = () => {
+    setOpen(false);
+  };
+
   return (
-    <Drawer direction="bottom">
+    <Drawer direction="bottom" open={open} onOpenChange={setOpen}>
       <DrawerTrigger asChild>
         <Menu size={36} className="cursor-pointer" />
       </DrawerTrigger>
@@ -50,6 +55,7 @@ export default function TopDrawerMenu({ content }: { content: menuContentType })
                   <Link
                     className="flex items-center justify-start px-2 py-2 text-foreground hover:text-primary"
                     href={item.links}
+                    onClick={handleClose}
                   >
                     {item.title}
                   </Link>
@@ -70,6 +76,7 @@ export default function TopDrawerMenu({ content }: { content: menuContentType })
                         key={idx}
                         href={link.links}
                         className="block px-4 py-2 text-sm text-foreground hover:bg-primary hover:text-primary-foreground rounded"
+                        onClick={handleClose}
                       >
                         {link.text}
                       </Link>

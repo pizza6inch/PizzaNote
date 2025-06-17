@@ -22,8 +22,6 @@ type menuType = {
   }[];
 }[];
 
-// 假設這是您的菜單內容
-
 export function MainNav({ menuContent }: { menuContent: menuType }) {
   return (
     <NavigationMenu>

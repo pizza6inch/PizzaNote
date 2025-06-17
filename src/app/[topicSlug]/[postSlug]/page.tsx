@@ -156,8 +156,43 @@ export default async function Page({ params }: { params: Promise<{ topicSlug: st
 
   return (
     <MainLayout>
-      <div className="flex">
+      <div className="flex md:flex-row flex-col">
         <div className="md:block hidden sticky top-[10vh] w-[320px] overflow-y-auto h-[90vh] py-10 px-5 bg-gray-100 dark:bg-gray-900 custom-scrollbar ">
+          <nav className="p-5 bg-gray-100 dark:bg-gray-900 rounded-lg shadow-md dark:shadow-gray-700">
+            <h2 className="text-2xl font-bold mb-4 border-b-2 text-foreground border-gray-300 dark:border-gray-700 pb-2">
+              目錄
+            </h2>
+            <ul className="space-y-5">
+              {categoryPosts &&
+                categoryPosts.map((category) => (
+                  <li key={category.title}>
+                    <h3 className="text-lg font-semibold text-foreground mb-2 ">{category.title}</h3>
+                    <ul className="pl-4 space-y-2">
+                      {category.posts.map((post) => (
+                        <li key={post.title} className="group">
+                          <Link href={`/${topicSlug}/${post.slug}`}>
+                            {post.slug === postDetail.slug ? (
+                              <p className="text-primary relative  pb-1">
+                                {post.title}
+                                <span className="h-[2px] bg-primary absolute right-0 bottom-0 w-full"></span>
+                              </p>
+                            ) : (
+                              <p className="text-gray-600 dark:text-gray-400 hover:text-gray-900 hover:dark:text-gray-200 cursor-pointer transition-colors relative pb-1">
+                                {post.title}
+                                <span className="absolute right-0 bottom-0 w-0 h-[2px] bg-primary transition-all duration-500 group-hover:w-full group-hover:left-0"></span>
+                              </p>
+                            )}
+                          </Link>
+                        </li>
+                      ))}
+                    </ul>
+                  </li>
+                ))}
+            </ul>
+          </nav>
+        </div>
+
+        <div className=" block md:hidden pt-10 px-5">
           <nav className="p-5 bg-gray-100 dark:bg-gray-900 rounded-lg shadow-md dark:shadow-gray-700">
             <h2 className="text-2xl font-bold mb-4 border-b-2 text-foreground border-gray-300 dark:border-gray-700 pb-2">
               目錄
