@@ -10,14 +10,18 @@ import PingPongGame from "@/components/PingPongGame";
 
 import { POSTS_QUERY } from "@/sanity/lib/queries";
 
+export const metadata = {
+  title: "披薩筆記 - 首頁",
+  description: "披薩筆記的首頁，包含最新技術文章與筆記分享。",
+};
+
 export default async function Home() {
   const posts = await readClient.fetch(POSTS_QUERY);
 
   // TODO:: 測試sanity fetch、研究useCdn設定 看看要不要開兩個sanityClient
 
-  if(!posts) {
+  if (!posts) {
     console.log("posts", posts);
-    
   }
 
   return (

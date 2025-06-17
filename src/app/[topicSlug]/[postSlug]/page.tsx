@@ -10,7 +10,7 @@ import {
   TOPIC_BY_SLUG,
   CATEGORY_BY_SLUG,
   COMMENT_BY_POST_SLUG,
-  VIEWS_BY_POST_SLUG,
+  VIEWS_BY_POST_ID,
 } from "@/sanity/lib/queries";
 
 import MarkdownBlock from "@/components/MarkdownBlock";
@@ -45,6 +45,30 @@ export async function generateStaticParams() {
   });
 
   return [...postRoutes, ...categoryRoutes];
+}
+
+export async function generateMetadata({ params }: { params: { topicSlug: string; postSlug: string } }) {
+  let postDetail = await readClient.fetch(POST_DETAIL_BY_SLUG, { postSlug: params.postSlug });
+  const category = await readClient.fetch(CATEGORY_BY_SLUG, { postSlug: params.postSlug });
+
+  if (!postDetail) {
+    postDetail = {
+      _id: "456",
+      categoryRef: category?.categoryRef || null,
+      categorySlug: category?.categorySlug || null,
+      slug: category?.slug || null,
+      title: category?.title || null,
+      categoryTitle: category?.categoryTitle || null,
+      description: category?.description || null,
+      content: null,
+      lastEdAt: category?.lastEdAt || null,
+    };
+  }
+
+  return {
+    title: `披薩筆記 - ${postDetail.title || "文章"}`,
+    description: postDetail.description || "披薩筆記的文章頁面",
+  };
 }
 
 export default async function Page({ params }: { params: Promise<{ topicSlug: string; postSlug: string }> }) {

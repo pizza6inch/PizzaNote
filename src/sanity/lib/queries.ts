@@ -69,11 +69,13 @@ export const POST_ROUTE_QUERY = defineQuery(`*[_type == "post"]{
     },
     "slug":slug.current
   },
-  "slug":slug.current
+  "slug":slug.current,
+  lastEdAt,
 }`);
 
 export const TOPIC_ROUTE_QUERY = defineQuery(`*[_type == "topic"]{
   "slug":slug.current,
+  lastEdAt,
 }`);
 
 export const CATEGORY_BY_SLUG = defineQuery(

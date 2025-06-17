@@ -350,7 +350,7 @@ export type LAUNCH_DATE_QUERYResult = {
   launchDate: string | null;
 } | null;
 // Variable: POST_ROUTE_QUERY
-// Query: *[_type == "post"]{  category->{    topic->{      "slug":slug.current    },    "slug":slug.current  },  "slug":slug.current}
+// Query: *[_type == "post"]{  category->{    topic->{      "slug":slug.current    },    "slug":slug.current  },  "slug":slug.current,  lastEdAt,}
 export type POST_ROUTE_QUERYResult = Array<{
   category: {
     topic: {
@@ -359,11 +359,13 @@ export type POST_ROUTE_QUERYResult = Array<{
     slug: string | null;
   } | null;
   slug: string | null;
+  lastEdAt: string | null;
 }>;
 // Variable: TOPIC_ROUTE_QUERY
-// Query: *[_type == "topic"]{  "slug":slug.current,}
+// Query: *[_type == "topic"]{  "slug":slug.current,  lastEdAt,}
 export type TOPIC_ROUTE_QUERYResult = Array<{
   slug: string | null;
+  lastEdAt: null;
 }>;
 // Variable: CATEGORY_BY_SLUG
 // Query: *[_type == "category" && slug.current == $postSlug]{    "categoryRef":_id,    "categorySlug":slug.current,    "slug":slug.current,    title,    "categoryTitle":title,    description,    lastEdAt,}[0]
@@ -447,9 +449,9 @@ export type COMMENT_BY_POST_SLUGResult = Array<{
     slug: Slug | null;
   } | null;
 }>;
-// Variable: VIEWER_BY_POST_SLUG
-// Query: *[_type =="post" && post->slug.current == $postSlug]  {    views  }[0]
-export type VIEWER_BY_POST_SLUGResult = {
+// Variable: VIEWS_BY_POST_ID
+// Query: *[_type == "post" && _id == $id] {    views  }[0]
+export type VIEWS_BY_POST_IDResult = {
   views: number | null;
 } | null;
 
@@ -461,8 +463,8 @@ declare module "@sanity/client" {
     "*[_type == \"post\"]\n  | order(publishedAt desc) {\n    \"slug\": slug.current,\n    _id,\n    title,\n    description,\n    publishedAt,\n    lastEdAt,\n    tags->{\n      title,\n      \"slug\":slug.current\n    },\n    category->{\n      title,\n      \"slug\":slug.current,\n      topic->{\n        title,\n        \"slug\":slug.current\n      }\n    }\n  }": ALL_POSTS_QUERYResult;
     "*[_type == \"category\"]\n    | order(title asc)\n    {\n      \"slug\":slug.current,\n      title,\n      _id,\n      description,\n      topic->{\n        \"slug\":slug.current\n      }\n    }\n  ": CATEGORIES_QUERYResult;
     "*[_type == \"siteInfo\"][0]{\n  launchDate\n}": LAUNCH_DATE_QUERYResult;
-    "*[_type == \"post\"]{\n  category->{\n    topic->{\n      \"slug\":slug.current\n    },\n    \"slug\":slug.current\n  },\n  \"slug\":slug.current\n}": POST_ROUTE_QUERYResult;
-    "*[_type == \"topic\"]{\n  \"slug\":slug.current,\n}": TOPIC_ROUTE_QUERYResult;
+    "*[_type == \"post\"]{\n  category->{\n    topic->{\n      \"slug\":slug.current\n    },\n    \"slug\":slug.current\n  },\n  \"slug\":slug.current,\n  lastEdAt,\n}": POST_ROUTE_QUERYResult;
+    "*[_type == \"topic\"]{\n  \"slug\":slug.current,\n  lastEdAt,\n}": TOPIC_ROUTE_QUERYResult;
     "*[_type == \"category\" && slug.current == $postSlug]{\n    \"categoryRef\":_id,\n    \"categorySlug\":slug.current,\n    \"slug\":slug.current,\n    title,\n    \"categoryTitle\":title,\n    description,\n    lastEdAt,\n}[0]": CATEGORY_BY_SLUGResult;
     "*[_type == \"post\" && slug.current == $postSlug]\n  {\n    _id,\n    'categoryRef':category._ref,\n    'categoryTitle':category->title,\n    'categorySlug':category->slug.current,\n    \"slug\":slug.current,\n    title,\n    content,\n    description,\n    lastEdAt,\n  }[0]": POST_DETAIL_BY_SLUGResult;
     "*[_type == \"subCategory\" && category._ref == $categoryRef]{\n  title,\n  \"posts\": *[_type == \"post\" && references(^._id)]{\n    title,\n    \"slug\":slug.current\n  }\n}": POSTS_BY_CATEGORYResult;
@@ -470,6 +472,6 @@ declare module "@sanity/client" {
     "*[_type == \"topic\" && slug.current == $topicSlug]{\n  title,\n  \"slug\":slug.current\n}[0]": TOPIC_BY_SLUGResult;
     "*[_type == \"topic\" && slug.current == $topicSlug]{\n    title,\n    \"slug\":slug.current,\n    description,\n    \"categories\": *[_type == \"category\" && references(^._id)]{\n      title,\n      \"slug\":slug.current,\n      description,\n    }\n  }[0]": TOPIC_PAGE_CONTENT_BY_TOPIC_SLUGResult;
     "*[_type == \"comment\" && post->slug.current == $postSlug]\n  | order(commentedAt desc)\n  {\n    _id,\n    authorName,\n    content,\n    commentedAt,\n    post->{title, slug}\n  }": COMMENT_BY_POST_SLUGResult;
-    "*[_type ==\"post\" && post->slug.current == $postSlug]\n  {\n    views\n  }[0]\n  ": VIEWER_BY_POST_SLUGResult;
+    "*[_type == \"post\" && _id == $id] {\n    views\n  }[0]": VIEWS_BY_POST_IDResult;
   }
 }

@@ -3,6 +3,11 @@ import MainLayout from "@/components/MainLayout";
 import Avatar from "@/components/Avatar";
 import ExperienceTimeline from "@/components/ExperienceTimeline";
 
+export const metadata = {
+  title: "披薩筆記 - 關於我",
+  description: "關於披薩筆記的作者 Ewan（Pizza）及其經歷。",
+};
+
 export default function AboutPage() {
   return (
     <MainLayout>
