@@ -2,10 +2,7 @@ import React from "react";
 import MainLayout from "@/components/MainLayout";
 import { readClient } from "@/sanity/lib/client";
 
-import {
-  TOPIC_BY_SLUG,
-  TOPIC_PAGE_CONTENT_BY_TOPIC_SLUG,
-} from "@/sanity/lib/queries";
+import { TOPIC_BY_SLUG, TOPIC_PAGE_CONTENT_BY_TOPIC_SLUG } from "@/sanity/lib/queries";
 import Link from "next/link";
 
 export const dynamicParams = false;
@@ -20,11 +17,7 @@ export async function generateStaticParams() {
   }));
 }
 
-export async function generateMetadata({
-  params,
-}: {
-  params: { topicSlug: string };
-}) {
+export async function generateMetadata({ params }: { params: { topicSlug: string } }) {
   const topicDetail = await readClient.fetch(TOPIC_PAGE_CONTENT_BY_TOPIC_SLUG, {
     topicSlug: params.topicSlug,
   });
@@ -42,11 +35,7 @@ export async function generateMetadata({
   };
 }
 
-export default async function Page({
-  params,
-}: {
-  params: Promise<{ topicSlug: string }>;
-}) {
+export default async function Page({ params }: { params: Promise<{ topicSlug: string }> }) {
   const { topicSlug } = await params;
 
   const topicDetail = await readClient.fetch(TOPIC_PAGE_CONTENT_BY_TOPIC_SLUG, {
@@ -60,13 +49,9 @@ export default async function Page({
   return (
     <MainLayout>
       <div className="py-10 px-5 md:px-10 flex flex-col items-center">
-        <h1 className="text-4xl font-bold mb-4 text-center">
-          {topicDetail.title}
-        </h1>
+        <h1 className="text-4xl font-bold mb-4 text-center">{topicDetail.title}</h1>
         {topicDetail.description && (
-          <p className="mb-8 text-gray-600 dark:text-gray-400 text-center max-w-3xl">
-            {topicDetail.description}
-          </p>
+          <p className="mb-8 text-gray-600 dark:text-gray-400 text-center max-w-3xl">{topicDetail.description}</p>
         )}
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6 w-full max-w-7xl">
           {topicDetail.categories?.map((category: any) => (
@@ -77,9 +62,7 @@ export default async function Page({
             >
               <h2 className="text-xl font-semibold mb-2">{category.title}</h2>
               {category.description && (
-                <p className="text-gray-500 dark:text-gray-400">
-                  {category.description}
-                </p>
+                <p className="text-gray-500 dark:text-gray-400 line-clamp-5">{category.description}</p>
               )}
             </Link>
           ))}

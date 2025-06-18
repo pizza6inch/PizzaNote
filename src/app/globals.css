@@ -116,9 +116,12 @@
 }
 
 .markdown-body img {
-  max-width: 100%;
+  width: 80%;
+  margin: auto;
   height: auto;
   display: block;
+  border-radius: 10;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
 
 .markdown-body a {
@@ -129,6 +132,11 @@
   background-color: transparent !important;
   padding: 0 !important;
   margin: 0 !important;
+}
+
+.markdown-body li {
+  list-style: disc outside;
+  padding-left: 1.5rem;
 }
 
 .markdown-body tr {
