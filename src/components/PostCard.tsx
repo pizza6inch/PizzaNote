@@ -72,7 +72,7 @@ export default function PostCard({
             ))} */}
           </div>
 
-          <p className="text-gray-700 dark:text-gray-300">{description}</p>
+          <p className="text-gray-700 dark:text-gray-300 line-clamp-3">{description}</p>
         </CardContent>
       </Card>
     </Tilt>
