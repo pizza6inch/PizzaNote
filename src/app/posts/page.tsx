@@ -7,7 +7,7 @@ export const dynamicParams = false;
 
 export const metadata = {
   title: "披薩筆記 - 文章列表",
-  description: "披薩筆記中所有技術文章的列表，涵蓋多種主題與分類，助你持續學習與成長。",
+  description: "披薩筆記中所有文章的列表，涵蓋多種主題與分類，助你持續學習與成長。",
 };
 
 export default async function PostsPageWrapper() {
