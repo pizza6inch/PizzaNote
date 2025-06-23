@@ -13,21 +13,26 @@ jest.mock("@/sanity/lib/client", () => ({
 
 // Mock Next.js Link component
 jest.mock("next/link", () => {
-  return ({ children, href }) => {
+  const MockLink = ({ children, href }) => {
     return <a href={href}>{children}</a>;
   };
+  MockLink.displayName = "MockNextLink";
+  return MockLink;
 });
 
 // Mock ThemeToggle and TopDrawerMenu if they cause issues
 jest.mock("@/components/ThemeToggle", () => ({
   ThemeToggle: () => <button>Theme Toggle</button>,
 }));
-jest.mock("@/components/TopDrawerMenu", () => () => <div>TopDrawerMenu</div>);
+jest.mock("@/components/TopDrawerMenu", () => ({
+  TopDrawerMenu: () => <div>TopDrawerMenu</div>,
+}));
 jest.mock("@/components/NavMenu", () => ({
   MainNav: () => <div>MainNav</div>,
 }));
-jest.mock("@/components/Logo", () => () => <div>Logo</div>);
-
+jest.mock("@/components/Logo", () => ({
+  Logo: () => <div>Logo</div>,
+}));
 
 const mockPosts = [
   {
@@ -118,7 +123,7 @@ describe("Header Component", () => {
       const firstPostResult = screen.getByText("First Post");
       expect(firstPostResult).toBeInTheDocument();
       // Check the href of the link
-      expect(firstPostResult.closest('a')).toHaveAttribute('href', '/topic-x/category-a/first-post');
+      expect(firstPostResult.closest("a")).toHaveAttribute("href", "/topic-x/category-a/first-post");
       expect(screen.queryByText("Second Post")).not.toBeInTheDocument();
     });
 
@@ -192,5 +197,4 @@ describe("Header Component", () => {
       expect(screen.getByText("請輸入關鍵字進行搜尋")).toBeInTheDocument();
     });
   });
-
 });

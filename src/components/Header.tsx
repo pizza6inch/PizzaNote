@@ -10,7 +10,6 @@ import { MainNav, CustomHoverNav } from "@/components/NavMenu";
 import Logo from "./Logo";
 import { readClient } from "@/sanity/lib/client";
 import { ALL_POSTS_QUERY } from "@/sanity/lib/queries";
-import PostCard from "./PostCard"; // Assuming PostCard can be used for search results
 
 interface Post {
   _id: string;
@@ -75,10 +74,12 @@ export default function Header() {
   };
 
   // Fetch posts when search is opened for the first time
+
   useEffect(() => {
     if (isSearchOpen && allPosts.length === 0) {
       fetchAllPosts();
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [isSearchOpen]); // Removed allPosts from dependency array to prevent re-fetching
 
   const menuContent = [
@@ -154,11 +155,7 @@ export default function Header() {
                 <MainNav menuContent={menuContent} />
                 {/* <CustomHoverNav /> */}
 
-                <button
-                  onClick={toggleSearch}
-                  className=" text-foreground hover:text-primary"
-                  aria-label="Search"
-                >
+                <button onClick={toggleSearch} className=" text-foreground hover:text-primary" aria-label="Search">
                   <Search size={24} />
                 </button>
 
@@ -210,9 +207,7 @@ export default function Header() {
                   >
                     <div className="p-2 hover:bg-muted rounded-md cursor-pointer">
                       <h4 className="font-medium">{post.title}</h4>
-                      <p className="text-sm text-muted-foreground ">
-                        {post.description.substring(0, 100)}...
-                      </p>
+                      <p className="text-sm text-muted-foreground ">{post.description.substring(0, 100)}...</p>
                     </div>
                   </Link>
                 ))
