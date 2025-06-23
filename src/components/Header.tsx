@@ -23,10 +23,10 @@ export default function Header() {
       title: "前端",
       links: "/front-end",
       content: [
-        { links: "/front-end/sanity", text: "Sanity整合" },
+        { links: "/front-end/Bundler", text: "打包工具" },
         {
-          links: "/front-end/performance-optimization",
-          text: "效能優化",
+          links: "/front-end/seo",
+          text: "SEO",
         },
       ],
     },
@@ -34,8 +34,8 @@ export default function Header() {
       title: "生活相關",
       links: "/life",
       content: [
-        { links: "/life/health", text: "健康不只是健康?!" },
-        { links: "/life/enthusiasm", text: "對生活保持熱忱" },
+        { links: "/life/", text: "暫無" },
+        { links: "/life/", text: "暫無" },
       ],
     },
     {
