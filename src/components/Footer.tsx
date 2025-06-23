@@ -39,7 +39,7 @@ export default function Footer() {
               </li>
 
               <li>
-                <Link href="https://www.instagram.com" target="_blank" rel="noopener">
+                <Link href="https://www.instagram.com/pg206206/" target="_blank" rel="noopener">
                   <Button variant="outline" size="icon" className="rounded-full dark:bg-card dark:hover:bg-accent">
                     <Instagram className="h-5 w-5" />
                   </Button>

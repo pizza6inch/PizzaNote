@@ -92,7 +92,7 @@ export default async function Sidebar() {
 
           <li>
             <Link
-              href="https://www.instagram.com"
+              href="https://www.instagram.com/pg206206/"
               target="_blank"
               rel="noopener"
               className="hover:text-primary transition-colors dark:text-gray-300 dark:hover:text-primary"
