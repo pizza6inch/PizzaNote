@@ -23,5 +23,11 @@ export const topicType = defineType({
       name: "description",
       type: "text",
     }),
+    defineField({
+      name: "lastEdAt",
+      type: "datetime",
+      initialValue: () => new Date().toISOString(),
+      validation: (Rule) => Rule.required(),
+    }),
   ],
 });

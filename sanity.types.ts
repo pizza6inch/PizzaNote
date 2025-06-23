@@ -193,6 +193,7 @@ export type Topic = {
   title?: string;
   slug?: Slug;
   description?: string;
+  lastEdAt?: string;
 };
 
 export type Slug = {
@@ -350,13 +351,15 @@ export type LAUNCH_DATE_QUERYResult = {
   launchDate: string | null;
 } | null;
 // Variable: POST_ROUTE_QUERY
-// Query: *[_type == "post"]{  category->{    topic->{      "slug":slug.current    },    "slug":slug.current  },  "slug":slug.current,  lastEdAt,}
+// Query: *[_type == "post"]{  category->{    topic->{      "slug":slug.current,      lastEdAt    },    "slug":slug.current,    lastEdAt  },  "slug":slug.current,  lastEdAt}
 export type POST_ROUTE_QUERYResult = Array<{
   category: {
     topic: {
       slug: string | null;
+      lastEdAt: string | null;
     } | null;
     slug: string | null;
+    lastEdAt: string | null;
   } | null;
   slug: string | null;
   lastEdAt: string | null;
@@ -365,7 +368,7 @@ export type POST_ROUTE_QUERYResult = Array<{
 // Query: *[_type == "topic"]{  "slug":slug.current,  lastEdAt,}
 export type TOPIC_ROUTE_QUERYResult = Array<{
   slug: string | null;
-  lastEdAt: null;
+  lastEdAt: string | null;
 }>;
 // Variable: CATEGORY_BY_SLUG
 // Query: *[_type == "category" && slug.current == $postSlug]{    "categoryRef":_id,    "categorySlug":slug.current,    "slug":slug.current,    title,    "categoryTitle":title,    description,    lastEdAt,}[0]
@@ -463,7 +466,7 @@ declare module "@sanity/client" {
     "*[_type == \"post\"]\n  | order(publishedAt desc) {\n    \"slug\": slug.current,\n    _id,\n    title,\n    description,\n    publishedAt,\n    lastEdAt,\n    tags->{\n      title,\n      \"slug\":slug.current\n    },\n    category->{\n      title,\n      \"slug\":slug.current,\n      topic->{\n        title,\n        \"slug\":slug.current\n      }\n    }\n  }": ALL_POSTS_QUERYResult;
     "*[_type == \"category\"]\n    | order(title asc)\n    {\n      \"slug\":slug.current,\n      title,\n      _id,\n      description,\n      topic->{\n        \"slug\":slug.current\n      }\n    }\n  ": CATEGORIES_QUERYResult;
     "*[_type == \"siteInfo\"][0]{\n  launchDate\n}": LAUNCH_DATE_QUERYResult;
-    "*[_type == \"post\"]{\n  category->{\n    topic->{\n      \"slug\":slug.current\n    },\n    \"slug\":slug.current\n  },\n  \"slug\":slug.current,\n  lastEdAt,\n}": POST_ROUTE_QUERYResult;
+    "*[_type == \"post\"]{\n  category->{\n    topic->{\n      \"slug\":slug.current,\n      lastEdAt\n    },\n    \"slug\":slug.current,\n    lastEdAt\n  },\n  \"slug\":slug.current,\n  lastEdAt\n}": POST_ROUTE_QUERYResult;
     "*[_type == \"topic\"]{\n  \"slug\":slug.current,\n  lastEdAt,\n}": TOPIC_ROUTE_QUERYResult;
     "*[_type == \"category\" && slug.current == $postSlug]{\n    \"categoryRef\":_id,\n    \"categorySlug\":slug.current,\n    \"slug\":slug.current,\n    title,\n    \"categoryTitle\":title,\n    description,\n    lastEdAt,\n}[0]": CATEGORY_BY_SLUGResult;
     "*[_type == \"post\" && slug.current == $postSlug]\n  {\n    _id,\n    'categoryRef':category._ref,\n    'categoryTitle':category->title,\n    'categorySlug':category->slug.current,\n    \"slug\":slug.current,\n    title,\n    content,\n    description,\n    lastEdAt,\n  }[0]": POST_DETAIL_BY_SLUGResult;

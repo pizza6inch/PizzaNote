@@ -65,12 +65,14 @@ export const LAUNCH_DATE_QUERY = defineQuery(`*[_type == "siteInfo"][0]{
 export const POST_ROUTE_QUERY = defineQuery(`*[_type == "post"]{
   category->{
     topic->{
-      "slug":slug.current
+      "slug":slug.current,
+      lastEdAt
     },
-    "slug":slug.current
+    "slug":slug.current,
+    lastEdAt
   },
   "slug":slug.current,
-  lastEdAt,
+  lastEdAt
 }`);
 
 export const TOPIC_ROUTE_QUERY = defineQuery(`*[_type == "topic"]{

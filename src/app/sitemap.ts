@@ -21,9 +21,14 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   }));
 
   const postUrls = posts.map((post) => ({
-    url: `${SITE_URL}/${post.category?.slug}/${post.slug}`,
+    url: `${SITE_URL}/${post.category?.topic?.slug}/${post.slug}`,
     lastModified: new Date(post.lastEdAt || ""),
   }));
 
-  return [...staticUrls, ...topicUrls, ...postUrls];
+  const categoryUrls = posts.map((post) => ({
+    url: `${SITE_URL}/${post.category?.topic?.slug}/${post.category?.slug}`,
+    lastModified: new Date(post.lastEdAt || ""),
+  }));
+
+  return [...staticUrls, ...topicUrls, ...postUrls, ...categoryUrls];
 }
