@@ -137,6 +137,7 @@
 .markdown-body li {
   list-style: disc outside;
   padding-left: 1.5rem;
+  font-size: 18px;
 }
 
 .markdown-body tr {
@@ -145,6 +146,7 @@
 
 .markdown-body p {
   line-height: 2;
+  font-size: 18px;
 }
 
 .arrow {

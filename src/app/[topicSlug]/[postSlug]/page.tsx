@@ -159,14 +159,14 @@ export default async function Page({ params }: { params: Promise<{ topicSlug: st
       <div className="flex md:flex-row flex-col">
         <div className="md:block hidden sticky top-[10vh] w-[320px] overflow-y-auto h-[90vh] py-10 px-5 bg-gray-100 dark:bg-gray-900 custom-scrollbar ">
           <nav className="p-5 bg-gray-100 dark:bg-gray-900 rounded-lg shadow-md dark:shadow-gray-700">
-            <h2 className="text-2xl font-bold mb-4 border-b-2 text-foreground border-gray-300 dark:border-gray-700 pb-2">
+            <h2 className="text-3xl font-bold mb-4 border-b-2 text-foreground border-gray-300 dark:border-gray-700 pb-2">
               目錄
             </h2>
             <ul className="space-y-5">
               {categoryPosts &&
                 categoryPosts.map((category) => (
                   <li key={category.title}>
-                    <h3 className="text-lg font-semibold text-foreground mb-2 ">{category.title}</h3>
+                    <h3 className="text-xl font-semibold text-foreground mb-2 ">{category.title}</h3>
                     <ul className="pl-4 space-y-2">
                       {category.posts.map((post) => (
                         <li key={post.title} className="group">
@@ -194,14 +194,14 @@ export default async function Page({ params }: { params: Promise<{ topicSlug: st
 
         <div className=" block md:hidden pt-10 px-5">
           <nav className="p-5 bg-gray-100 dark:bg-gray-900 rounded-lg shadow-md dark:shadow-gray-700">
-            <h2 className="text-2xl font-bold mb-4 border-b-2 text-foreground border-gray-300 dark:border-gray-700 pb-2">
+            <h2 className="text-3xl font-bold mb-4 border-b-2 text-foreground border-gray-300 dark:border-gray-700 pb-2">
               目錄
             </h2>
             <ul className="space-y-5">
               {categoryPosts &&
                 categoryPosts.map((category) => (
                   <li key={category.title}>
-                    <h3 className="text-lg font-semibold text-foreground mb-2 ">{category.title}</h3>
+                    <h3 className="text-xl font-semibold text-foreground mb-2 ">{category.title}</h3>
                     <ul className="pl-4 space-y-2">
                       {category.posts.map((post) => (
                         <li key={post.title} className="group">
@@ -237,7 +237,7 @@ export default async function Page({ params }: { params: Promise<{ topicSlug: st
           <div className=" space-y-2">
             <h1 className="text-4xl font-bold">{postDetail.title}</h1>
             <div className="py-4">{postDetail.description && <MarkdownBlock content={postDetail.description} />}</div>
-            <p className="text-sm text-gray-400">{formatDate(postDetail.lastEdAt)}</p>
+            <p className="text-lg text-gray-400">{formatDate(postDetail.lastEdAt)}</p>
           </div>
           <hr />
           {postDetail.content && <MarkdownBlock content={postDetail.content} />}
@@ -247,7 +247,7 @@ export default async function Page({ params }: { params: Promise<{ topicSlug: st
             {prevPost ? (
               <Link
                 href={`/${topicSlug}/${prevPost.slug}`}
-                className="group text-sm flex flex-col items-start text-gray-600 dark:text-gray-400 hover:text-gray-900 hover:dark:text-gray-200 cursor-pointer transition-colors"
+                className="group text-lg flex flex-col items-start text-gray-600 dark:text-gray-400 hover:text-gray-900 hover:dark:text-gray-200 cursor-pointer transition-colors"
               >
                 <p className="mb-2 flex items-center gap-1 arrow">
                   <ArrowLeft className="w-4 h-4" />
@@ -262,7 +262,7 @@ export default async function Page({ params }: { params: Promise<{ topicSlug: st
             {nextPost ? (
               <Link
                 href={`/${topicSlug}/${nextPost.slug}`}
-                className="group text-sm flex flex-col items-end text-gray-600 dark:text-gray-400 hover:text-gray-900 hover:dark:text-gray-200 cursor-pointer transition-colors"
+                className="group text-lg flex flex-col items-end text-gray-600 dark:text-gray-400 hover:text-gray-900 hover:dark:text-gray-200 cursor-pointer transition-colors"
               >
                 <p className="mb-2 flex items-center gap-1 arrow">
                   下一篇

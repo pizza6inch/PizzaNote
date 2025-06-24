@@ -125,38 +125,11 @@ export default function Header() {
               </Link>
 
               <div className="hidden md:flex space-x-4">
-                {/* {menuContent.map((item, index) => (
-                  <div key={index} className="relative group">
-                    <Link href={item.links} className="flex items-center px-2 py-2 text-foreground hover:text-primary">
-                      {item.title}
-                      {item.content.length > 0 && <ChevronDown />}
-                    </Link>
-                    {item.content.length > 0 && (
-                      <div className="absolute left-0 top-full w-64 bg-background dark:bg-card shadow-2xl rounded-lg overflow-hidden z-10 hidden group-hover:block transition-opacity duration-200">
-                        <Link
-                          href={item.links}
-                          className="block px-4 py-4 text-sm font-bold text-foreground hover:bg-primary hover:text-primary-foreground"
-                        >
-                          總覽
-                        </Link>
-                        {item.content.map((link, idx) => (
-                          <Link
-                            key={idx}
-                            href={link.links}
-                            className="block px-4 py-4 text-sm font-bold text-foreground hover:bg-primary hover:text-primary-foreground"
-                          >
-                            {link.text}
-                          </Link>
-                        ))}
-                      </div>
-                    )}
-                  </div>
-                ))} */}
                 <MainNav menuContent={menuContent} />
                 {/* <CustomHoverNav /> */}
 
                 <button onClick={toggleSearch} className=" text-foreground hover:text-primary" aria-label="Search">
-                  <Search size={24} />
+                  <Search size={36} />
                 </button>
 
                 <ThemeToggle />

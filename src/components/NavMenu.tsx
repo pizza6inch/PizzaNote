@@ -30,7 +30,7 @@ export function MainNav({ menuContent }: { menuContent: menuType }) {
           <NavigationMenuItem key={index}>
             {item.content.length > 0 ? (
               <>
-                <NavigationMenuTrigger className="bg-transparent">{item.title}</NavigationMenuTrigger>
+                <NavigationMenuTrigger className="bg-transparent text-lg">{item.title}</NavigationMenuTrigger>
                 <NavigationMenuContent>
                   <ul className="grid w-[250px] gap-0 p-0">
                     <li className="row-span-1">
@@ -39,7 +39,7 @@ export function MainNav({ menuContent }: { menuContent: menuType }) {
                           href={item.links}
                           className="block select-none space-y-1 rounded-md p-3 leading-none no-underline outline-none transition-colors hover:bg-accent hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground"
                         >
-                          <div className="text-sm font-medium">總覽</div>
+                          <div className="text-lg font-medium">總覽</div>
                         </Link>
                       </NavigationMenuLink>
                     </li>
@@ -50,7 +50,7 @@ export function MainNav({ menuContent }: { menuContent: menuType }) {
                             href={link.links}
                             className="block select-none space-y-1 rounded-md p-3 leading-none no-underline outline-none transition-colors hover:bg-accent hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground"
                           >
-                            <div className="text-sm font-medium">{link.text}</div>
+                            <div className="text-lg font-medium">{link.text}</div>
                           </Link>
                         </NavigationMenuLink>
                       </li>
@@ -60,7 +60,9 @@ export function MainNav({ menuContent }: { menuContent: menuType }) {
               </>
             ) : (
               <Link href={item.links} legacyBehavior passHref>
-                <NavigationMenuLink className={navigationMenuTriggerStyle()}>{item.title}</NavigationMenuLink>
+                <NavigationMenuLink className={`${navigationMenuTriggerStyle()}`}>
+                  <p className="text-lg">{item.title}</p>
+                </NavigationMenuLink>
               </Link>
             )}
           </NavigationMenuItem>
