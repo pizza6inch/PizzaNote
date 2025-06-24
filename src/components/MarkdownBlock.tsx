@@ -4,7 +4,7 @@ import Markdown from "react-markdown";
 import remarkGfm from "remark-gfm";
 import rehypeHighlight from "rehype-highlight";
 import { Prism as SyntaxHighlighter } from "react-syntax-highlighter";
-import { dark } from "react-syntax-highlighter/dist/esm/styles/prism";
+import { dark, vscDarkPlus } from "react-syntax-highlighter/dist/esm/styles/prism";
 import "github-markdown-css/github-markdown-dark.css";
 
 export default function MarkdownBlock({ content }: Readonly<{ content: string }>) {
@@ -40,7 +40,7 @@ A table:
                 // {...rest}
                 PreTag="div"
                 language={match[1]}
-                style={dark}
+                style={vscDarkPlus}
               >
                 {String(children).replace(/\n$/, "")}
               </SyntaxHighlighter>
