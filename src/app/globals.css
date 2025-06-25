@@ -130,8 +130,16 @@
 
 .markdown-body pre {
   background-color: transparent !important;
-  padding: 0 !important;
-  margin: 0 !important;
+  /* padding: 0 !important; */
+  /* margin: 0 !important; */
+}
+
+.markdown-body pre div {
+  border-radius: 10px;
+}
+
+.markdown-body pre div code {
+  font-size: 16px !important;
 }
 
 .markdown-body li {
