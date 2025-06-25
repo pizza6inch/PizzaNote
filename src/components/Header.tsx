@@ -11,6 +11,8 @@ import Logo from "./Logo";
 import { readClient } from "@/sanity/lib/client";
 import { ALL_POSTS_QUERY } from "@/sanity/lib/queries";
 
+import { motion, AnimatePresence } from "framer-motion";
+
 interface Post {
   _id: string;
   title: string;
@@ -124,22 +126,26 @@ export default function Header() {
                 <Logo />
               </Link>
 
-              <div className="hidden md:flex space-x-4">
+              <div className="hidden md:flex space-x-3">
                 <MainNav menuContent={menuContent} />
                 {/* <CustomHoverNav /> */}
 
-                <button onClick={toggleSearch} className=" text-foreground hover:text-primary" aria-label="Search">
-                  <Search size={36} />
+                <button
+                  onClick={toggleSearch}
+                  className=" text-foreground hover:bg-primary rounded-lg p-2"
+                  aria-label="Search"
+                >
+                  <Search size={24} />
                 </button>
 
-                <ThemeToggle />
+                <ThemeToggle size={24} />
               </div>
 
               <div className="md:hidden flex items-center gap-3 md:gap-6">
-                <ThemeToggle size={36} />
+                <ThemeToggle size={24} />
 
                 <button onClick={toggleSearch} aria-label="Search" className="cursor-pointer">
-                  <Search size={36} />
+                  <Search size={24} />
                 </button>
 
                 <TopDrawerMenu content={menuContent} />
@@ -149,50 +155,72 @@ export default function Header() {
         </div>
       </header>
 
-      {/* Search Bar */}
-      {isSearchOpen && (
-        <div className="fixed inset-0 bg-black bg-opacity-50 z-50 flex items-start justify-center pt-20">
-          <div className="bg-background dark:bg-card p-6 rounded-lg w-full max-w-2xl">
-            <div className="mb-4 flex justify-between items-center">
-              <h3 className="text-lg font-medium">搜尋文章</h3>
-              <Button variant="ghost" size="sm" onClick={toggleSearch}>
-                ✕
-              </Button>
-            </div>
-            <div className="relative">
-              <input
-                type="search"
-                placeholder="搜尋文章"
-                className="w-full p-3 border rounded-md dark:bg-card dark:border-border"
-                value={searchQuery}
-                onChange={handleSearchChange}
-              />
-            </div>
-            <div className="mt-4 h-64 overflow-y-auto border-t pt-4 dark:border-border">
-              {isLoading ? (
-                <div className="text-center text-muted-foreground py-8">載入中...</div>
-              ) : searchResults.length > 0 ? (
-                searchResults.map((post) => (
-                  <Link
-                    key={post._id}
-                    href={`/${post.category.topic.slug}/${post.category.slug}/${post.slug}`}
-                    onClick={toggleSearch} // Close search bar on click
-                  >
-                    <div className="p-2 hover:bg-muted rounded-md cursor-pointer">
-                      <h4 className="font-medium">{post.title}</h4>
-                      <p className="text-sm text-muted-foreground ">{post.description.substring(0, 100)}...</p>
-                    </div>
-                  </Link>
-                ))
-              ) : searchQuery.trim() !== "" && !isLoading ? (
-                <div className="text-center text-muted-foreground py-8">找不到相關文章</div>
-              ) : (
-                <div className="text-center text-muted-foreground py-8">請輸入關鍵字進行搜尋</div>
-              )}
-            </div>
-          </div>
-        </div>
-      )}
+      {/* Search Dialog */}
+      <AnimatePresence>
+        {isSearchOpen && (
+          <>
+            {/* 背景遮罩淡入淡出 */}
+            <motion.div
+              className="fixed inset-0 z-40 bg-black bg-opacity-50"
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+              transition={{ duration: 0.2 }}
+            />
+
+            {/* 搜尋內容彈出動畫 */}
+            <motion.div
+              className="fixed inset-0 z-50 flex items-start justify-center pt-20"
+              initial={{ scale: 0.8, opacity: 0, y: -20 }}
+              animate={{ scale: 1, opacity: 1, y: 0 }}
+              exit={{ scale: 0.8, opacity: 0, y: -20 }}
+              transition={{ duration: 0.3, ease: "easeOut" }}
+            >
+              <div className="bg-background dark:bg-card p-6 rounded-lg w-full max-w-2xl">
+                <div className="mb-4 flex justify-between items-center">
+                  <h3 className="text-lg font-medium">搜尋文章</h3>
+                  <Button variant="ghost" size="icon" onClick={toggleSearch}>
+                    ✕
+                  </Button>
+                </div>
+
+                <div className="relative">
+                  <input
+                    type="search"
+                    placeholder="輸入關鍵字"
+                    className="w-full p-3 border rounded-md dark:bg-card dark:border-border"
+                    value={searchQuery}
+                    onChange={handleSearchChange}
+                  />
+                </div>
+
+                <div className="mt-4 h-64 overflow-y-auto border-t pt-4 dark:border-border">
+                  {isLoading ? (
+                    <div className="text-center text-muted-foreground py-8">載入中...</div>
+                  ) : searchResults.length > 0 ? (
+                    searchResults.map((post) => (
+                      <Link
+                        key={post._id}
+                        href={`/${post.category.topic.slug}/${post.category.slug}/${post.slug}`}
+                        onClick={toggleSearch}
+                      >
+                        <div className="p-2 hover:bg-muted rounded-md cursor-pointer">
+                          <h4 className="font-medium">{post.title}</h4>
+                          <p className="text-sm text-muted-foreground">{post.description.substring(0, 100)}...</p>
+                        </div>
+                      </Link>
+                    ))
+                  ) : searchQuery.trim() !== "" && !isLoading ? (
+                    <div className="text-center text-muted-foreground py-8">找不到相關文章</div>
+                  ) : (
+                    <div className="text-center text-muted-foreground py-8">請輸入關鍵字進行搜尋</div>
+                  )}
+                </div>
+              </div>
+            </motion.div>
+          </>
+        )}
+      </AnimatePresence>
     </>
   );
 }
