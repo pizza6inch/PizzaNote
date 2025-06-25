@@ -149,8 +149,8 @@ export default async function Page({ params }: { params: Promise<{ topicSlug: st
       links: `/${topicSlug}`,
     },
     {
-      title: postDetail?.title || "error",
-      links: `/${topicSlug}/${postDetail.slug}`,
+      title: postDetail?.categorySlug || "error",
+      links: `/${topicSlug}/${postDetail.categorySlug}`,
     },
   ];
 
