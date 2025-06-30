@@ -199,11 +199,7 @@ export default function Header() {
                     <div className="text-center text-muted-foreground py-8">載入中...</div>
                   ) : searchResults.length > 0 ? (
                     searchResults.map((post) => (
-                      <Link
-                        key={post._id}
-                        href={`/${post.category.topic.slug}/${post.category.slug}/${post.slug}`}
-                        onClick={toggleSearch}
-                      >
+                      <Link key={post._id} href={`/${post.category.topic.slug}/${post.slug}`} onClick={toggleSearch}>
                         <div className="p-2 hover:bg-muted rounded-md cursor-pointer">
                           <h4 className="font-medium">{post.title}</h4>
                           <p className="text-sm text-muted-foreground">{post.description.substring(0, 100)}...</p>
