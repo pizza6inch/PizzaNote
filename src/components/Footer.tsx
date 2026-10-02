@@ -4,7 +4,8 @@ import React, { useState } from "react";
 import Link from "next/link";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
-import { Github, Facebook, Instagram, Mail } from "lucide-react";
+import { Mail } from "lucide-react";
+import { GithubIcon, InstagramIcon } from "./BrandIcons";
 import Logo from "./Logo";
 
 export default function Footer() {
@@ -33,7 +34,7 @@ export default function Footer() {
               <li>
                 <Link href="https://github.com/pizza6inch" target="_blank" rel="noopener">
                   <Button variant="outline" size="icon" className="rounded-full dark:bg-card dark:hover:bg-accent">
-                    <Github className="h-5 w-5" />
+                    <GithubIcon className="h-5 w-5" />
                   </Button>
                 </Link>
               </li>
@@ -41,7 +42,7 @@ export default function Footer() {
               <li>
                 <Link href="https://www.instagram.com/pg206206/" target="_blank" rel="noopener">
                   <Button variant="outline" size="icon" className="rounded-full dark:bg-card dark:hover:bg-accent">
-                    <Instagram className="h-5 w-5" />
+                    <InstagramIcon className="h-5 w-5" />
                   </Button>
                 </Link>
               </li>

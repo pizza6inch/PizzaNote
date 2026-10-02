@@ -3,7 +3,6 @@ import React from "react";
 import Link from "next/link";
 import { Card, CardContent } from "@/components/ui/card";
 import { formatDate } from "@/lib/utils";
-import { Tilt } from "react-tilt";
 
 export interface PostCardProps {
   title: string | null;
@@ -32,7 +31,7 @@ export default function PostCard({
   const formattedDate = formatDate(date);
 
   return (
-    <Tilt className="w-full h-full">
+    <div className="w-full h-full transition-transform duration-200 hover:-translate-y-1">
       <Card className="shadow-sm dark:bg-card w-full h-full">
         <CardContent className="p-6">
           {/* {isColumnPost && (
@@ -75,6 +74,6 @@ export default function PostCard({
           <p className="text-gray-700 dark:text-gray-300 line-clamp-3">{description}</p>
         </CardContent>
       </Card>
-    </Tilt>
+    </div>
   );
 }
