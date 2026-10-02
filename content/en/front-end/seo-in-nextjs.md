@@ -1,6 +1,6 @@
 ---
 title: "Next.js SEO Notes: Getting Your Site Discovered by Search Engines"
-description: "Practical Next.js SEO notes: favicon, metadata, self-hosted fonts, dynamic metadata, request deduplication, SSG and ISR, sitemap.xml, robots.txt and Google Search Console."
+description: "Practical Next.js SEO notes: favicon, metadata, self-hosted fonts, SSG and ISR, sitemap.xml, robots.txt and Google Search Console."
 publishedAt: "2025-06-11T08:52:58.201Z"
 updatedAt: "2025-06-11T08:52:58.201Z"
 category: "seo"

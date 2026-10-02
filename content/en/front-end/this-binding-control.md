@@ -1,6 +1,6 @@
 ---
 title: "JS Fundamentals: The this Keyword, Part 2 (Controlling this Binding)"
-description: "The five ways this is bound in JavaScript (default, implicit, explicit, new and arrow function binding), with examples of their rules and priority, plus common pitfalls."
+description: "The five ways this is bound in JavaScript: default, implicit, explicit, new and arrow function binding, with their priority rules and common pitfalls."
 publishedAt: "2025-06-25T03:39:11.465Z"
 updatedAt: "2025-06-25T03:39:11.465Z"
 category: "javascript"
