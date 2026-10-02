@@ -1,0 +1,62 @@
+{
+  "topics": [
+    {
+      "slug": "life",
+      "title": "生活",
+      "description": "人生苦短，把握當下！",
+      "updatedAt": "2025-06-23T00:54:00.000Z"
+    },
+    {
+      "slug": "front-end",
+      "title": "前端",
+      "description": "個人的前端開發經驗~",
+      "updatedAt": "2025-06-23T00:54:00.000Z"
+    }
+  ],
+  "categories": [
+    {
+      "slug": "seo",
+      "aliases": [],
+      "title": "SEO",
+      "description": "SEO（Search Engine Optimization，搜尋引擎最佳化）是一系列提升網站在搜尋引擎中自然排名的技術與策略。目的是讓網站更容易被搜尋引擎理解與收錄，進而增加曝光率與流量。無論是內容優化、技術結構調整，還是提升使用者體驗，SEO 都是現代網站不可或缺的一環。對前端開發者而言，了解 SEO 不僅能改善網站效能，也能為產品帶來實質的成效。",
+      "topic": "front-end",
+      "updatedAt": "2025-06-11T09:14:25.770Z"
+    },
+    {
+      "slug": "javascript",
+      "aliases": [],
+      "title": "JavaScript",
+      "description": "JavaScript 是一種運行於瀏覽器與伺服器的高階直譯式程式語言。\n最初被設計用來讓網頁具備互動性，如今已成為前端開發的標準語言，也廣泛應用於後端（如 Node.js）、行動應用、桌面應用甚至物聯網開發。\n此分類會介紹關於 JS 相關的開發筆記",
+      "topic": "front-end",
+      "updatedAt": "2025-06-24T06:50:38.525Z"
+    },
+    {
+      "slug": "bundler",
+      "aliases": [
+        "Bundler"
+      ],
+      "title": "打包工具",
+      "description": "打包工具是一種前端開發中不可或缺的工具，用來將多個模組（例如 JavaScript、CSS、圖片、字型等資源）整合成瀏覽器可以執行的單一或數個檔案。常見的打包工具有 Webpack、Vite、Parcel 等。透過打包，可以提升網站效能、減少載入時間，同時支援模組化開發與資源優化（如壓縮、分割、快取等）。",
+      "topic": "front-end",
+      "updatedAt": "2025-06-09T08:18:59.257Z"
+    }
+  ],
+  "tags": [
+    {
+      "slug": "react",
+      "title": "react"
+    },
+    {
+      "slug": "front-end-development",
+      "title": "前端開發"
+    },
+    {
+      "slug": "nextjs",
+      "title": "nextJS"
+    },
+    {
+      "slug": "sanity",
+      "title": "sanity"
+    }
+  ]
+}
