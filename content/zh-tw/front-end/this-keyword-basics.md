@@ -86,7 +86,7 @@ foo();
 ```
 輸出 `undefined`。
 `foo` 內 `this` 為 `window`，呼叫 `window.bar()` `bar`內`this`為`window`，`window.a`未定義
-```javascript=
+```javascript
 var foo = 'foo';
 var obj = {
   foo: 'foo in Object'
@@ -106,7 +106,7 @@ sayFoo();       // foo
 var a = 1
 
 var obj = {
-  var a = 2
+  a: 2,
   fn1: function(){
     console.log(this.a); // 2 ✅
 

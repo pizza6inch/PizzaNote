@@ -9,10 +9,10 @@ tags: ["front-end-development"]
 aliases: ["Webpack"]
 ---
 
-# WebPack
+# Webpack
 
 打包工具，
-通常用於前端，react(creat-react-app)
+通常用於前端，react(create-react-app)
 
 ## 為什麼需要 Webpack？
 現代 JavaScript 開發常常會使用：
@@ -38,14 +38,14 @@ JS的引入模組方式分為 ES Module 跟 CommonJS
 
 ES module
 
-```javascript!
+```javascript
 import fs from 'fs';
 export default {functionA};
 ```
 
 
 CommonJS
-```javascript!
+```javascript
 // a.js
 // import 
 const fs = require('fs');
@@ -59,20 +59,20 @@ module.exports = {functionA};
 | 模組系統 | import/export（ESM） | require/module.exports（CommonJS） |
 | -------- | -------- | -------- |
 | Node.js 預設     | ❌ 不支援（需設定package.json）    | ✅ 預設支援     |		
-|瀏覽器 html	|❌ 不支援（需設定 <script type="module">）|	❌ 不支援
+|瀏覽器 html	|❌ 不支援（需設定 `<script type="module">`）|	❌ 不支援
     
 
 而webpack 可以將開發時使用的模組化語法（如 ES Module 或 CommonJS）轉換成瀏覽器可以理解的格式，並打包成一個或多個 JavaScript 檔案。
 
 打包前:
-```javascript!
+```javascript
 // index.js
 import generateJoke from "./joke";
 
 console.log(generateJoke());
 ```
 
-```javascript!
+```javascript
 // joke.js
 function generateJoke() {
   return "I don't trust stairs. They're always up to something.";
@@ -83,7 +83,7 @@ export default generateJoke;
 
 
 打包後:
-```javascript!
+```javascript
 (()=>{"use strict";console.log("I don't trust stairs. They're always up to something.")})();
 ```
 
@@ -92,7 +92,7 @@ export default generateJoke;
 webpack設定
 webpack.config.js
     
-```javascript!
+```javascript
 const path = require("path");
 
 module.exports = {
@@ -117,13 +117,13 @@ file:"[name]" 表示最終產出的js file(壓縮過後的檔),名子會符合en
 ### Loader
 
 用來把css、scss、image load進去js bundle裡面
-```bash!
+```bash
 npm i -D sass style-loader css-loader sass-loader
 ```
 
 test接收regular expression 偵測目錄底下所有包含scss副檔名的file
 
-```javascript!
+```javascript
 module.exports = {
   module: {
     rules: [
@@ -137,14 +137,14 @@ module.exports = {
 ```
 
 ### HtmlWebpackPlugin
-```bash!
-npm i -D HtmlWebpackPlugin
+```bash
+npm i -D html-webpack-plugin
 ```
 
 HtmlWebpackPlugin可以幫助產生.html檔，可以透過src/template.html來決定template
 並且自動對應script src至新產生的js檔
 
-```javascript!
+```javascript
 
 module.exports = {
   plugins: [
@@ -157,7 +157,7 @@ module.exports = {
 };
 ```
 
-使用 <% %>來抓取plugin設定
+使用 `<% %>` 來抓取plugin設定
 src/template.html
 ```html
 <!DOCTYPE html>
@@ -182,7 +182,7 @@ src/template.html
 ### Source map
 瀏覽器因為拿取壓縮後的bundleJS，因此程式出錯時，在開發者工具所帶出的錯誤訊息通常會看不懂也無法追蹤錯誤從哪裡發生，Source map檔就是用來幫助對照原先檔案和build檔案之間的關聯
 
-```javascript!
+```javascript
 module.exports = {
     devtool: "source-map",
 }
@@ -191,7 +191,7 @@ module.exports = {
 ### devServer
 幫助開發者在本地架web sever，監聽檔案變化來直接看修改結果，現代開發者必備功能
 
-```javascript!
+```javascript
 module.exports = {
     devServer: {
     static: {
@@ -210,7 +210,7 @@ module.exports = {
 
 向後兼容工具，JavaScript（可能包含最新的 ES6+、ES2022 語法）不一定所有瀏覽器都支援，這時候就需要 Babel。
 ex:
-```javascript!
+```javascript
 const greet = (name = "Guest") => {
   console.log(`Hello, ${name}`);
 };
@@ -224,7 +224,7 @@ const greet = (name = "Guest") => {
 ❌ 不支援預設參數 name = "Guest"
 
 🛠️ Babel 就會把它轉成像這樣的語法（可在舊瀏覽器執行）：
-```javascript!
+```javascript
 "use strict";
 var greet = function(name) {
   if (name === void 0) name = "Guest";
@@ -232,11 +232,11 @@ var greet = function(name) {
 };
 ```
 
-```bash!
+```bash
 npm i -D babel-loader @babel/core @babel/preset-env
 ```
 
-```javascript!
+```javascript
 module.exports = {
     module:{
         rules:[
@@ -261,7 +261,7 @@ module.exports = {
 ### assets loader
 將圖片加入build file裡面，使得瀏覽器能抓到圖片資源
 
-```javascript!
+```javascript
 module.exports = {
   module: {
     rules: [
@@ -284,7 +284,7 @@ module.exports = {
 幫助開發者評估bundle size，以及套件、程式碼的占比，會以圖的方式呈現
 
 
-```javascript!
+```javascript
 plugins: [
     new BundleAnalyzerPlugin(),
   ],
@@ -295,6 +295,6 @@ plugins: [
 
 順帶一提
 
-先webpack學起來後其他工具也會是套用類似的概念，例如nextJS使用parcel透過next.config處理打包，vite透過vite.config處理，所以不用擔心這些都要重新學! 懂了基礎概念的你再透過上網查相關文檔一定也可以快速上手~
+先webpack學起來後其他工具也會是套用類似的概念，例如nextJS 使用自家的打包工具（Turbopack 或 Webpack）並透過 next.config 處理打包，vite透過vite.config處理，所以不用擔心這些都要重新學! 懂了基礎概念的你再透過上網查相關文檔一定也可以快速上手~
 
 src:https://github.com/bradtraversy/webpack-starter

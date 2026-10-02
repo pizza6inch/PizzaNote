@@ -65,7 +65,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
 
 ex:
 
-```jsx!
+```jsx
 
 export async function generateMetadata({
   params: { postId },
@@ -97,7 +97,7 @@ generateMetadata函式是一個server function，所以你不能在這個頁面�
 
 ex:
 
-```jsx!
+```jsx
 export async function generateMetadata({
   params: { postId },
 }: BlogPostPageProps): Promise<Metadata> {
@@ -119,7 +119,7 @@ export default async function BlogPostPage({
 - 若使用非fetch可手動使用 cache() 優化重複資料請求
 
 範例:
-```javascript!
+```javascript
 import { cache } from "react"
 
 // Manually deduplicate requests if not using fetch
@@ -153,7 +153,7 @@ export default async function BlogPostPage({
 
 
 ex:
-```jsx!
+```jsx
 
 export async function generateStaticParams() {
   const response = await fetch("https://dummyjson.com/posts");
@@ -172,7 +172,7 @@ export async function generateStaticParams() {
 
 除了build更新cache以外也可以透過設置revalidate time來告訴next server，定期去更新page data。而這也被稱做ISR(Incremental Static Regeneration)。
 
-```jsx!
+```jsx
 // app/posts/[id]/page.tsx
 export const revalidate = 60;
 ```
@@ -183,7 +183,7 @@ export const revalidate = 60;
 
 而有一個設定可以規定只要導向沒有在return list裡面的route時回傳404頁面給user。
 
-```javascript!
+```javascript
 export const dynamic = 'force-static' //強制快取
 
 ```
@@ -196,7 +196,7 @@ Sitemap是用來讓搜尋引擎能夠完整瀏覽網站中的每個頁面，以�
 
 通常在 baseurl/sitemap.xml裡面
 看起來會像這樣:
-```html!
+```html
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
     <url>
         <loc>https://myawesomeblog.com/about</loc>
@@ -212,7 +212,7 @@ Sitemap是用來讓搜尋引擎能夠完整瀏覽網站中的每個頁面，以�
 ```
 由於sitemap內的頁面通常是需要常常更新，且會有大量頁面，所以會需要動態的產生這個sitemap，而nextJS有提供產生sitemap的方法
 
-```typescript!
+```typescript
 // sitemap.ts
 import { BlogPostsResponse } from "@/models/BlogPost";
 import { MetadataRoute } from "next";
@@ -247,7 +247,7 @@ lastModified 如果都設置為最新時間 new Date()的話，搜尋引擎會�
 告訴搜尋引擎一些設定，你想針對的裝置類別、允許被爬蟲的頁面等等
 
 ex:
-```typescript!
+```typescript
 // robots.ts
 import { MetadataRoute } from "next";
 

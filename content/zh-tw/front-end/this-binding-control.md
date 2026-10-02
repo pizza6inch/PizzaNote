@@ -66,7 +66,7 @@ call & apply都是使用function時指定this，差別在於
 
 ### bind綁定this範例情境:
 
-```javascript=
+```javascript
 function Button(callback) {
   // 模擬點擊
   callback();
@@ -90,7 +90,7 @@ setTimeout(app.sayHello.bind(app),1000); // callback需bind this
  
 ### call、apply綁定this範例情境
  
-```javascript!
+```javascript
 function printFullName(preMessage) {
   console.log(`${preMessage} ${this.firstName} ${this.lastName}`);
 }
@@ -115,7 +115,7 @@ printFullName.apply(user2,["Hi"]) // -> Hi Pizza 6inch
  
  當你使用 new 關鍵字來呼叫一個函式時，該函式就會被當作建構函式（constructor function），**此時this綁定就會是建立出來的「新物件」本身**
  
-```javascript!
+```javascript
 function Person(name) {
   this.name = name; // 如果有new，此時this綁定至user
 }
@@ -123,8 +123,8 @@ function Person(name) {
 const user = new Person("Ada");
 console.log(user.name); // Ada
 
-const user = Person("Ada"); // 如果沒有 new
-console.log(user);          // undefined
+const user2 = Person("Ada"); // 如果沒有 new
+console.log(user2);         // undefined
 console.log(window.name);   // "Ada"（非嚴格模式下被綁到 window）
 ```
 
@@ -139,7 +139,7 @@ console.log(window.name);   // "Ada"（非嚴格模式下被綁到 window）
 > - 因為這個特性所以我在刷題常常中招時QQ
 > - 箭頭函式我已經習慣使用到完全不知道跟傳統function差在哪裡XD
 
-```javascript=
+```javascript
 const obj = {
   name: "Alice",
   greet: function () {
@@ -155,7 +155,7 @@ const obj = {
 obj.greet(); // Hi, I'm Alice
 ```
 傳統函式會導致 this 丟失
-```javascript=
+```javascript
 const obj = {
   name: "Bob",
   greet: function () {
@@ -173,7 +173,7 @@ obj.greet(); // Hi, I'm undefined
 ### 實務場景
 事件處理時保持 this 一致
 
-```javascript!
+```javascript
 class Button {
   constructor(label) {
     this.label = label;

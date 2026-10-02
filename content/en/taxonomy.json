@@ -1,0 +1,62 @@
+{
+  "topics": [
+    {
+      "slug": "life",
+      "title": "Life",
+      "description": "Life is short — enjoy the moment!",
+      "updatedAt": "2025-06-23T00:54:00.000Z"
+    },
+    {
+      "slug": "front-end",
+      "title": "Front-end",
+      "description": "My personal front-end development experience.",
+      "updatedAt": "2025-06-23T00:54:00.000Z"
+    }
+  ],
+  "categories": [
+    {
+      "slug": "seo",
+      "aliases": [],
+      "title": "SEO",
+      "description": "SEO (Search Engine Optimization) is a set of techniques and strategies for improving a website's organic ranking in search engines. The goal is to make a site easier for search engines to understand and index, which increases visibility and traffic. Whether it is content optimisation, technical restructuring or a better user experience, SEO is an essential part of any modern website. For front-end developers, understanding SEO not only improves site performance but also brings real results to the product.",
+      "topic": "front-end",
+      "updatedAt": "2025-06-11T09:14:25.770Z"
+    },
+    {
+      "slug": "javascript",
+      "aliases": [],
+      "title": "JavaScript",
+      "description": "JavaScript is a high-level interpreted programming language that runs in browsers and on servers.\nIt was originally designed to make web pages interactive, and has since become the standard language of front-end development, widely used for back-end work (such as Node.js), mobile apps, desktop apps and even IoT development.\nThis category covers my development notes on JS.",
+      "topic": "front-end",
+      "updatedAt": "2025-06-24T06:50:38.525Z"
+    },
+    {
+      "slug": "bundler",
+      "aliases": [
+        "Bundler"
+      ],
+      "title": "Bundlers",
+      "description": "A bundler is an indispensable front-end tool that combines many modules (JavaScript, CSS, images, fonts and other assets) into one or a few files a browser can run. Common bundlers include Webpack, Vite and Parcel. Bundling improves site performance and reduces load time, while supporting modular development and asset optimisation (minification, splitting, caching and more).",
+      "topic": "front-end",
+      "updatedAt": "2025-06-09T08:18:59.257Z"
+    }
+  ],
+  "tags": [
+    {
+      "slug": "react",
+      "title": "react"
+    },
+    {
+      "slug": "front-end-development",
+      "title": "Front-end development"
+    },
+    {
+      "slug": "nextjs",
+      "title": "Next.js"
+    },
+    {
+      "slug": "sanity",
+      "title": "sanity"
+    }
+  ]
+}
