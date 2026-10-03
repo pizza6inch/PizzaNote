@@ -78,7 +78,8 @@ export default function PizzaToc({ slices, label }: { slices: PizzaSlice[]; labe
             key={slice.slug}
             href={slice.href}
             className="pizza-link"
-            aria-label={`${slice.title} ${slice.count}`}
+            // A visible label already names the link; narrow slices without one get the name here.
+            aria-label={showLabel ? undefined : `${slice.title} ${slice.count}`}
           >
             <g className="pizza-slice" style={style}>
               <path className="pizza-wedge" d={wedge} fill="#ffd54a" stroke="#b8651b" strokeWidth={3} strokeLinejoin="round" />
@@ -105,11 +106,16 @@ export default function PizzaToc({ slices, label }: { slices: PizzaSlice[]; labe
                   <tspan x={labelPos.x} dy="-0.1em">
                     {slice.title}
                   </tspan>
+                  {/* Keeps the accessible name "SEO 2" rather than "SEO2". */}
+                  {" "}
                   <tspan x={labelPos.x} dy="1.25em" style={{ fontFamily: "var(--font-mono)", fontSize: fontSize * 0.7 }}>
                     {slice.count}
                   </tspan>
                 </text>
               )}
+              {/* Keyboard focus ring: a dark outline with a white core, visible on yellow and on pepperoni. */}
+              <path className="pizza-focus" d={wedge} fill="none" stroke="#2a140c" strokeWidth={7} strokeLinejoin="round" />
+              <path className="pizza-focus" d={wedge} fill="none" stroke="#ffffff" strokeWidth={2.5} strokeLinejoin="round" />
             </g>
           </Link>
         );

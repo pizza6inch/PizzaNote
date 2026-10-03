@@ -1,5 +1,6 @@
 ---
 title: "JS Fundamentals: The this Keyword, Part 1 (Definition & Basic Examples)"
+seoTitle: "JavaScript this, Part 1: What this Refers To"
 description: "Understand JavaScript's this keyword with clear examples: what it is, default binding, implicit binding, and the most common pitfalls."
 publishedAt: "2025-06-24T06:57:07.835Z"
 updatedAt: "2025-06-24T06:57:07.835Z"

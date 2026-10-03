@@ -1,5 +1,5 @@
 import type { MetadataRoute } from "next";
-import { locales, htmlLang, type Locale } from "@/i18n/config";
+import { defaultLocale, locales, htmlLang, type Locale } from "@/i18n/config";
 import {
   getCategoriesWithPosts,
   getIndexableTags,
@@ -10,20 +10,20 @@ import {
   getTopicsWithPosts,
   hasPostTranslation,
 } from "@/lib/content";
-import { absoluteUrl } from "@/lib/site";
+import { absoluteUrl, siteConfig } from "@/lib/site";
 import { paths } from "@/lib/urls";
 
 type Entry = MetadataRoute.Sitemap[number];
 
 const latest = (dates: string[]) => (dates.length ? new Date(dates.sort().at(-1)!) : undefined);
 
-/** hreflang alternates for pages that exist in more than one language. */
+/** hreflang alternates for pages that exist in more than one language, with x-default as in the page heads. */
 const languagesFor = (pathFor: (l: Locale) => string, exists: (l: Locale) => boolean) => {
   const present = locales.filter(exists);
   if (present.length < 2) return undefined;
-  return {
-    languages: Object.fromEntries(present.map((l) => [htmlLang[l], absoluteUrl(pathFor(l))])),
-  };
+  const languages = Object.fromEntries(present.map((l) => [htmlLang[l], absoluteUrl(pathFor(l))]));
+  if (present.includes(defaultLocale)) languages["x-default"] = absoluteUrl(pathFor(defaultLocale));
+  return { languages };
 };
 
 export default function sitemap(): MetadataRoute.Sitemap {
@@ -39,7 +39,11 @@ export default function sitemap(): MetadataRoute.Sitemap {
         lastModified: siteLastMod,
         alternates: languagesFor(paths.home, () => true),
       },
-      { url: absoluteUrl(paths.about(locale)), alternates: languagesFor(paths.about, () => true) },
+      {
+        url: absoluteUrl(paths.about(locale)),
+        lastModified: new Date(siteConfig.aboutUpdatedAt),
+        alternates: languagesFor(paths.about, () => true),
+      },
     );
 
     if (posts.length > 0) {

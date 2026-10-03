@@ -91,11 +91,11 @@ export default function Header({ homeHref, searchIndexUrl, menu, labels, localeL
       {localeLinks.map((l) => (
         <li key={l.code}>
           {l.current ? (
-            <span className="block rounded-full bg-[var(--cheese)] px-2.5 py-1 font-bold text-[var(--crust)]" aria-current="true">
+            <span className="flex min-h-11 min-w-11 items-center justify-center rounded-full bg-[var(--cheese)] px-3 font-bold text-[var(--crust)]" aria-current="true">
               {l.label}
             </span>
           ) : (
-            <Link href={l.href} hrefLang={l.code} className="block rounded-full px-2.5 py-1 font-bold hover:bg-white/20">
+            <Link href={l.href} hrefLang={l.code} className="flex min-h-11 min-w-11 items-center justify-center rounded-full px-3 font-bold hover:bg-white/20">
               {l.label}
             </Link>
           )}
@@ -105,7 +105,7 @@ export default function Header({ homeHref, searchIndexUrl, menu, labels, localeL
   );
 
   const searchButton = (
-    <button type="button" onClick={openSearch} className="masthead-link inline-flex items-center" aria-label={labels.search}>
+    <button type="button" onClick={openSearch} className="masthead-link" aria-label={labels.search}>
       <Search size={22} aria-hidden="true" />
     </button>
   );
@@ -145,7 +145,7 @@ export default function Header({ homeHref, searchIndexUrl, menu, labels, localeL
             <ThemeToggle size={22} label={labels.theme} />
             <details className="group relative">
               <summary
-                className="masthead-link flex cursor-pointer list-none items-center [&::-webkit-details-marker]:hidden"
+                className="masthead-link cursor-pointer list-none [&::-webkit-details-marker]:hidden"
                 aria-label={labels.menu}
               >
                 <Menu size={24} aria-hidden="true" className="group-open:hidden" />
@@ -157,7 +157,7 @@ export default function Header({ homeHref, searchIndexUrl, menu, labels, localeL
                     <li key={item.href}>
                       <Link
                         href={item.href}
-                        className="masthead-link block"
+                        className="masthead-link w-full justify-start!"
                         aria-current={item.current ? "page" : undefined}
                       >
                         {item.title}
@@ -186,7 +186,7 @@ export default function Header({ homeHref, searchIndexUrl, menu, labels, localeL
       >
         <div className="field flex items-center justify-between gap-4 px-6 py-4">
           <h2 className="font-display text-2xl">{labels.searchTitle}</h2>
-          <button type="button" onClick={closeSearch} aria-label={labels.close} className="rounded-full p-2 hover:bg-black/10">
+          <button type="button" onClick={closeSearch} aria-label={labels.close} className="inline-flex h-11 w-11 items-center justify-center rounded-full hover:bg-black/10">
             <X size={22} aria-hidden="true" />
           </button>
         </div>

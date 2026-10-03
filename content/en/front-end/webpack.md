@@ -1,5 +1,6 @@
 ---
 title: "Understanding Webpack: Transpiling JS Modules, Handling Images and Browser Support"
+seoTitle: "Understanding Webpack: A Beginner's Guide"
 description: "A beginner-friendly introduction to Webpack, the bundler behind many React projects: modules, loaders, plugins, Babel, source maps and the dev server."
 publishedAt: "2025-06-09T08:21:44.284Z"
 updatedAt: "2025-06-09T08:21:44.284Z"

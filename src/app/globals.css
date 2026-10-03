@@ -49,6 +49,9 @@
     --crust: #2a140c;
     --masthead: #c9241b;
     --on-masthead: #ffffff;
+    /* Red surfaces behind white text keep the deep red in both themes (5.6:1 with white). */
+    --pepperoni-surface: #c9241b;
+    --pepperoni-surface-hover: #8e1b12;
     --link: #c9241b;
     --link-hover: #8e1b12;
 
@@ -76,6 +79,9 @@
     --crust: #2a140c;
     --masthead: #c9241b;
     --on-masthead: #ffffff;
+    /* Red surfaces behind white text keep the deep red in both themes (5.6:1 with white). */
+    --pepperoni-surface: #c9241b;
+    --pepperoni-surface-hover: #8e1b12;
     --link: #ffc72c;
     --link-hover: #ffe08a;
 
@@ -184,6 +190,12 @@
 }
 
 .masthead-link {
+  /* 44px minimum hit area: the masthead is mostly used on phones. */
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 2.75rem;
+  min-width: 2.75rem;
   padding: 0.4rem 0.75rem;
   border-radius: 999px;
   font-weight: 600;
@@ -284,8 +296,8 @@
   color: var(--crust);
 }
 .ticket-link[aria-current="page"] {
-  background: var(--pepperoni);
-  color: #fff;
+  background: var(--pepperoni-surface);
+  color: var(--on-masthead);
   font-weight: 600;
 }
 .ticket-no {
@@ -293,6 +305,9 @@
   font-size: 0.8rem;
   padding-top: 0.2rem;
   opacity: 0.8;
+}
+.ticket-link[aria-current="page"] .ticket-no {
+  opacity: 1;
 }
 
 /* Menu row: number, title, a dotted leader running into the minutes (the "price"), then summary and category. */
@@ -412,9 +427,12 @@ li:first-child > .menu-row {
 .pizza-link:focus-visible {
   outline: none;
 }
-.pizza-link:focus-visible .pizza-wedge {
-  stroke: var(--crust);
-  stroke-width: 4;
+.pizza-focus {
+  opacity: 0;
+  pointer-events: none;
+}
+.pizza-link:focus-visible .pizza-focus {
+  opacity: 1;
 }
 
 @media (prefers-reduced-motion: reduce) {
@@ -441,8 +459,8 @@ li:first-child > .menu-row {
   display: inline-flex;
   align-items: center;
   gap: 0.5rem;
-  background: var(--pepperoni);
-  color: #fff;
+  background: var(--pepperoni-surface);
+  color: var(--on-masthead);
   font-weight: 700;
   padding: 0.75rem 1.4rem;
   border-radius: 999px;
@@ -451,16 +469,8 @@ li:first-child > .menu-row {
     background-color 160ms cubic-bezier(0.16, 1, 0.3, 1),
     transform 160ms cubic-bezier(0.16, 1, 0.3, 1);
 }
-.field .btn-pepperoni {
-  /* The field is the same yellow in both themes, so the button keeps the light-theme red (5.6:1 with white). */
-  background: #c9241b;
-  color: #fff;
-}
-.field .btn-pepperoni:hover {
-  background: #8e1b12;
-}
 .btn-pepperoni:hover {
-  background: var(--pepperoni-deep);
+  background: var(--pepperoni-surface-hover);
   transform: translateY(-1px);
 }
 

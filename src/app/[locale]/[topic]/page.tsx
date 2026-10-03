@@ -18,7 +18,7 @@ import {
   getTopic,
   getTopicsWithPosts,
 } from "@/lib/content";
-import { breadcrumbJsonLd, pageMetadata } from "@/lib/seo";
+import { breadcrumbJsonLd, collectionPageJsonLd, pageMetadata } from "@/lib/seo";
 import { paths } from "@/lib/urls";
 
 export const dynamicParams = false;
@@ -65,10 +65,13 @@ export default async function TopicPage({ params }: Props) {
   return (
     <MainLayout locale={locale} alternates={alternatesFor(slug)} currentPath={paths.topic(locale, slug)}>
       <JsonLd
-        data={breadcrumbJsonLd([
-          { name: dict.breadcrumb.home, path: paths.home(locale) },
-          { name: topic.title, path: paths.topic(locale, slug) },
-        ])}
+        data={[
+          collectionPageJsonLd(locale, topic.title, topic.description, paths.topic(locale, slug)),
+          breadcrumbJsonLd([
+            { name: dict.breadcrumb.home, path: paths.home(locale) },
+            { name: topic.title, path: paths.topic(locale, slug) },
+          ]),
+        ]}
       />
       <PageHeader
         title={topic.title}

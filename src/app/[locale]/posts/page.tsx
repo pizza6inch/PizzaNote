@@ -7,7 +7,7 @@ import JsonLd from "@/components/JsonLd";
 import { getDictionary } from "@/i18n/dictionaries";
 import { localePaths, resolveLocale } from "@/i18n/server";
 import { getCategoriesWithPosts, getPostNumber, getPosts, getPostsByCategory } from "@/lib/content";
-import { breadcrumbJsonLd, pageMetadata } from "@/lib/seo";
+import { breadcrumbJsonLd, collectionPageJsonLd, pageMetadata } from "@/lib/seo";
 import { paths } from "@/lib/urls";
 
 type Props = { params: Promise<{ locale: string }> };
@@ -36,10 +36,13 @@ export default async function PostsPage({ params }: Props) {
   return (
     <MainLayout locale={locale} alternates={alternates()} currentPath={paths.posts(locale)}>
       <JsonLd
-        data={breadcrumbJsonLd([
-          { name: dict.breadcrumb.home, path: paths.home(locale) },
-          { name: dict.posts.title, path: paths.posts(locale) },
-        ])}
+        data={[
+          collectionPageJsonLd(locale, dict.posts.title, dict.posts.description, paths.posts(locale)),
+          breadcrumbJsonLd([
+            { name: dict.breadcrumb.home, path: paths.home(locale) },
+            { name: dict.posts.title, path: paths.posts(locale) },
+          ]),
+        ]}
       />
       <PageHeader
         title={dict.posts.title}

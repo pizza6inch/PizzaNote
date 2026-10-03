@@ -1,7 +1,7 @@
 import { locales, htmlLang } from "@/i18n/config";
 import { getDictionary } from "@/i18n/dictionaries";
 import { getPosts } from "@/lib/content";
-import { absoluteUrl } from "@/lib/site";
+import { absoluteUrl, siteConfig } from "@/lib/site";
 import { paths } from "@/lib/urls";
 
 export const dynamic = "force-static";
@@ -26,6 +26,14 @@ export function GET() {
 > ${dict.site.description} The same notes are published in Traditional Chinese (zh-TW) and English.
 
 Each post is also available as plain Markdown by appending .md to its URL.
+
+## Author
+
+${siteConfig.author.name}: ${getDictionary("en").post.authorBio}
+
+- [About (zh-TW)](${absoluteUrl(paths.about("zh-tw"))})
+- [About (en)](${absoluteUrl(paths.about("en"))})
+- [GitHub](${siteConfig.author.github})
 
 ${sections}
 

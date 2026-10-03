@@ -15,12 +15,9 @@
   },
   "dependencies": {
     "@giscus/react": "^3.1.0",
-    "@radix-ui/react-slot": "^1.2.0",
     "@shikijs/rehype": "^4.5.0",
     "@tailwindcss/postcss": "^4.3.3",
     "@upstash/redis": "^1.39.0",
-    "class-variance-authority": "^0.7.1",
-    "clsx": "^2.1.1",
     "gray-matter": "^4.0.3",
     "image-size": "^2.0.4",
     "lucide-react": "^1.49.0",
@@ -31,8 +28,7 @@
     "rehype-slug": "^6.0.0",
     "remark-gfm": "^4.0.1",
     "server-only": "^0.0.1",
-    "shiki": "^4.5.0",
-    "tailwind-merge": "^3.7.0"
+    "shiki": "^4.5.0"
   },
   "devDependencies": {
     "@testing-library/dom": "^10.4.2",

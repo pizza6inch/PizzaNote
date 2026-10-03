@@ -1,5 +1,6 @@
 ---
 title: "Set Up a Custom Domain for Your Vercel Site with Namecheap"
+seoTitle: "Custom Domain for a Vercel Site with Namecheap"
 description: "How to buy a domain on Namecheap and point it at your Vercel deployment with DNS records, so people can find your site on Google."
 publishedAt: "2025-06-18T07:54:20.096Z"
 updatedAt: "2025-06-18T07:54:20.096Z"

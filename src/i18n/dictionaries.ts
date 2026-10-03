@@ -21,6 +21,10 @@ export interface Dictionary {
     minShort: (n: number) => string;
     minUnit: string;
     table: string;
+    by: string;
+    aboutAuthor: string;
+    authorBio: string;
+    moreAboutAuthor: string;
   };
   about: { title: string; intro: string; experience: string };
   experience: { date: string; title: string; description: string }[];
@@ -78,6 +82,10 @@ const zhTw: Dictionary = {
     minShort: (n) => `${n} 分鐘`,
     minUnit: "分鐘",
     table: "表格",
+    by: "作者",
+    aboutAuthor: "關於作者",
+    authorBio: "北科資工出身的前端開發者，把實作中踩過的坑與解法整理成筆記，主題涵蓋前端、JavaScript 與 SEO。",
+    moreAboutAuthor: "更多關於我",
   },
   about: {
     title: "關於我",
@@ -165,6 +173,11 @@ const en: Dictionary = {
     minShort: (n) => `${n} min`,
     minUnit: "min",
     table: "Table",
+    by: "By",
+    aboutAuthor: "About the author",
+    authorBio:
+      "A front-end developer with a Computer Science background from National Taipei University of Technology, writing hands-on notes on front-end, JavaScript and SEO from real projects.",
+    moreAboutAuthor: "More about me",
   },
   about: {
     title: "About me",
