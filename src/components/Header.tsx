@@ -1,28 +1,24 @@
 "use client";
 
-import React, { useState, useEffect } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import Link from "next/link";
-import { Search } from "lucide-react";
-import { Button } from "@/components/ui/button";
+import { Menu, Search, X } from "lucide-react";
 import { ThemeToggle } from "@/components/ThemeToggle";
-import TopDrawerMenu from "@/components/TopDrawerMenu";
-import { MainNav } from "@/components/NavMenu";
 import Logo from "./Logo";
-import { motion, AnimatePresence } from "framer-motion";
 
 export interface MenuItem {
   title: string;
-  links: string;
-  content: { links: string; text: string }[];
+  href: string;
+  current?: boolean;
 }
 
 export interface HeaderLabels {
   siteName: string;
-  overview: string;
   search: string;
   menu: string;
   language: string;
   theme: string;
+  skip: string;
   searchTitle: string;
   searchPlaceholder: string;
   searchLoading: string;
@@ -53,13 +49,17 @@ interface HeaderProps {
 }
 
 export default function Header({ homeHref, searchIndexUrl, menu, labels, localeLinks }: HeaderProps) {
+  const dialogRef = useRef<HTMLDialogElement>(null);
   const [isSearchOpen, setIsSearchOpen] = useState(false);
   const [searchQuery, setSearchQuery] = useState("");
   const [entries, setEntries] = useState<SearchEntry[] | null>(null);
 
-  const toggleSearch = () => {
-    setIsSearchOpen((open) => !open);
-    setSearchQuery("");
+  const openSearch = () => {
+    setIsSearchOpen(true);
+    dialogRef.current?.showModal();
+  };
+  const closeSearch = () => {
+    dialogRef.current?.close();
   };
 
   // The index is a small static JSON file; it is only fetched the first time search opens.
@@ -87,15 +87,15 @@ export default function Header({ homeHref, searchIndexUrl, menu, labels, localeL
         );
 
   const languageSwitch = (
-    <ul className="flex items-center gap-1 text-sm" aria-label={labels.language}>
+    <ul className="flex items-center rounded-full bg-black/15 p-0.5 text-sm" aria-label={labels.language}>
       {localeLinks.map((l) => (
         <li key={l.code}>
           {l.current ? (
-            <span className="px-2 py-1 font-bold text-primary" aria-current="true">
+            <span className="block rounded-full bg-[var(--cheese)] px-2.5 py-1 font-bold text-[var(--crust)]" aria-current="true">
               {l.label}
             </span>
           ) : (
-            <Link href={l.href} hrefLang={l.code} className="px-2 py-1 hover:text-primary">
+            <Link href={l.href} hrefLang={l.code} className="block rounded-full px-2.5 py-1 font-bold hover:bg-white/20">
               {l.label}
             </Link>
           )}
@@ -104,115 +104,126 @@ export default function Header({ homeHref, searchIndexUrl, menu, labels, localeL
     </ul>
   );
 
+  const searchButton = (
+    <button type="button" onClick={openSearch} className="masthead-link inline-flex items-center" aria-label={labels.search}>
+      <Search size={22} aria-hidden="true" />
+    </button>
+  );
+
   return (
     <>
-      <header className="navigation w-full fixed top-0 z-50 shadow-sm shadow-yellow">
-        <div className="container-fluid border-bottom fixed-top bg-background dark:border-border ">
-          <div className="container nav-container">
-            <nav className="flex items-end justify-between py-3 px-0">
-              <Link href={homeHref} className="flex items-center space-x-4">
-                <Logo name={labels.siteName} />
-              </Link>
+      <a
+        href="#main"
+        className="sr-only focus:not-sr-only focus:fixed focus:left-4 focus:top-4 focus:z-[60] focus:rounded-full focus:bg-[var(--cheese)] focus:px-4 focus:py-2 focus:text-[var(--crust)]"
+      >
+        {labels.skip}
+      </a>
+      <header className="masthead sticky top-0 z-50">
+        <nav className="mx-auto flex h-16 max-w-[90rem] items-center justify-between gap-4 px-4 md:px-8">
+          <Link href={homeHref} className="flex shrink-0 items-center gap-3">
+            <Logo name={labels.siteName} size={38} />
+          </Link>
 
-              <div className="hidden md:flex space-x-3 items-center">
-                <MainNav menuContent={menu} overviewLabel={labels.overview} />
-
-                <button
-                  onClick={toggleSearch}
-                  className=" text-foreground hover:bg-primary rounded-lg p-2"
-                  aria-label={labels.search}
-                >
-                  <Search size={24} />
-                </button>
-
-                <ThemeToggle size={24} label={labels.theme} />
-                {languageSwitch}
-              </div>
-
-              <div className="md:hidden flex items-center gap-3 md:gap-6">
-                {languageSwitch}
-                <ThemeToggle size={24} label={labels.theme} />
-
-                <button onClick={toggleSearch} aria-label={labels.search} className="cursor-pointer">
-                  <Search size={24} />
-                </button>
-
-                <TopDrawerMenu content={menu} title={labels.menu} siteName={labels.siteName} />
-              </div>
-            </nav>
+          <div className="hidden items-center gap-1 md:flex">
+            <ul className="flex items-center gap-1">
+              {menu.map((item) => (
+                <li key={item.href}>
+                  <Link href={item.href} className="masthead-link" aria-current={item.current ? "page" : undefined}>
+                    {item.title}
+                  </Link>
+                </li>
+              ))}
+            </ul>
+            <span className="mx-2 h-6 w-px bg-white/35" aria-hidden="true" />
+            {searchButton}
+            <ThemeToggle size={22} label={labels.theme} />
+            <span className="ml-2">{languageSwitch}</span>
           </div>
-        </div>
+
+          <div className="flex items-center gap-1 md:hidden">
+            {searchButton}
+            <ThemeToggle size={22} label={labels.theme} />
+            <details className="group relative">
+              <summary
+                className="masthead-link flex cursor-pointer list-none items-center [&::-webkit-details-marker]:hidden"
+                aria-label={labels.menu}
+              >
+                <Menu size={24} aria-hidden="true" className="group-open:hidden" />
+                <X size={24} aria-hidden="true" className="hidden group-open:block" />
+              </summary>
+              <div className="absolute right-0 top-[calc(100%+0.75rem)] w-64 rounded-xl bg-[var(--masthead)] p-3 shadow-[0_18px_30px_rgba(42,20,12,0.35)]">
+                <ul className="flex flex-col gap-1">
+                  {menu.map((item) => (
+                    <li key={item.href}>
+                      <Link
+                        href={item.href}
+                        className="masthead-link block"
+                        aria-current={item.current ? "page" : undefined}
+                      >
+                        {item.title}
+                      </Link>
+                    </li>
+                  ))}
+                </ul>
+                <div className="mt-3 border-t border-white/30 pt-3">{languageSwitch}</div>
+              </div>
+            </details>
+          </div>
+        </nav>
       </header>
 
-      {/* Search Dialog */}
-      <AnimatePresence>
-        {isSearchOpen && (
-          <>
-            {/* 背景遮罩淡入淡出 */}
-            <motion.div
-              className="fixed inset-0 z-40 bg-black bg-opacity-50"
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              exit={{ opacity: 0 }}
-              transition={{ duration: 0.2 }}
-              onClick={toggleSearch}
-            />
-
-            {/* 搜尋內容彈出動畫 */}
-            <motion.div
-              className="fixed inset-0 z-50 flex items-start justify-center pt-20 pointer-events-none"
-              initial={{ scale: 0.8, opacity: 0, y: -20 }}
-              animate={{ scale: 1, opacity: 1, y: 0 }}
-              exit={{ scale: 0.8, opacity: 0, y: -20 }}
-              transition={{ duration: 0.3, ease: "easeOut" }}
-            >
-              <div
-                role="dialog"
-                aria-label={labels.searchTitle}
-                className="bg-background dark:bg-card p-6 rounded-lg w-full max-w-2xl pointer-events-auto"
-              >
-                <div className="mb-4 flex justify-between items-center">
-                  <h2 className="text-lg font-medium">{labels.searchTitle}</h2>
-                  <Button variant="ghost" size="icon" onClick={toggleSearch} aria-label={labels.close}>
-                    ✕
-                  </Button>
-                </div>
-
-                <div className="relative">
-                  <input
-                    type="search"
-                    autoFocus
-                    placeholder={labels.searchPlaceholder}
-                    aria-label={labels.searchPlaceholder}
-                    className="w-full p-3 border rounded-md dark:bg-card dark:border-border"
-                    value={searchQuery}
-                    onChange={(e) => setSearchQuery(e.target.value)}
-                  />
-                </div>
-
-                <div className="mt-4 h-64 overflow-y-auto border-t pt-4 dark:border-border">
-                  {isLoading ? (
-                    <div className="text-center text-muted-foreground py-8">{labels.searchLoading}</div>
-                  ) : results.length > 0 ? (
-                    results.map((post) => (
-                      <Link key={post.href} href={post.href} onClick={toggleSearch}>
-                        <div className="p-2 hover:bg-muted rounded-md cursor-pointer">
-                          <h3 className="font-medium">{post.title}</h3>
-                          <p className="text-sm text-muted-foreground">{post.description.substring(0, 100)}...</p>
-                        </div>
-                      </Link>
-                    ))
-                  ) : query !== "" ? (
-                    <div className="text-center text-muted-foreground py-8">{labels.searchEmpty}</div>
-                  ) : (
-                    <div className="text-center text-muted-foreground py-8">{labels.searchHint}</div>
-                  )}
-                </div>
-              </div>
-            </motion.div>
-          </>
-        )}
-      </AnimatePresence>
+      <dialog
+        ref={dialogRef}
+        aria-label={labels.searchTitle}
+        onClose={() => {
+          setIsSearchOpen(false);
+          setSearchQuery("");
+        }}
+        onClick={(e) => {
+          if (e.target === e.currentTarget) closeSearch();
+        }}
+        className="m-auto mt-20 w-[min(42rem,calc(100vw-2rem))] rounded-2xl bg-background p-0 text-foreground shadow-[0_24px_48px_rgba(42,20,12,0.35)] backdrop:bg-[rgba(42,20,12,0.55)]"
+      >
+        <div className="field flex items-center justify-between gap-4 px-6 py-4">
+          <h2 className="font-display text-2xl">{labels.searchTitle}</h2>
+          <button type="button" onClick={closeSearch} aria-label={labels.close} className="rounded-full p-2 hover:bg-black/10">
+            <X size={22} aria-hidden="true" />
+          </button>
+        </div>
+        <div className="p-6">
+          <input
+            type="search"
+            autoFocus
+            placeholder={labels.searchPlaceholder}
+            aria-label={labels.searchPlaceholder}
+            className="w-full rounded-xl border-2 border-[hsl(var(--foreground)/0.25)] bg-background px-4 py-3 text-lg outline-none focus:border-[var(--pepperoni)] dark:focus:border-[var(--cheese)]"
+            value={searchQuery}
+            onChange={(e) => setSearchQuery(e.target.value)}
+          />
+          <div className="mt-4 max-h-80 overflow-y-auto" aria-live="polite">
+            {isLoading ? (
+              <p className="py-8 text-center text-muted-foreground">{labels.searchLoading}</p>
+            ) : results.length > 0 ? (
+              <ul>
+                {results.map((post) => (
+                  <li key={post.href}>
+                    <Link
+                      href={post.href}
+                      onClick={closeSearch}
+                      className="block rounded-xl px-3 py-3 hover:bg-[var(--cheese-soft)]"
+                    >
+                      <span className="block font-display text-lg">{post.title}</span>
+                      <span className="mt-1 block text-sm text-muted-foreground line-clamp-2">{post.description}</span>
+                    </Link>
+                  </li>
+                ))}
+              </ul>
+            ) : (
+              <p className="py-8 text-center text-muted-foreground">{query !== "" ? labels.searchEmpty : labels.searchHint}</p>
+            )}
+          </div>
+        </div>
+      </dialog>
     </>
   );
 }

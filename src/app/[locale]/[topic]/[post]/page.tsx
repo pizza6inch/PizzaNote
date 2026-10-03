@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import Link from "next/link";
 import { ArrowLeft, ArrowRight } from "lucide-react";
+import CjkText from "@/components/CjkText";
 import MainLayout from "@/components/MainLayout";
 import MarkdownBlock from "@/components/MarkdownBlock";
 import BreadcrumbLinks from "@/components/BreadcrumbLinks";
@@ -12,7 +13,15 @@ import JsonLd from "@/components/JsonLd";
 import { htmlLang } from "@/i18n/config";
 import { getDictionary } from "@/i18n/dictionaries";
 import { localePaths, resolveLocale } from "@/i18n/server";
-import { getAllPostParams, getCategory, getPost, getSeriesGroups, getTopic, hasPostTranslation } from "@/lib/content";
+import {
+  getAllPostParams,
+  getCategory,
+  getPost,
+  getPostNumber,
+  getSeriesGroups,
+  getTopic,
+  hasPostTranslation,
+} from "@/lib/content";
 import { articleJsonLd, breadcrumbJsonLd, pageMetadata } from "@/lib/seo";
 import { siteConfig } from "@/lib/site";
 import { paths } from "@/lib/urls";
@@ -75,8 +84,8 @@ export default async function PostPage({ params }: Props) {
     ...(category ? [{ title: category.title, links: paths.category(locale, category.slug) }] : []),
   ];
 
-  const navLink =
-    "group text-lg flex flex-col text-gray-600 dark:text-gray-400 hover:text-gray-900 hover:dark:text-gray-200 cursor-pointer transition-colors";
+  const stepLink =
+    "group flex flex-col gap-2 rounded-xl border-2 border-[hsl(var(--border))] p-5 transition-colors hover:border-[var(--pepperoni)] hover:bg-[var(--cheese-soft)] dark:hover:border-[var(--cheese)]";
 
   return (
     <MainLayout locale={locale} alternates={alternatesFor(topicSlug, slug)}>
@@ -87,58 +96,70 @@ export default async function PostPage({ params }: Props) {
         ]}
       />
 
-      <div className="flex md:flex-row flex-col">
-        <article className="py-10 px-5 md:px-10 relative space-y-10 md:w-[80%] w-[100%] md:order-2">
-          <div>
-            <BreadcrumbLinks items={crumbs} />
-            <div className="fixed top-15 right-5 z-10">
-              <ViewCounter postKey={`${topicSlug}/${slug}`} label={dict.post.views} />
+      <header className="field">
+        <div className="mx-auto max-w-[90rem] px-4 pb-12 pt-8 md:px-8 md:pb-14 md:pt-10">
+          <BreadcrumbLinks items={crumbs} />
+          <h1 className="mt-6 max-w-5xl font-display text-[clamp(2.1rem,1.5rem+2.8vw,4.25rem)] leading-[1.12]">
+            <CjkText>{post.title}</CjkText>
+          </h1>
+          <p className="mt-5 max-w-3xl text-lg leading-relaxed text-[var(--crust)]/85">{post.description}</p>
+          <dl className="mt-8 flex flex-wrap items-center gap-x-6 gap-y-3 text-sm font-bold">
+            <div className="flex items-baseline gap-2">
+              <dt className="sr-only">No.</dt>
+              <dd className="rounded-full bg-[var(--crust)] px-3 py-1 font-mono text-[var(--cheese)]" data-numeric>
+                No.{String(getPostNumber(locale, post)).padStart(2, "0")}
+              </dd>
             </div>
-          </div>
+            <div className="flex items-baseline gap-2">
+              <dt>{dict.post.updated}</dt>
+              <dd>
+                <time dateTime={post.updatedAt}>{formatDate(post.updatedAt)}</time>
+              </dd>
+            </div>
+            <div>
+              <dt className="sr-only">{dict.post.minRead(post.readingMinutes)}</dt>
+              <dd data-numeric>{dict.post.minRead(post.readingMinutes)}</dd>
+            </div>
+            <div className="text-[var(--crust)]">
+              <dt className="sr-only">{dict.post.views}</dt>
+              <dd>
+                <ViewCounter postKey={`${topicSlug}/${slug}`} label={dict.post.views} />
+              </dd>
+            </div>
+          </dl>
+        </div>
+      </header>
 
-          <header className="space-y-2">
-            <h1 className="text-4xl font-bold">{post.title}</h1>
-            <p className="py-4 text-lg text-gray-700 dark:text-gray-300">{post.description}</p>
-            <p className="text-lg text-gray-500 dark:text-gray-400">
-              {dict.post.updated}: <time dateTime={post.updatedAt}>{formatDate(post.updatedAt)}</time>
-              <span className="mx-2">•</span>
-              {dict.post.minRead(post.readingMinutes)}
-            </p>
-          </header>
-          <hr />
+      <div className="mx-auto grid max-w-[90rem] gap-12 px-4 py-12 md:px-8 md:py-16 lg:grid-cols-[minmax(0,1fr)_20rem] lg:gap-16">
+        <article className="min-w-0">
+          <MarkdownBlock content={post.body} tableLabel={dict.post.table} />
 
-          <MarkdownBlock content={post.body} />
-
-          <hr />
-          <div className="flex justify-between items-center mt-10">
+          <nav aria-label={`${dict.post.prev} / ${dict.post.next}`} className="mt-16 grid gap-4 sm:grid-cols-2">
             {prev ? (
-              <Link href={paths.post(locale, prev.topic, prev.slug)} className={`${navLink} items-start`} rel="prev">
-                <span className="mb-2 flex items-center gap-1 arrow">
-                  <ArrowLeft className="w-4 h-4" aria-hidden="true" />
+              <Link href={paths.post(locale, prev.topic, prev.slug)} className={stepLink} rel="prev">
+                <span className="flex items-center gap-1 text-sm font-bold text-muted-foreground">
+                  <ArrowLeft className="h-4 w-4" aria-hidden="true" />
                   {dict.post.prev}
                 </span>
-                <span>{prev.title}</span>
+                <span className="font-display text-lg leading-snug group-hover:underline">{prev.title}</span>
               </Link>
             ) : (
-              <div />
+              <span aria-hidden="true" />
             )}
-
-            {next ? (
-              <Link href={paths.post(locale, next.topic, next.slug)} className={`${navLink} items-end`} rel="next">
-                <span className="mb-2 flex items-center gap-1 arrow">
+            {next && (
+              <Link href={paths.post(locale, next.topic, next.slug)} className={`${stepLink} sm:items-end sm:text-right`} rel="next">
+                <span className="flex items-center gap-1 text-sm font-bold text-muted-foreground">
                   {dict.post.next}
-                  <ArrowRight className="w-4 h-4" aria-hidden="true" />
+                  <ArrowRight className="h-4 w-4" aria-hidden="true" />
                 </span>
-                <span>{next.title}</span>
+                <span className="font-display text-lg leading-snug group-hover:underline">{next.title}</span>
               </Link>
-            ) : (
-              <div />
             )}
-          </div>
+          </nav>
         </article>
 
         {category && (
-          <aside className="md:order-1 md:sticky md:top-[10vh] md:w-[320px] md:shrink-0 md:h-[90vh] md:overflow-y-auto py-10 px-5 md:bg-gray-100 md:dark:bg-gray-900 custom-scrollbar">
+          <aside className="lg:sticky lg:top-24 lg:max-h-[calc(100vh-7rem)] lg:self-start lg:overflow-y-auto">
             <SeriesNav
               locale={locale}
               heading={dict.post.toc}
@@ -151,7 +172,6 @@ export default async function PostPage({ params }: Props) {
         )}
       </div>
 
-      <hr />
       <CommentSection
         heading={dict.post.comments}
         term={`${topicSlug}/${slug}`}

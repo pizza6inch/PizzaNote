@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { Button } from "@/components/ui/button";
+import PizzaMark from "@/components/PizzaMark";
 import { getDictionary } from "@/i18n/dictionaries";
 import { isLocale, defaultLocale } from "@/i18n/config";
 
@@ -14,16 +14,15 @@ export default function NotFoundContent() {
   const dict = getDictionary(locale);
 
   return (
-    <div className="min-h-[70vh] flex items-center justify-center">
-      <div className="max-w-md w-full text-center p-8">
-        <h1 className="text-6xl font-bold mb-4 text-primary">404</h1>
-        <h2 className="text-2xl font-semibold mb-6">{dict.notFound.title}</h2>
-        <p className="text-gray-600 mb-8">{dict.notFound.body}</p>
-        <div className="flex justify-center">
-          <Link href={`/${locale}/`}>
-            <Button>{dict.notFound.home}</Button>
-          </Link>
-        </div>
+    <div className="field flex min-h-[80vh] items-center justify-center px-4">
+      <div className="max-w-xl text-center">
+        <PizzaMark size={96} className="mx-auto" />
+        <h1 className="mt-6 font-display text-[clamp(2.5rem,2rem+3vw,4.5rem)] leading-none">404</h1>
+        <h2 className="mt-4 font-display text-2xl">{dict.notFound.title}</h2>
+        <p className="mt-4 text-lg leading-relaxed text-[var(--crust)]/85">{dict.notFound.body}</p>
+        <Link href={`/${locale}/`} className="btn-pepperoni mt-8">
+          {dict.notFound.home}
+        </Link>
       </div>
     </div>
   );

@@ -2,14 +2,18 @@ import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import Link from "next/link";
 import MainLayout from "@/components/MainLayout";
-import PostCard from "@/components/PostCard";
+import MenuRow from "@/components/MenuRow";
+import PageHeader from "@/components/PageHeader";
+import PizzaToc from "@/components/PizzaToc";
 import JsonLd from "@/components/JsonLd";
-import { locales } from "@/i18n/config";
+import { locales, type Locale } from "@/i18n/config";
 import { getDictionary } from "@/i18n/dictionaries";
 import { localePaths, resolveLocale } from "@/i18n/server";
 import {
   getCategoriesForTopic,
   getCategory,
+  getPostNumber,
+  getPostsByCategory,
   getPostsByTopic,
   getTopic,
   getTopicsWithPosts,
@@ -25,8 +29,8 @@ export function generateStaticParams() {
   return locales.flatMap((locale) => getTopicsWithPosts(locale).map((t) => ({ locale, topic: t.slug })));
 }
 
-const hasTopic = (locale: (typeof locales)[number], slug: string) =>
-  getTopicsWithPosts(locale).some((t) => t.slug === slug);
+const hasTopic = (locale: Locale, slug: string) => getTopicsWithPosts(locale).some((t) => t.slug === slug);
+const alternatesFor = (slug: string) => localePaths((l) => hasTopic(l, slug), (l) => paths.topic(l, slug));
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const locale = await resolveLocale(params);
@@ -38,7 +42,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
     path: paths.topic(locale, slug),
     title: topic.title,
     description: topic.description,
-    alternates: localePaths((l) => hasTopic(l, slug), (l) => paths.topic(l, slug)),
+    alternates: alternatesFor(slug),
   });
 }
 
@@ -51,50 +55,65 @@ export default async function TopicPage({ params }: Props) {
   const dict = getDictionary(locale);
   const categories = getCategoriesForTopic(locale, slug);
   const posts = getPostsByTopic(locale, slug);
+  const slices = categories.map((c) => ({
+    slug: c.slug,
+    title: c.title,
+    count: getPostsByCategory(locale, c.slug).length,
+    href: paths.category(locale, c.slug),
+  }));
 
   return (
-    <MainLayout locale={locale} alternates={localePaths((l) => hasTopic(l, slug), (l) => paths.topic(l, slug))}>
+    <MainLayout locale={locale} alternates={alternatesFor(slug)} currentPath={paths.topic(locale, slug)}>
       <JsonLd
         data={breadcrumbJsonLd([
           { name: dict.breadcrumb.home, path: paths.home(locale) },
           { name: topic.title, path: paths.topic(locale, slug) },
         ])}
       />
-      <div className="py-10 px-5 md:px-10 flex flex-col items-center">
-        <h1 className="text-4xl font-bold mb-4 text-center">{topic.title}</h1>
-        {topic.description && (
-          <p className="mb-8 text-gray-600 dark:text-gray-400 text-center max-w-3xl">{topic.description}</p>
-        )}
+      <PageHeader
+        title={topic.title}
+        description={topic.description}
+        crumbs={[{ title: dict.breadcrumb.home, links: paths.home(locale), isHome: true }]}
+      />
 
-        <h2 className="sr-only">{dict.topic.categories}</h2>
-        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6 w-full max-w-7xl">
-          {categories.map((category) => (
-            <Link
-              key={category.slug}
-              href={paths.category(locale, category.slug)}
-              className="block p-6 bg-white dark:bg-gray-800 rounded-lg shadow hover:shadow-lg transition-shadow"
-            >
-              <h3 className="text-xl font-semibold mb-2">{category.title}</h3>
-              {category.description && (
-                <p className="text-gray-500 dark:text-gray-400 line-clamp-5">{category.description}</p>
-              )}
-            </Link>
-          ))}
-        </div>
+      <div className="mx-auto grid max-w-[90rem] gap-12 px-4 py-14 md:px-8 md:py-20 lg:grid-cols-12">
+        <section className="lg:col-span-4" aria-labelledby="topic-categories">
+          <h2 id="topic-categories" className="font-display text-3xl">
+            {dict.topic.categories}
+          </h2>
+          <div className="mx-auto mt-6 max-w-[20rem]">
+            <PizzaToc slices={slices} label={dict.topic.categories} />
+          </div>
+          <ul className="mt-8 divide-y divide-[hsl(var(--border))] border-y border-[hsl(var(--border))]">
+            {categories.map((category) => (
+              <li key={category.slug}>
+                <Link href={paths.category(locale, category.slug)} className="block px-2 py-4 hover:bg-[var(--cheese-soft)]">
+                  <span className="block font-display text-xl">{category.title}</span>
+                  <span className="mt-1 block text-sm leading-relaxed text-muted-foreground line-clamp-3">
+                    {category.description}
+                  </span>
+                </Link>
+              </li>
+            ))}
+          </ul>
+        </section>
 
-        <h2 className="text-2xl font-bold mt-12 mb-6 w-full max-w-7xl">{dict.topic.posts}</h2>
-        <ul className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6 w-full max-w-7xl">
-          {posts.map((post) => (
-            <li key={post.slug}>
-              <PostCard
+        <section className="lg:col-span-8" aria-labelledby="topic-posts">
+          <h2 id="topic-posts" className="font-display text-3xl">
+            {dict.topic.posts}
+          </h2>
+          <ol className="mt-6">
+            {posts.map((post) => (
+              <MenuRow
+                key={post.slug}
                 locale={locale}
                 post={post}
+                number={getPostNumber(locale, post)}
                 categoryTitle={getCategory(locale, post.category)?.title}
-                headingLevel="h3"
               />
-            </li>
-          ))}
-        </ul>
+            ))}
+          </ol>
+        </section>
       </div>
     </MainLayout>
   );

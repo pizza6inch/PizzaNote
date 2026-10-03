@@ -16,17 +16,15 @@ jest.mock("next/link", () => {
 jest.mock("@/components/ThemeToggle", () => ({
   ThemeToggle: ({ label }: { label: string }) => <button aria-label={label}>Theme Toggle</button>,
 }));
-jest.mock("@/components/TopDrawerMenu", () => ({ __esModule: true, default: () => <div>TopDrawerMenu</div> }));
-jest.mock("@/components/NavMenu", () => ({ MainNav: () => <div>MainNav</div> }));
 jest.mock("../Logo", () => ({ __esModule: true, default: () => <div>Logo</div> }));
 
 const labels: HeaderLabels = {
   siteName: "PizzaNote",
-  overview: "Overview",
   search: "Search",
   menu: "Menu",
   language: "Language",
   theme: "Toggle theme",
+  skip: "Skip to content",
   searchTitle: "Search posts",
   searchPlaceholder: "Type a keyword",
   searchLoading: "Loading...",
@@ -35,7 +33,13 @@ const labels: HeaderLabels = {
   close: "Close",
 };
 
-const menu: MenuItem[] = [{ title: "Posts", links: "/en/posts/", content: [] }];
+const menu: MenuItem[] = [{ title: "Posts", href: "/en/posts/" }];
+
+// jsdom has no <dialog> behaviour; the component only needs the methods to exist.
+beforeAll(() => {
+  HTMLDialogElement.prototype.showModal = jest.fn();
+  HTMLDialogElement.prototype.close = jest.fn();
+});
 
 const localeLinks: LocaleLink[] = [
   { code: "zh-TW", label: "中文", href: "/zh-tw/", current: false },

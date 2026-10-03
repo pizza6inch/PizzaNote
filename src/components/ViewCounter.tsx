@@ -44,15 +44,12 @@ export default function ViewCounter({ postKey, label }: { postKey: string; label
   if (views === null) return null;
 
   return (
-    <div
-      className="inline-flex items-center gap-2 px-3 py-2 bg-gray-100 dark:bg-gray-900 shadow-md dark:shadow-gray-700 rounded-full border border-gray-200"
-      title={label}
-    >
+    <span className="inline-flex items-center gap-1.5" title={label}>
       <Eye className="w-4 h-4" aria-hidden="true" />
-      <span className="text-sm font-medium">
+      <span data-numeric>
         <span className="sr-only">{label}: </span>
         {views}
       </span>
-    </div>
+    </span>
   );
 }

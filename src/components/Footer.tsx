@@ -1,62 +1,60 @@
 import React from "react";
 import Link from "next/link";
-import { buttonVariants } from "@/components/ui/button";
-import { cn } from "@/lib/utils";
 import { Mail } from "lucide-react";
 import { GithubIcon, InstagramIcon } from "./BrandIcons";
 import Logo from "./Logo";
+import DaysAlive from "./DaysAlive";
 import type { Locale } from "@/i18n/config";
 import { getDictionary } from "@/i18n/dictionaries";
 import { paths } from "@/lib/urls";
-import { siteConfig } from "@/lib/site";
+import { daysSince, siteConfig } from "@/lib/site";
+
+const social = "inline-flex h-11 w-11 items-center justify-center rounded-full bg-white/10 text-[var(--cheese)] transition-colors hover:bg-[var(--cheese)] hover:text-[var(--crust)]";
 
 export default function Footer({ locale }: { locale: Locale }) {
   const dict = getDictionary(locale);
   const year = new Date().getFullYear();
+  // The client refreshes the number, so the dictionary template becomes a "{days}" placeholder.
+  const aliveTemplate = dict.footer.alive(-1).replace("-1", "{days}");
 
   return (
-    <footer className=" bg-background dark:bg-background border-t dark:border-border">
-      <div className="container">
-        <div className="grid grid-cols-1 md:grid-cols-12 gap-8 py-10">
-          <div className="md:col-span-6 pb-3 flex flex-col justify-center items-center">
-            <h2 className="text-md font-medium mb-4">{dict.footer.follow}</h2>
-            <ul className="flex space-x-4 mb-4">
+    <footer>
+      <div className="gingham" aria-hidden="true" />
+      <div className="bg-[var(--crust)] text-[#fff4d6]">
+        <div className="mx-auto flex max-w-[90rem] flex-col gap-8 px-4 py-12 md:flex-row md:items-end md:justify-between md:px-8">
+          <div className="space-y-4">
+            <Link href={paths.home(locale)} className="flex items-center gap-3">
+              <Logo name={dict.site.name} />
+            </Link>
+            <p className="max-w-md text-[#fff4d6]/80">{dict.site.tagline}</p>
+            <p className="text-sm text-[var(--cheese)]">
+              <DaysAlive launchDate={siteConfig.launchDate} initial={daysSince(siteConfig.launchDate)} template={aliveTemplate} />
+            </p>
+          </div>
+
+          <div className="space-y-4 md:text-right">
+            <h2 className="font-display text-lg text-[var(--cheese)]">{dict.footer.follow}</h2>
+            <ul className="flex gap-3 md:justify-end">
               <li>
-                <Link
-                  href={siteConfig.author.github} target="_blank" rel="noopener" aria-label="GitHub"
-                  className={cn(buttonVariants({ variant: "outline", size: "icon" }), "rounded-full dark:bg-card dark:hover:bg-accent")}
-                >
+                <Link href={siteConfig.author.github} target="_blank" rel="noopener" aria-label="GitHub" className={social}>
                   <GithubIcon className="h-5 w-5" />
                 </Link>
               </li>
               <li>
-                <Link
-                  href={siteConfig.author.instagram} target="_blank" rel="noopener" aria-label="Instagram"
-                  className={cn(buttonVariants({ variant: "outline", size: "icon" }), "rounded-full dark:bg-card dark:hover:bg-accent")}
-                >
+                <Link href={siteConfig.author.instagram} target="_blank" rel="noopener" aria-label="Instagram" className={social}>
                   <InstagramIcon className="h-5 w-5" />
                 </Link>
               </li>
               <li>
-                <Link
-                  href={`mailto:${siteConfig.author.email}`}
-                  aria-label="Email"
-                  className={cn(buttonVariants({ variant: "outline", size: "icon" }), "rounded-full dark:bg-card dark:hover:bg-accent")}
-                >
-                  <Mail className="h-5 w-5" />
+                <Link href={`mailto:${siteConfig.author.email}`} aria-label="Email" className={social}>
+                  <Mail className="h-5 w-5" aria-hidden="true" />
                 </Link>
               </li>
             </ul>
+            <p className="text-sm text-[#fff4d6]/70" data-numeric>
+              © 2025–{year} {dict.site.name} · {dict.footer.rights}
+            </p>
           </div>
-          <div className="md:col-span-6 text-center flex justify-center items-center">
-            <Link href={paths.home(locale)} className=" flex items-center gap-2">
-              <Logo name={dict.site.name} />
-            </Link>
-          </div>
-        </div>
-
-        <div className="border-t py-4 text-center text-sm text-gray-600 dark:text-gray-400 dark:border-border">
-          © 2025-{year} {dict.site.name} | {dict.footer.rights}
         </div>
       </div>
     </footer>

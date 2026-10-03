@@ -43,3 +43,9 @@ next-env.d.ts
 
 backup.tar
 !.env.example
+
+# Impeccable working files (captures, decision server state)
+.impeccable/review/
+.impeccable/questions/
+.impeccable/hook.cache.json
+.impeccable/decision-round-*.json

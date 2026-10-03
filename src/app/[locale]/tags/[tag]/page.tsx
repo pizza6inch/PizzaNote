@@ -1,12 +1,13 @@
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import MainLayout from "@/components/MainLayout";
-import PostCard from "@/components/PostCard";
+import MenuRow from "@/components/MenuRow";
+import PageHeader from "@/components/PageHeader";
 import JsonLd from "@/components/JsonLd";
 import { locales, type Locale } from "@/i18n/config";
 import { getDictionary } from "@/i18n/dictionaries";
 import { localePaths, resolveLocale } from "@/i18n/server";
-import { getCategory, getIndexableTags, getPostsByTag, getTag } from "@/lib/content";
+import { getCategory, getIndexableTags, getPostNumber, getPostsByTag, getTag } from "@/lib/content";
 import { breadcrumbJsonLd, pageMetadata } from "@/lib/seo";
 import { paths } from "@/lib/urls";
 
@@ -56,16 +57,24 @@ export default async function TagPage({ params }: Props) {
           { name: dict.tag.title(tag.title), path: paths.tag(locale, slug) },
         ])}
       />
-      <div className="py-10 px-5 md:px-10 max-w-7xl mx-auto">
-        <h1 className="text-4xl font-bold mb-4">{dict.tag.title(tag.title)}</h1>
-        <p className="mb-8 text-gray-600 dark:text-gray-400">{dict.tag.description(tag.title, posts.length)}</p>
-        <ul className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
+      <PageHeader
+        title={dict.tag.title(tag.title)}
+        description={dict.tag.description(tag.title, posts.length)}
+        crumbs={[{ title: dict.breadcrumb.home, links: paths.home(locale), isHome: true }]}
+      />
+      <div className="mx-auto max-w-[90rem] px-4 py-14 md:px-8 md:py-20">
+        <ol>
           {posts.map((post) => (
-            <li key={post.slug}>
-              <PostCard locale={locale} post={post} categoryTitle={getCategory(locale, post.category)?.title} />
-            </li>
+            <MenuRow
+              key={post.slug}
+              locale={locale}
+              post={post}
+              number={getPostNumber(locale, post)}
+              categoryTitle={getCategory(locale, post.category)?.title}
+              headingLevel="h2"
+            />
           ))}
-        </ul>
+        </ol>
       </div>
     </MainLayout>
   );
