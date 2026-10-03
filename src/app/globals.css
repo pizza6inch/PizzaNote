@@ -5,7 +5,8 @@
 /*
   Design system: a pizzeria's menu board.
   Pepperoni red + cheese yellow on a crust-ink ground; the reading column stays calm and white (night: burnt crust).
-  Display type is Huninn (round, Taiwanese), body is Noto Sans TC, code and numerals are JetBrains Mono.
+  Display type is a Huninn subset (round, Taiwanese); body is Latin Noto Sans plus the visitor's system CJK face;
+  code and numerals are JetBrains Mono. DESIGN.md is the full reference.
 */
 
 @theme {

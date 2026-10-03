@@ -1,6 +1,6 @@
 // Builds a tiny subset of the display face (Huninn) containing only the characters that headings can show:
 // UI strings, taxonomy names, post titles and series, and Markdown headings. A full CJK webfont costs hundreds of
-// kilobytes of render-blocking CSS plus dozens of glyph files; this subset is a single ~20 KB woff2.
+// kilobytes of render-blocking CSS plus dozens of glyph files; this subset is a single woff2 (about 75 KB for the current headings).
 //
 // The output is committed. The script only goes to the network when the character set changes, and if the
 // network is unavailable it keeps the existing file (any missing glyph falls back to the body font).

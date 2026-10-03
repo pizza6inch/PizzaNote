@@ -8,7 +8,7 @@ import { locales, htmlLang } from "@/i18n/config";
 import { resolveLocale } from "@/i18n/server";
 import { SITE_URL } from "@/lib/site";
 
-// Display face: a ~20 KB subset of Huninn holding only the characters headings use (scripts/build-display-font.mjs).
+// Display face: a ~75 KB subset of Huninn holding only the characters headings use (scripts/build-display-font.mjs).
 // Body text uses the visitor's own CJK system font, so no large webfont blocks the first paint.
 const display = localFont({ src: "../../fonts/huninn-subset.woff2", display: "swap", variable: "--font-huninn" });
 // Latin-only body face (~30 KB); Chinese characters fall through to the visitor's system CJK font.
