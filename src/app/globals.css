@@ -201,8 +201,11 @@
   color: var(--crust);
 }
 
-.field a {
-  color: var(--crust);
+/* In the base layer so a link's own utility classes (hover colours) can override it. */
+@layer base {
+  .field a {
+    color: var(--crust);
+  }
 }
 
 /* A red-and-white gingham tablecloth strip: used once, above the footer. */

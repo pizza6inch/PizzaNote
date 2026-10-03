@@ -82,7 +82,7 @@ export default async function Home({ params }: Props) {
                 <li key={s.slug}>
                   <Link
                     href={s.href}
-                    className="inline-flex items-baseline gap-1.5 rounded-full border-2 border-[var(--crust)] px-3 py-1 text-sm font-bold transition-colors hover:bg-[var(--crust)] hover:text-[var(--cheese)]"
+                    className="inline-flex items-baseline gap-1.5 rounded-full border-2 border-[var(--crust)] px-3 py-1 text-sm font-bold transition-colors hover:border-[var(--pepperoni)] hover:bg-[var(--pepperoni)] hover:text-white"
                   >
                     {s.title}
                     <span className="font-mono text-xs" data-numeric>

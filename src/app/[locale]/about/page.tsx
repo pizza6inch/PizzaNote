@@ -29,7 +29,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 }
 
 const contact =
-  "inline-flex items-center gap-2 rounded-full border-2 border-[var(--crust)] px-4 py-2 font-bold text-[var(--crust)] transition-colors hover:bg-[var(--crust)] hover:text-[var(--cheese)]";
+  "inline-flex items-center gap-2 rounded-full border-2 border-[var(--crust)] px-4 py-2 font-bold text-[var(--crust)] transition-colors hover:border-[var(--pepperoni)] hover:bg-[var(--pepperoni)] hover:text-white";
 
 export default async function AboutPage({ params }: Props) {
   const locale = await resolveLocale(params);

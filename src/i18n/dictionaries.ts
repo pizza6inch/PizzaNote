@@ -33,7 +33,7 @@ export interface Dictionary {
 const zhTw: Dictionary = {
   site: {
     name: "披薩筆記",
-    tagline: "Ewan（Pizza）的前端學習筆記",
+    tagline: "Ewan（Pizza）的學習筆記",
     description: "披薩筆記是 Ewan（Pizza）的學習紀錄，整理前端、JavaScript、SEO 與開發工具的實作心得。",
   },
   nav: {
@@ -118,7 +118,7 @@ const zhTw: Dictionary = {
 const en: Dictionary = {
   site: {
     name: "PizzaNote",
-    tagline: "Ewan (Pizza)'s front-end learning notes",
+    tagline: "Ewan (Pizza)'s learning notes",
     description:
       "PizzaNote is Ewan (Pizza)'s learning journal: practical notes on front-end development, JavaScript, SEO and developer tooling.",
   },
