@@ -1,77 +1,46 @@
-"use client";
 import React from "react";
 import Link from "next/link";
 import { Card, CardContent } from "@/components/ui/card";
 import { formatDate } from "@/lib/utils";
+import { paths } from "@/lib/urls";
+import type { Locale } from "@/i18n/config";
+import type { Post } from "@/lib/content";
 
 export interface PostCardProps {
-  title: string | null;
-  slug: string | null;
-  date: string | null;
-  category: {
-    title: string | null;
-    slug: string | null;
-    topic: {
-      title: string | null;
-      slug: string | null;
-    } | null;
-  } | null;
-  description: string | null;
-  tags: string[] | null;
+  locale: Locale;
+  post: Post;
+  categoryTitle?: string;
+  /** Use <h2> by default; pages that already have an <h2> hierarchy can pass "h3". */
+  headingLevel?: "h2" | "h3";
 }
 
-export default function PostCard({
-  title,
-  slug,
-  date, // 2025-04-07T02:14:17.968Z
-  category,
-  description,
-  tags = [],
-}: PostCardProps) {
-  const formattedDate = formatDate(date);
+export default function PostCard({ locale, post, categoryTitle, headingLevel = "h2" }: PostCardProps) {
+  const Heading = headingLevel;
 
   return (
     <div className="w-full h-full transition-transform duration-200 hover:-translate-y-1">
       <Card className="shadow-sm dark:bg-card w-full h-full">
         <CardContent className="p-6">
-          {/* {isColumnPost && (
-          <div className="btn btn-primary btn-sm rounded py-1 px-2 mb-3 inline-block text-xs text-white bg-primary">
-            自媒體專欄
-          </div>
-        )} */}
-
-          {title && (
-            <Link href={`/${category?.topic?.slug}/${slug}`} className="block my-3">
-              <h2 className="post-list-title dark:text-gray-100 hover:text-primary dark:hover:text-primary transition-colors">
-                {title}
-              </h2>
-            </Link>
-          )}
+          <Link href={paths.post(locale, post.topic, post.slug)} className="block my-3">
+            <Heading className="post-list-title dark:text-gray-100 hover:text-primary dark:hover:text-primary transition-colors">
+              {post.title}
+            </Heading>
+          </Link>
 
           <div className="mb-3 text-sm text-gray-600 dark:text-gray-400 flex flex-wrap items-center">
-            {/* <span>By {author}</span> */}
-            {/* <span className="mx-2">•</span> */}
-            {date && <span>{formattedDate}</span>}
+            <time dateTime={post.publishedAt}>{formatDate(post.publishedAt)}</time>
 
-            {category && (
+            {categoryTitle && (
               <>
                 <span className="mx-2">•</span>
-                <Link href={`/${category?.topic?.slug}/${category.slug}`} className="text-primary hover:underline">
-                  {category.title}
+                <Link href={paths.category(locale, post.category)} className="text-primary hover:underline">
+                  {categoryTitle}
                 </Link>
               </>
             )}
-
-            {/* {tags &&
-            tags.map((tag) => (
-              <div key={tag}>
-                <span className="mx-2">•</span>
-                <span className="text-primary   bg-yellow rounded-full p-1 text-sm">{tag}</span>
-              </div>
-            ))} */}
           </div>
 
-          <p className="text-gray-700 dark:text-gray-300 line-clamp-3">{description}</p>
+          <p className="text-gray-700 dark:text-gray-300 line-clamp-3">{post.description}</p>
         </CardContent>
       </Card>
     </div>

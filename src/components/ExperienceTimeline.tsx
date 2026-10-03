@@ -6,28 +6,15 @@ import "react-vertical-timeline-component/style.min.css";
 import { useTheme } from "./ThemeProvider";
 import { Briefcase, Users, Book } from "lucide-react";
 
-const experienceData = [
-  {
-    date: "2024.7 ~ Now",
-    title: "易遊網實習生",
-    description: "協助開發易遊網的前端功能，包括商品分類、訂單詳情、訂購驗證、靜態SEO頁面等。",
-    icon: Briefcase,
-  },
-  {
-    date: "2025.1 ~ 2025.3",
-    title: "學生計算機年會開發組志工",
-    description: "協助開發年會官方網站及大地遊戲系統。",
-    icon: Users,
-  },
-  {
-    date: "2021.8 ~ 2025.6",
-    title: "國立台北科技大學",
-    description: "資訊工程學系",
-    icon: Book,
-  },
-];
+const icons = [Briefcase, Users, Book];
 
-export default function ExperienceTimeline() {
+export interface ExperienceItem {
+  date: string;
+  title: string;
+  description: string;
+}
+
+export default function ExperienceTimeline({ items }: { items: ExperienceItem[] }) {
   const { theme } = useTheme();
 
   const isDark =
@@ -55,8 +42,8 @@ export default function ExperienceTimeline() {
 
   return (
     <VerticalTimeline lineColor={lineColor} layout="2-columns">
-      {experienceData.map((item, index) => {
-        const IconComponent = item.icon;
+      {items.map((item, index) => {
+        const IconComponent = icons[index % icons.length];
         return (
           <VerticalTimelineElement
             key={index}

@@ -1,15 +1,12 @@
 module.exports = {
-  testEnvironment: 'jest-environment-jsdom',
-  setupFilesAfterEnv: ['<rootDir>/jest.setup.ts'], // Optional setup file
+  testEnvironment: "jest-environment-jsdom",
+  setupFilesAfterEnv: ["<rootDir>/jest.setup.ts"],
   moduleNameMapper: {
-    '^@/components/(.*)$': '<rootDir>/src/components/$1',
-    '^@/sanity/(.*)$': '<rootDir>/src/sanity/$1',
-    '^@/lib/(.*)$': '<rootDir>/src/lib/$1', // Added this line
+    "^@/(.*)$": "<rootDir>/src/$1",
     // Handle CSS imports (if you import CSS in components)
-    '\\.(css|less|scss|sass)$': 'identity-obj-proxy',
+    "\.(css|less|scss|sass)$": "<rootDir>/src/test/styleMock.js",
   },
   transform: {
-    '^.+\\.(ts|tsx)$': ['ts-jest', { tsconfig: { jsx: 'react-jsx' } }],
+    "^.+\.(ts|tsx)$": ["ts-jest", { tsconfig: { jsx: "react-jsx" }, diagnostics: false }],
   },
-  // globals section for ts-jest is deprecated, so removing it
 };

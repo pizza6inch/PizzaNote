@@ -200,6 +200,11 @@
   color: #222;
 }
 
+.light .markdown-body blockquote {
+  color: #4b5563;
+  border-left-color: #d1d5db;
+}
+
 .markdown-body {
   font-family: "Open Sans", "Noto Sans" !important;
 }
@@ -217,10 +222,22 @@
   color: hsl(var(--primary)) !important;
 }
 
-.markdown-body pre {
+.markdown-body pre:not(.shiki) {
   background-color: transparent !important;
   /* padding: 0 !important; */
   /* margin: 0 !important; */
+}
+
+.markdown-body pre.shiki {
+  border-radius: 10px;
+  padding: 1rem;
+  overflow-x: auto;
+  line-height: 1.6;
+}
+
+.markdown-body pre.shiki code {
+  font-size: 16px !important;
+  background: transparent;
 }
 
 .markdown-body pre div {

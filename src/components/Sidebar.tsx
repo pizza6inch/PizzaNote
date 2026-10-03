@@ -1,60 +1,53 @@
 import React from "react";
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
-import Image from "next/image";
-
+import { Mail } from "lucide-react";
 import PizzaPlayground from "./PizzaPlayground";
 import Avatar from "./Avatar";
+import DaysAlive from "./DaysAlive";
+import { GithubIcon, InstagramIcon } from "./BrandIcons";
+import type { Locale } from "@/i18n/config";
+import { getDictionary } from "@/i18n/dictionaries";
+import { getCategoriesWithPosts } from "@/lib/content";
+import { paths } from "@/lib/urls";
+import { daysSince, siteConfig } from "@/lib/site";
 
-// import { sanityFetch } from "@/sanity/lib/live";
+const iconLink = "hover:text-primary transition-colors dark:text-gray-300 dark:hover:text-primary";
 
-import { readClient } from "@/sanity/lib/client";
+export default function Sidebar({ locale }: { locale: Locale }) {
+  const dict = getDictionary(locale);
+  const categories = getCategoriesWithPosts(locale);
+  const initialDays = daysSince(siteConfig.launchDate);
+  // The client refreshes the number, so the dictionary template is turned into a "{days}" placeholder.
+  const aliveTemplate = dict.sidebar.alive(-1).replace("-1", "{days}");
 
-import { Mail } from "lucide-react";
-
-import { CATEGORIES_QUERY, LAUNCH_DATE_QUERY } from "@/sanity/lib/queries";
-
-export default async function Sidebar() {
-  const categories = await readClient.fetch(CATEGORIES_QUERY);
-  const siteInfo = await readClient.fetch(LAUNCH_DATE_QUERY);
-  // const { data: categories } = await sanityFetch({ query: CATEGORIES_QUERY }); // server side fetch
-  // const { data: siteInfo } = await sanityFetch({ query: LAUNCH_DATE_QUERY });
-  const launchDate = siteInfo?.launchDate ? new Date(siteInfo.launchDate) : null;
-  const diffDays = launchDate ? Math.abs(new Date().getTime() - launchDate.getTime()) / (1000 * 60 * 60 * 24) : 0;
-  const daysSinceLaunch = Math.round(diffDays);
   return (
-    <div>
+    <aside>
       <div className="mb-8">
-        <h4 className="widget-title">關於我</h4>
-        {/* <p className="mb-2 font-bold">3.1 K Followers</p> */}
-        {/* <Image src={"/avatar.png"} width={150} height={150} alt="avatar" className="mx-auto my-4 rounded-full" /> */}
+        <h2 className="widget-title">{dict.sidebar.about}</h2>
         <Avatar />
-        <p className="mb-4 dark:text-gray-300">
-          我是
-          Ewan（Pizza），北科資工大四生，目前在易遊網實習。這個部落格紀錄的不只是技術，更是成長的足跡。我想把學習中的困惑與突破、實作中的靈感與反思，真實分享給正在努力的你。希望這裡的內容能陪你一起前進，一起成長，為未來點亮更多可能！
-        </p>
-        <Link href="/about">
+        <p className="mb-4 dark:text-gray-300">{dict.about.intro}</p>
+        <Link href={paths.about(locale)}>
           <Button variant="outline" className="w-full sm:w-auto dark:bg-card dark:hover:bg-accent">
-            了解更多
+            {dict.sidebar.more}
           </Button>
         </Link>
       </div>
 
       <div className="mb-8">
-        <h4 className="widget-title">披薩心臟！</h4>
+        <h2 className="widget-title">{dict.sidebar.heart}</h2>
         <PizzaPlayground />
-        <p className="mt-8">本站已存活:{daysSinceLaunch}天!</p>
+        <p className="mt-8">
+          <DaysAlive launchDate={siteConfig.launchDate} initial={initialDays} template={aliveTemplate} />
+        </p>
       </div>
+
       <div className="mb-8">
-        <h4 className="widget-title">文章分類</h4>
+        <h2 className="widget-title">{dict.sidebar.categories}</h2>
         <ul className="list-none space-y-2">
-          {categories.map((category, index) => (
-            <li key={index}>
-              <Link
-                href={`/${category?.topic?.slug}/${category.slug}`}
-                className="hover:text-primary transition-colors dark:text-gray-300 dark:hover:text-primary"
-              >
+          {categories.map((category) => (
+            <li key={category.slug}>
+              <Link href={paths.category(locale, category.slug)} className={iconLink}>
                 {category.title}
               </Link>
             </li>
@@ -63,70 +56,31 @@ export default async function Sidebar() {
       </div>
 
       <div>
-        <h4 className="widget-title">追蹤</h4>
+        <h2 className="widget-title">{dict.sidebar.follow}</h2>
         <ul className="flex space-x-4">
           <li>
-            <Link
-              href="https://github.com/pizza6inch"
-              target="_blank"
-              rel="noopener"
-              className="hover:text-primary transition-colors dark:text-gray-300 dark:hover:text-primary"
-            >
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                width="24"
-                height="24"
-                viewBox="0 0 24 24"
-                fill="none"
-                stroke="currentColor"
-                strokeWidth="2"
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                className="lucide lucide-github"
-              >
-                <path d="M15 22v-4a4.8 4.8 0 0 0-1-3.5c3 0 6-2 6-5.5.08-1.25-.27-2.48-1-3.5.28-1.15.28-2.35 0-3.5 0 0-1 0-3 1.5-2.64-.5-5.36-.5-8 0C6 2 5 2 5 2c-.3 1.15-.3 2.35 0 3.5A5.403 5.403 0 0 0 4 9c0 3.5 3 5.5 6 5.5-.39.49-.68 1.05-.85 1.65-.17.6-.22 1.23-.15 1.85v4" />
-                <path d="M9 18c-4.51 2-5-2-7-2" />
-              </svg>
-            </Link>
-          </li>
-
-          <li>
-            <Link
-              href="https://www.instagram.com/pg206206/"
-              target="_blank"
-              rel="noopener"
-              className="hover:text-primary transition-colors dark:text-gray-300 dark:hover:text-primary"
-            >
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                width="24"
-                height="24"
-                viewBox="0 0 24 24"
-                fill="none"
-                stroke="currentColor"
-                strokeWidth="2"
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                className="lucide lucide-instagram"
-              >
-                <rect width="20" height="20" x="2" y="2" rx="5" ry="5" />
-                <path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z" />
-                <line x1="17.5" x2="17.51" y1="6.5" y2="6.5" />
-              </svg>
+            <Link href={siteConfig.author.github} target="_blank" rel="noopener" aria-label="GitHub" className={iconLink}>
+              <GithubIcon className="h-6 w-6" />
             </Link>
           </li>
           <li>
             <Link
-              href="https://www.instagram.com"
+              href={siteConfig.author.instagram}
               target="_blank"
               rel="noopener"
-              className="hover:text-primary transition-colors dark:text-gray-300 dark:hover:text-primary"
+              aria-label="Instagram"
+              className={iconLink}
             >
+              <InstagramIcon className="h-6 w-6" />
+            </Link>
+          </li>
+          <li>
+            <Link href={`mailto:${siteConfig.author.email}`} aria-label="Email" className={iconLink}>
               <Mail />
             </Link>
           </li>
         </ul>
       </div>
-    </div>
+    </aside>
   );
 }

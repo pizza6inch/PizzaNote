@@ -1,6 +1,6 @@
 "use client";
 
-import { createContext, useContext, useEffect, useState } from "react";
+import { createContext, useCallback, useContext, useEffect, useMemo, useSyncExternalStore } from "react";
 
 type Theme = "light" | "dark" | "system";
 
@@ -22,52 +22,53 @@ const initialState: ThemeProviderState = {
 
 const ThemeProviderContext = createContext<ThemeProviderState>(initialState);
 
-export function ThemeProvider({
-  children,
-  defaultTheme = "system",
-  storageKey = "theme",
-  ...props
-}: ThemeProviderProps) {
-  const [theme, setTheme] = useState<Theme>(defaultTheme);
+const THEME_EVENT = "theme-change";
 
-  useEffect(() => {
-    const savedTheme = localStorage.getItem(storageKey) as Theme | null;
+const isTheme = (value: string | null): value is Theme => value === "light" || value === "dark" || value === "system";
 
-    if (savedTheme) {
-      setTheme(savedTheme);
-    } else if (defaultTheme === "system") {
-      setTheme(window.matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light");
-    }
-  }, [defaultTheme, storageKey]);
+const subscribe = (callback: () => void) => {
+  window.addEventListener(THEME_EVENT, callback);
+  window.addEventListener("storage", callback);
+  return () => {
+    window.removeEventListener(THEME_EVENT, callback);
+    window.removeEventListener("storage", callback);
+  };
+};
+
+/**
+ * The saved theme lives in localStorage and is read through useSyncExternalStore, so the server render
+ * (which cannot know it) uses the default and the client switches over without a hydration mismatch.
+ * The first paint is already correct thanks to the inline script in the locale layout.
+ */
+export function ThemeProvider({ children, defaultTheme = "system", storageKey = "theme" }: ThemeProviderProps) {
+  const theme = useSyncExternalStore<Theme>(
+    subscribe,
+    () => {
+      const saved = localStorage.getItem(storageKey);
+      return isTheme(saved) ? saved : defaultTheme;
+    },
+    () => defaultTheme,
+  );
 
   useEffect(() => {
     const root = window.document.documentElement;
-
     root.classList.remove("light", "dark");
-
-    if (theme === "system") {
-      const systemTheme = window.matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light";
-
-      root.classList.add(systemTheme);
-      return;
-    }
-
-    root.classList.add(theme);
+    root.classList.add(
+      theme === "system" ? (window.matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light") : theme,
+    );
   }, [theme]);
 
-  const value = {
-    theme,
-    setTheme: (theme: Theme) => {
-      localStorage.setItem(storageKey, theme);
-      setTheme(theme);
+  const setTheme = useCallback(
+    (next: Theme) => {
+      localStorage.setItem(storageKey, next);
+      window.dispatchEvent(new Event(THEME_EVENT));
     },
-  };
-
-  return (
-    <ThemeProviderContext.Provider {...props} value={value}>
-      {children}
-    </ThemeProviderContext.Provider>
+    [storageKey],
   );
+
+  const value = useMemo(() => ({ theme, setTheme }), [theme, setTheme]);
+
+  return <ThemeProviderContext.Provider value={value}>{children}</ThemeProviderContext.Provider>;
 }
 
 export const useTheme = () => {

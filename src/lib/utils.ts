@@ -6,16 +6,8 @@ export function cn(...inputs: ClassValue[]) {
 }
 
 // 格式化為 yyyy/mm/dd
-export const formatDate = (date: string | null): string => {
-  const dateObj = date ? new Date(date) : new Date();
-
-  const formattedDate =
-    dateObj.getFullYear() +
-    "/" +
-    (dateObj.getMonth() + 1).toString().padStart(2, "0") +
-    "/" +
-    dateObj.getDate().toString().padStart(2, "0");
-  return formattedDate;
+export const formatDate = (date: string): string => {
+  const d = new Date(date);
+  return `${d.getUTCFullYear()}/${String(d.getUTCMonth() + 1).padStart(2, "0")}/${String(d.getUTCDate()).padStart(2, "0")}`;
 };
 
-export const getGeneratedCategoryPostsContent = (categoryPost) => {};
