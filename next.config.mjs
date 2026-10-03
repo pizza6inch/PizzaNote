@@ -32,6 +32,14 @@ const nextConfig = {
 
   async redirects() {
     return [
+      // The project's vercel.app production alias serves the same build; send it to the canonical domain.
+      // Preview deployments have their own hostnames and are not affected.
+      {
+        source: "/:path*",
+        has: [{ type: "host", value: "pizza-note.vercel.app" }],
+        destination: "https://pizzanote.dev/:path*",
+        permanent: true,
+      },
       // The root has no content of its own; the default language is Traditional Chinese.
       // Temporary on purpose, so language detection can be added later without fighting browser caches.
       { source: "/", destination: "/zh-tw/", permanent: false },
