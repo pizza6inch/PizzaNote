@@ -1,11 +1,11 @@
 import React from "react";
-import Image from "next/image";
+import PizzaMark from "./PizzaMark";
 
-const Logo = ({ name = "披薩筆記" }: { name?: string }) => {
+const Logo = ({ name = "披薩筆記", size = 40 }: { name?: string; size?: number }) => {
   return (
     <>
-      <Image src="/logo.svg" alt={name} width={40} height={40} className="" />
-      <span className="inline-block font-bold text-xl">{name}</span>
+      <PizzaMark size={size} />
+      <span className="font-display text-2xl leading-none">{name}</span>
     </>
   );
 };

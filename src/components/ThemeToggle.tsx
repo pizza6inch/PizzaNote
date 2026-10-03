@@ -3,6 +3,7 @@
 import { Moon, Sun } from "lucide-react";
 import { useTheme } from "@/components/ThemeProvider";
 
+/** Both icons are in the markup; CSS shows the one for the active theme, so the server HTML is never wrong. */
 export function ThemeToggle({ size, label }: { size: number; label: string }) {
   const { theme, setTheme } = useTheme();
 
@@ -10,10 +11,11 @@ export function ThemeToggle({ size, label }: { size: number; label: string }) {
     <button
       type="button"
       aria-label={label}
-      className=" hover:bg-primary transition-all rounded-lg p-2"
+      className="masthead-link inline-flex items-center"
       onClick={() => setTheme(theme === "dark" ? "light" : "dark")}
     >
-      {theme === "dark" ? <Sun size={size} /> : <Moon size={size} />}
+      <Moon size={size} aria-hidden="true" className="dark:hidden" />
+      <Sun size={size} aria-hidden="true" className="hidden dark:block" />
     </button>
   );
 }

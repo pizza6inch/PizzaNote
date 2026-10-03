@@ -1,10 +1,12 @@
 import type { Metadata } from "next";
+import Link from "next/link";
 import MainLayout from "@/components/MainLayout";
-import PostCard from "@/components/PostCard";
+import MenuRow from "@/components/MenuRow";
+import PageHeader from "@/components/PageHeader";
 import JsonLd from "@/components/JsonLd";
 import { getDictionary } from "@/i18n/dictionaries";
 import { localePaths, resolveLocale } from "@/i18n/server";
-import { getCategory, getPosts } from "@/lib/content";
+import { getCategoriesWithPosts, getPostNumber, getPosts, getPostsByCategory } from "@/lib/content";
 import { breadcrumbJsonLd, pageMetadata } from "@/lib/seo";
 import { paths } from "@/lib/urls";
 
@@ -24,31 +26,55 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   });
 }
 
+/** The full menu: one section per category, posts numbered by their permanent menu number. */
 export default async function PostsPage({ params }: Props) {
   const locale = await resolveLocale(params);
   const dict = getDictionary(locale);
   const posts = getPosts(locale);
+  const categories = getCategoriesWithPosts(locale);
 
   return (
-    <MainLayout locale={locale} alternates={alternates()}>
+    <MainLayout locale={locale} alternates={alternates()} currentPath={paths.posts(locale)}>
       <JsonLd
         data={breadcrumbJsonLd([
           { name: dict.breadcrumb.home, path: paths.home(locale) },
           { name: dict.posts.title, path: paths.posts(locale) },
         ])}
       />
-      <div className="py-10 px-10 md:px-20 max-w-7xl mx-auto">
-        <h1 className="text-4xl font-bold mb-8 text-start">{dict.posts.title}</h1>
+      <PageHeader
+        title={dict.posts.title}
+        description={dict.posts.description}
+        crumbs={[{ title: dict.breadcrumb.home, links: paths.home(locale), isHome: true }]}
+      />
+
+      <div className="mx-auto max-w-[90rem] px-4 py-14 md:px-8 md:py-20">
         {posts.length === 0 ? (
-          <p>{dict.posts.empty}</p>
+          <p className="text-lg text-muted-foreground">{dict.posts.empty}</p>
         ) : (
-          <ul className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6 mb-8">
-            {posts.map((post) => (
-              <li key={post.slug}>
-                <PostCard locale={locale} post={post} categoryTitle={getCategory(locale, post.category)?.title} />
-              </li>
+          <div className="space-y-16">
+            {categories.map((category) => (
+              <section key={category.slug} aria-labelledby={`cat-${category.slug}`}>
+                <div className="flex flex-wrap items-baseline gap-x-4 gap-y-1">
+                  <h2 id={`cat-${category.slug}`} className="font-display text-[clamp(1.75rem,1.4rem+1.5vw,2.75rem)]">
+                    <Link href={paths.category(locale, category.slug)} className="hover:text-[var(--link)] hover:underline">
+                      {category.title}
+                    </Link>
+                  </h2>
+                  <span className="text-sm text-muted-foreground">
+                    <span className="font-mono" data-numeric>
+                      {getPostsByCategory(locale, category.slug).length}
+                    </span>{" "}
+                    {dict.posts.countUnit(getPostsByCategory(locale, category.slug).length)}
+                  </span>
+                </div>
+                <ol className="mt-6">
+                  {getPostsByCategory(locale, category.slug).map((post) => (
+                    <MenuRow key={post.slug} locale={locale} post={post} number={getPostNumber(locale, post)} />
+                  ))}
+                </ol>
+              </section>
             ))}
-          </ul>
+          </div>
         )}
       </div>
     </MainLayout>

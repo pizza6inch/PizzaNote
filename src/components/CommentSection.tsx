@@ -21,8 +21,8 @@ export default function CommentSection({ heading, term, lang, repo, repoId, cate
   if (!repoId || !categoryId) return null;
 
   return (
-    <section aria-labelledby="comments-heading" className="container py-10">
-      <h2 id="comments-heading" className="text-2xl font-bold mb-6">
+    <section aria-labelledby="comments-heading" className="mx-auto max-w-[90rem] border-t-2 border-dashed border-[hsl(var(--border))] px-4 py-14 md:px-8">
+      <h2 id="comments-heading" className="mb-8 font-display text-3xl">
         {heading}
       </h2>
       <Giscus

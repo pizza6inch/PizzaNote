@@ -2,9 +2,9 @@ import type { Locale } from "./config";
 
 export interface Dictionary {
   site: { name: string; tagline: string; description: string };
-  nav: { home: string; allPosts: string; about: string; overview: string; search: string; menu: string; language: string; theme: string };
-  home: { title: string; latest: string };
-  posts: { title: string; description: string; empty: string };
+  nav: { home: string; allPosts: string; about: string; overview: string; search: string; menu: string; language: string; skip: string; theme: string };
+  home: { title: string; latest: string; special: string; menu: string; read: string; topics: string };
+  posts: { title: string; description: string; empty: string; count: (n: number) => string; countUnit: (n: number) => string };
   topic: { posts: string; categories: string };
   category: { posts: string; title: string; description: (name: string) => string };
   tag: { title: (name: string) => string; description: (name: string, count: number) => string };
@@ -18,11 +18,13 @@ export interface Dictionary {
     comments: string;
     views: string;
     minRead: (n: number) => string;
+    minShort: (n: number) => string;
+    minUnit: string;
+    table: string;
   };
   about: { title: string; intro: string; experience: string };
   experience: { date: string; title: string; description: string }[];
-  sidebar: { about: string; more: string; heart: string; alive: (days: number) => string; categories: string; follow: string };
-  footer: { follow: string; rights: string };
+  footer: { follow: string; rights: string; alive: (days: number) => string };
   search: { title: string; placeholder: string; loading: string; empty: string; hint: string; close: string };
   notFound: { title: string; body: string; home: string };
   breadcrumb: { home: string };
@@ -42,13 +44,16 @@ const zhTw: Dictionary = {
     search: "搜尋",
     menu: "選單",
     language: "語言",
+    skip: "跳到主要內容",
     theme: "切換深淺色主題",
   },
-  home: { title: "披薩筆記", latest: "最新文章" },
+  home: { title: "披薩筆記", latest: "最新文章", special: "本日推薦", menu: "文章菜單", read: "開始閱讀", topics: "依主題挑選" },
   posts: {
     title: "所有文章",
     description: "披薩筆記中所有文章的列表，涵蓋前端、JavaScript、SEO 等主題，助你持續學習與成長。",
     empty: "目前還沒有文章。",
+    count: (n) => `${n} 篇`,
+    countUnit: () => "篇",
   },
   topic: { posts: "最新文章", categories: "分類" },
   category: {
@@ -70,6 +75,9 @@ const zhTw: Dictionary = {
     comments: "留言",
     views: "瀏覽次數",
     minRead: (n) => `約 ${n} 分鐘`,
+    minShort: (n) => `${n} 分鐘`,
+    minUnit: "分鐘",
+    table: "表格",
   },
   about: {
     title: "關於我",
@@ -90,15 +98,7 @@ const zhTw: Dictionary = {
     },
     { date: "2021.8 ~ 2025.6", title: "國立台北科技大學", description: "資訊工程學系" },
   ],
-  sidebar: {
-    about: "關於我",
-    more: "了解更多",
-    heart: "披薩心臟！",
-    alive: (days) => `本站已存活:${days}天!`,
-    categories: "文章分類",
-    follow: "追蹤",
-  },
-  footer: { follow: "追蹤", rights: "All Rights Reserved." },
+  footer: { follow: "追蹤", rights: "All Rights Reserved.", alive: (days) => `本站已營業 ${days} 天` },
   search: {
     title: "搜尋文章",
     placeholder: "輸入關鍵字",
@@ -130,14 +130,17 @@ const en: Dictionary = {
     search: "Search",
     menu: "Menu",
     language: "Language",
+    skip: "Skip to content",
     theme: "Toggle light/dark theme",
   },
-  home: { title: "PizzaNote", latest: "Latest posts" },
+  home: { title: "PizzaNote", latest: "Latest posts", special: "Today's special", menu: "The menu", read: "Read the note", topics: "Pick a topic" },
   posts: {
     title: "All posts",
     description:
       "Every post on PizzaNote, covering front-end development, JavaScript and SEO, to keep you learning and growing.",
     empty: "There are no posts yet.",
+    count: (n) => `${n} ${n === 1 ? "note" : "notes"}`,
+    countUnit: (n) => (n === 1 ? "note" : "notes"),
   },
   topic: { posts: "Latest posts", categories: "Categories" },
   category: {
@@ -159,6 +162,9 @@ const en: Dictionary = {
     comments: "Comments",
     views: "Views",
     minRead: (n) => `${n} min read`,
+    minShort: (n) => `${n} min`,
+    minUnit: "min",
+    table: "Table",
   },
   about: {
     title: "About me",
@@ -184,15 +190,7 @@ const en: Dictionary = {
       description: "B.S. in Computer Science and Information Engineering",
     },
   ],
-  sidebar: {
-    about: "About me",
-    more: "Learn more",
-    heart: "Pizza heart!",
-    alive: (days) => `This site has been alive for ${days} days!`,
-    categories: "Categories",
-    follow: "Follow",
-  },
-  footer: { follow: "Follow", rights: "All Rights Reserved." },
+  footer: { follow: "Follow", rights: "All Rights Reserved.", alive: (days) => `Open for ${days} days` },
   search: {
     title: "Search posts",
     placeholder: "Type a keyword",

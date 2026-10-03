@@ -1,0 +1,175 @@
+{
+  "schemaVersion": 2,
+  "generatedAt": "2026-10-03T12:00:00+08:00",
+  "title": "Design System: PizzaNote 披薩筆記",
+  "extensions": {
+    "colorMeta": {
+      "pepperoni": { "role": "primary", "displayName": "Pepperoni Red", "canonical": "#c9241b", "tonalRamp": ["#3d0a07", "#5e110c", "#8e1b12", "#c9241b", "#e5483b", "#f07c71", "#f8b3ab", "#fde4e1"] },
+      "pepperoni-deep": { "role": "primary", "displayName": "Pepperoni Deep", "canonical": "#8e1b12" },
+      "masthead": { "role": "primary", "displayName": "Masthead Red (both themes)", "canonical": "#c9241b" },
+      "cheese": { "role": "secondary", "displayName": "Cheese Yellow (both themes)", "canonical": "#ffc72c", "tonalRamp": ["#4a3500", "#7a5800", "#b38300", "#e6aa00", "#ffc72c", "#ffd863", "#ffe9a3", "#fff6db"] },
+      "cheese-soft": { "role": "secondary", "displayName": "Cheese Soft", "canonical": "#fff1bd" },
+      "crust": { "role": "neutral", "displayName": "Crust", "canonical": "#2a140c", "tonalRamp": ["#140905", "#2a140c", "#4a2c20", "#6a4639", "#8f6b5c", "#b8988a", "#dfd1b9", "#f3ece4"] },
+      "paper": { "role": "neutral", "displayName": "Paper", "canonical": "hsl(0 0% 100%)" },
+      "crust-ink": { "role": "neutral", "displayName": "Crust Ink", "canonical": "hsl(16 62% 11%)" },
+      "crust-muted": { "role": "neutral", "displayName": "Crust Muted", "canonical": "hsl(16 30% 32%)" },
+      "flour-rule": { "role": "neutral", "displayName": "Flour Rule", "canonical": "hsl(38 38% 80%)" },
+      "night-ground": { "role": "neutral", "displayName": "Night Ground (burnt crust)", "canonical": "hsl(16 52% 7%)" },
+      "night-card": { "role": "neutral", "displayName": "Night Card", "canonical": "hsl(16 42% 11%)" },
+      "night-text": { "role": "neutral", "displayName": "Night Text (warm cream)", "canonical": "hsl(43 100% 92%)" },
+      "night-muted": { "role": "neutral", "displayName": "Night Muted", "canonical": "hsl(38 30% 72%)" },
+      "night-rule": { "role": "neutral", "displayName": "Night Rule", "canonical": "hsl(16 30% 22%)" },
+      "night-cheese-soft": { "role": "secondary", "displayName": "Night Cheese Soft", "canonical": "#2e1a10" },
+      "night-pepperoni": { "role": "primary", "displayName": "Night Pepperoni", "canonical": "#e5483b" },
+      "night-pepperoni-deep": { "role": "primary", "displayName": "Night Pepperoni Deep", "canonical": "#ff8a7d" },
+      "night-link-hover": { "role": "secondary", "displayName": "Night Link Hover", "canonical": "#ffe08a" },
+      "footer-text": { "role": "neutral", "displayName": "Footer Cream", "canonical": "#fff4d6" },
+      "oven-black": { "role": "neutral", "displayName": "Oven Black (code ground)", "canonical": "#231510" },
+      "oven-edge": { "role": "neutral", "displayName": "Oven Edge", "canonical": "#4a2c20" },
+      "pizza-crust": { "role": "tertiary", "displayName": "Pizza Crust", "canonical": "#d98c2b" },
+      "pizza-crust-inner": { "role": "tertiary", "displayName": "Pizza Crust Inner", "canonical": "#e9a23c" },
+      "pizza-face": { "role": "tertiary", "displayName": "Pizza Face", "canonical": "#ffd54a" },
+      "pizza-cut": { "role": "tertiary", "displayName": "Pizza Cut Line", "canonical": "#b8651b" },
+      "pizza-glow": { "role": "tertiary", "displayName": "Pizza Glow (reduced-motion hover)", "canonical": "#ffe07a" }
+    },
+    "typographyMeta": {
+      "display": { "displayName": "Display (Huninn subset)", "purpose": "The single H1 on the yellow field; the home's newest-post title. Glyphs outside the subset fall back to the body face." },
+      "headline": { "displayName": "Headline", "purpose": "Section heads on the white ground, e.g. the home menu." },
+      "title": { "displayName": "Title", "purpose": "Menu-row titles and the order-ticket title." },
+      "prose-heading": { "displayName": "Prose H2", "purpose": "Article headings with a cheese highlighter band; H3 1.35rem, H4 1.15rem." },
+      "body": { "displayName": "Body (reading column)", "purpose": "Article prose, max 44rem; Latin Noto Sans plus the visitor's system CJK face." },
+      "body-ui": { "displayName": "Body (interface)", "purpose": "Summaries, descriptions and interface text." },
+      "label": { "displayName": "Label", "purpose": "Read times, ticket groups, table headers, masthead links (600)." },
+      "mono": { "displayName": "Mono (numerals and code)", "purpose": "Digits and code only; CJK units stay in the body face." }
+    },
+    "shadows": [
+      { "name": "plate-lift", "value": "drop-shadow(0 16px 18px rgba(42, 20, 12, 0.22))", "purpose": "Filter on the pizza table of contents sitting on its plate." },
+      { "name": "dropdown", "value": "0 18px 30px rgba(42, 20, 12, 0.35)", "purpose": "Mobile masthead menu panel." },
+      { "name": "dialog", "value": "0 24px 48px rgba(42, 20, 12, 0.35)", "purpose": "Search dialog; backdrop rgba(42, 20, 12, 0.55)." },
+      { "name": "h2-highlighter", "value": "inset 0 -0.45em 0 #ffc72c", "purpose": "Flat marker band under prose H2 (rgba(255,199,44,0.28) at night). Not elevation." }
+    ],
+    "motion": [
+      { "name": "ease-board", "value": "cubic-bezier(0.16, 1, 0.3, 1)", "purpose": "The only easing in the system." },
+      { "name": "duration-state", "value": "160ms", "purpose": "Masthead links, ticket lines, read button background and 1px rise." },
+      { "name": "duration-row", "value": "180ms", "purpose": "Menu-row hover fill." },
+      { "name": "slice-lift", "value": "transform 320ms cubic-bezier(0.16, 1, 0.3, 1); translate 11px along the slice bisector", "purpose": "Signature motion on pizza slice hover/focus. Reduced motion: no transform, fill #ffe07a with a 4px crust stroke; all frame transitions removed." }
+    ],
+    "breakpoints": [
+      { "name": "menu-stack", "value": "720px" },
+      { "name": "md", "value": "768px" },
+      { "name": "lg", "value": "1024px" }
+    ]
+  },
+  "components": [
+    {
+      "name": "Read Button",
+      "kind": "button",
+      "refersTo": "button-read",
+      "description": "The one action style: a red pill. On the yellow field it is pinned to light red in both themes.",
+      "html": "<a class=\"ds-btn-read\" href=\"#\">開始閱讀 <span class=\"ds-btn-read-min\">· 6 分鐘</span><svg width=\"20\" height=\"20\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\" aria-hidden=\"true\"><path d=\"M5 12h14\"/><path d=\"m12 5 7 7-7 7\"/></svg></a>",
+      "css": ".ds-btn-read { display: inline-flex; align-items: center; gap: 0.5rem; background: #c9241b; color: #fff; font-weight: 700; padding: 0.75rem 1.4rem; border-radius: 999px; text-decoration: none; transition: background-color 160ms cubic-bezier(0.16,1,0.3,1), transform 160ms cubic-bezier(0.16,1,0.3,1); } .ds-btn-read-min { font-weight: 400; opacity: 0.9; } .ds-btn-read:hover { background: #8e1b12; transform: translateY(-1px); } .ds-btn-read:focus-visible { outline: 3px solid #2a140c; outline-offset: 3px; }"
+    },
+    {
+      "name": "Masthead",
+      "kind": "nav",
+      "refersTo": "masthead-band",
+      "description": "64px pepperoni band, same red in both themes; pill links fill cheese on hover and for the current page.",
+      "html": "<nav class=\"ds-masthead\"><a class=\"ds-mast-brand\" href=\"#\"><svg width=\"36\" height=\"36\" viewBox=\"0 0 48 48\" aria-hidden=\"true\"><circle cx=\"24\" cy=\"24\" r=\"22\" fill=\"#d98c2b\"/><circle cx=\"24\" cy=\"24\" r=\"18\" fill=\"#ffc72c\"/><circle cx=\"17\" cy=\"19\" r=\"4.2\" fill=\"#c9241b\"/><circle cx=\"30.5\" cy=\"16.5\" r=\"3.4\" fill=\"#c9241b\"/><circle cx=\"29\" cy=\"30\" r=\"4.6\" fill=\"#c9241b\"/></svg>披薩筆記</a><ul class=\"ds-mast-links\"><li><a class=\"ds-mast-link\" href=\"#\">前端</a></li><li><a class=\"ds-mast-link\" aria-current=\"page\" href=\"#\">所有文章</a></li><li><a class=\"ds-mast-link\" href=\"#\">關於我</a></li></ul></nav>",
+      "css": ".ds-masthead { display: flex; align-items: center; justify-content: space-between; height: 64px; padding: 0 2rem; background: #c9241b; color: #fff; } .ds-mast-brand { display: flex; align-items: center; gap: 0.75rem; color: inherit; text-decoration: none; font-size: 1.5rem; } .ds-mast-links { display: flex; gap: 0.25rem; list-style: none; margin: 0; padding: 0; } .ds-mast-link { display: block; padding: 0.4rem 0.75rem; border-radius: 999px; font-weight: 600; color: inherit; text-decoration: none; transition: background-color 160ms cubic-bezier(0.16,1,0.3,1); } .ds-mast-link:hover, .ds-mast-link[aria-current=\"page\"] { background: #ffc72c; color: #2a140c; } .ds-mast-link:focus-visible { outline: 3px solid #fff; outline-offset: 3px; }"
+    },
+    {
+      "name": "Menu Row",
+      "kind": "custom",
+      "refersTo": "menu-row",
+      "description": "A numbered post line with a dotted leader into the read time; summary and category on the second line.",
+      "html": "<ol class=\"ds-menu\"><li><a class=\"ds-menu-row\" href=\"#\"><span class=\"ds-menu-no\">05</span><span class=\"ds-menu-title\">JS 底層觀念 - this 物件</span><span class=\"ds-menu-leader\" aria-hidden=\"true\"></span><span class=\"ds-menu-time\"><span class=\"ds-mono\">6</span> 分鐘</span><span class=\"ds-menu-summary\">深入探討 JavaScript 中 this 的五種綁定方式。</span><span class=\"ds-menu-cat\">JavaScript</span></a></li></ol>",
+      "css": ".ds-menu { list-style: none; margin: 0; padding: 0; } .ds-menu-row { display: grid; grid-template-columns: 2.75rem minmax(0, max-content) minmax(1.5rem, 1fr) auto; grid-template-areas: 'no title leader time' '. summary summary cat'; column-gap: 0.75rem; align-items: last baseline; padding: 1.1rem 0.75rem; border-top: 2px solid #2a140c; border-bottom: 1px solid #dfd1b9; color: #2d140b; text-decoration: none; transition: background-color 180ms cubic-bezier(0.16,1,0.3,1); } .ds-menu-row:hover { background: #fff1bd; } .ds-menu-no { grid-area: no; font-family: 'JetBrains Mono', ui-monospace, monospace; font-size: 0.9rem; color: #6a4639; } .ds-menu-title { grid-area: title; font-size: 1.5rem; line-height: 1.3; } .ds-menu-row:hover .ds-menu-title { color: #c9241b; text-decoration: underline 2px; text-underline-offset: 0.2em; } .ds-menu-leader { grid-area: leader; height: 1px; margin-bottom: 0.3em; border-bottom: 2px dotted rgba(45,20,11,0.45); } .ds-menu-row:hover .ds-menu-leader { border-bottom-color: #c9241b; } .ds-menu-time { grid-area: time; font-weight: 700; font-size: 0.95rem; white-space: nowrap; } .ds-mono { font-family: 'JetBrains Mono', ui-monospace, monospace; } .ds-menu-summary { grid-area: summary; margin-top: 0.35rem; font-size: 0.95rem; color: #6a4639; } .ds-menu-cat { grid-area: cat; margin-top: 0.35rem; font-size: 0.85rem; color: #6a4639; } .ds-menu-row:focus-visible { outline: 3px solid #c9241b; outline-offset: 3px; }"
+    },
+    {
+      "name": "Order Ticket",
+      "kind": "card",
+      "refersTo": "order-ticket",
+      "description": "Series navigation: cheese-soft ticket with a dashed perforation, side notches, mono line numbers and a red current line.",
+      "html": "<nav class=\"ds-ticket\"><h2 class=\"ds-ticket-title\">目錄</h2><a class=\"ds-ticket-link\" href=\"#\"><span class=\"ds-ticket-no\">04</span><span>JS 底層觀念 - this 物件 上</span></a><a class=\"ds-ticket-link\" aria-current=\"page\" href=\"#\"><span class=\"ds-ticket-no\">05</span><span>JS 底層觀念 - this 物件 下</span></a></nav>",
+      "css": ".ds-ticket { position: relative; background: #fff1bd; color: #2d140b; border-radius: 0.5rem; padding: 1.25rem 1.25rem 1.5rem; max-width: 20rem; } .ds-ticket::before, .ds-ticket::after { content: ''; position: absolute; top: 3.6rem; width: 1.1rem; height: 1.1rem; border-radius: 50%; background: #fff; } .ds-ticket::before { left: -0.55rem; } .ds-ticket::after { right: -0.55rem; } .ds-ticket-title { font-size: 1.5rem; font-weight: 400; line-height: 1.2; margin: 0 0 1rem; padding-bottom: 1rem; border-bottom: 2px dashed rgba(45,20,11,0.45); } .ds-ticket-link { display: grid; grid-template-columns: 2rem 1fr; gap: 0.5rem; padding: 0.4rem 0.5rem; margin-inline: -0.5rem; border-radius: 0.375rem; color: inherit; text-decoration: none; line-height: 1.5; transition: background-color 160ms cubic-bezier(0.16,1,0.3,1); } .ds-ticket-link:hover { background: #ffc72c; color: #2a140c; } .ds-ticket-link[aria-current=\"page\"] { background: #c9241b; color: #fff; font-weight: 600; } .ds-ticket-link:focus-visible { outline: 3px solid #c9241b; outline-offset: 3px; } .ds-ticket-no { font-family: 'JetBrains Mono', ui-monospace, monospace; font-size: 0.8rem; padding-top: 0.2rem; opacity: 0.8; }"
+    },
+    {
+      "name": "Category Chip",
+      "kind": "chip",
+      "refersTo": "category-chip",
+      "description": "Crust-outlined pill on the yellow field with a mono count; fills crust on hover.",
+      "html": "<div class=\"ds-field\"><a class=\"ds-chip\" href=\"#\">JavaScript <span class=\"ds-chip-count\">2</span></a></div>",
+      "css": ".ds-field { background: #ffc72c; color: #2a140c; padding: 1.5rem; } .ds-chip { display: inline-flex; align-items: baseline; gap: 0.375rem; border: 2px solid #2a140c; border-radius: 999px; padding: 0.25rem 0.75rem; font-size: 0.875rem; font-weight: 700; color: #2a140c; text-decoration: none; transition: background-color 150ms, color 150ms; } .ds-chip:hover { background: #2a140c; color: #ffc72c; } .ds-chip:focus-visible { outline: 3px solid #2a140c; outline-offset: 3px; } .ds-chip-count { font-family: 'JetBrains Mono', ui-monospace, monospace; font-size: 0.75rem; }"
+    },
+    {
+      "name": "Search Input",
+      "kind": "input",
+      "refersTo": "search-input",
+      "description": "Large search field in the dialog; 2px ink border that turns pepperoni on focus.",
+      "html": "<input class=\"ds-input\" type=\"search\" placeholder=\"搜尋文章\" aria-label=\"搜尋文章\">",
+      "css": ".ds-input { width: 100%; border: 2px solid rgba(45,20,11,0.25); border-radius: 0.75rem; background: #fff; padding: 0.75rem 1rem; font-size: 1.125rem; color: #2d140b; caret-color: #c9241b; outline: none; } .ds-input:focus { border-color: #c9241b; }"
+    },
+    {
+      "name": "Code Block",
+      "kind": "custom",
+      "refersTo": "code-block",
+      "description": "Shiki dark-plus on oven black in both themes; scrolls inside its own frame.",
+      "html": "<pre class=\"ds-code\"><code><span style=\"color:#569CD6\">const</span> <span style=\"color:#4FC1FF\">person</span> = { <span style=\"color:#9CDCFE\">name</span>: <span style=\"color:#CE9178\">\"Alice\"</span> };</code></pre>",
+      "css": ".ds-code { font-family: 'JetBrains Mono', ui-monospace, monospace; font-size: 0.9rem; line-height: 1.65; background: #231510; color: #d4d4d4; border: 1px solid #4a2c20; border-radius: 0.75rem; padding: 1.1rem 1.25rem; overflow-x: auto; tab-size: 2; margin: 0; }"
+    },
+    {
+      "name": "Prose H2",
+      "kind": "custom",
+      "refersTo": "prose-heading",
+      "description": "Article H2 in the display face with a flat cheese highlighter band under its lower 0.45em.",
+      "html": "<h2 class=\"ds-h2\">顯式綁定 (Explicit Binding)</h2>",
+      "css": ".ds-h2 { font-size: 1.75rem; font-weight: 400; line-height: 1.25; letter-spacing: -0.01em; color: #2d140b; width: fit-content; padding-bottom: 0.4rem; box-shadow: inset 0 -0.45em 0 #ffc72c; }"
+    }
+  ],
+  "narrative": {
+    "northStar": "The Pizzeria Menu Board",
+    "overview": "The notes are a pizzeria's menu board and its order tickets. The frame is loud and flat: a pepperoni-red masthead band, a cheese-yellow field behind every page title, crust-brown ink, a red-and-white gingham strip above the footer. Inside that frame the reading column stays calm. It is white by day and burnt crust at night, set in the visitor's own CJK system face at a long-form measure. The pizza is the table of contents. Each slice is a category, its angle proportional to its post count, and every slice is a real link.\n\nThe vocabulary comes from a menu, not from a developer-blog card grid. Posts are numbered menu lines, and a dotted leader runs from each title to its read time, which plays the part of the price. A series is an order ticket with perforated rules and notched sides. Depth comes from flat colour fields and thin ink rules. Shadows are soft and appear only where a physical object lifts off the board (the pizza on its plate, a dropdown, the search dialog).\n\nDensity is generous on the field and tabular in the menu. Both languages share the same structure and polish. A Chinese title keeps its words whole when it wraps, and Latin and CJK sit in the same line without a seam.",
+    "keyCharacteristics": [
+      "Flat ingredient colours: pepperoni red, cheese yellow, crust ink, white or burnt-crust ground.",
+      "Round Taiwanese display face (Huninn) for headings only. Body text uses Latin Noto Sans plus the visitor's system CJK face.",
+      "Numbered menu rows with a dotted leader into the minutes.",
+      "An order ticket for series navigation and a pizza drawing for the category index.",
+      "One signature motion: the slice lifts out along its own axis.",
+      "Gingham appears once per page, directly above the footer."
+    ],
+    "rules": [
+      { "name": "The Same Yellow Rule", "body": "The cheese field and the red read button on it are identical in light and dark themes, and so is the masthead band. On the field, the button is pinned to light-theme pepperoni with white text (5.6:1), and its hover is pepperoni-deep. Dark mode never repaints the frame. It only changes the reading ground, the column text and the links inside the column.", "section": "colors" },
+      { "name": "The Frame Holds the Colour Rule", "body": "Red and yellow belong to the frame (masthead, field, ticket, actions, markers). The reading column stays paper and crust ink, and colour inside the prose is limited to links, list markers, the H2 highlighter and soft-cheese panels.", "section": "colors" },
+      { "name": "The Ink Flips on the Field Rule", "body": "The focus ring is 3px pepperoni (cheese at night) with a 3px offset. Inside the masthead it turns white, and on the yellow field it turns crust.", "section": "colors" },
+      { "name": "The Subset Rule", "body": "Huninn ships as one subset woff2 (75 KB as shipped) containing printable ASCII plus every character in the UI dictionary, the taxonomy titles, the post titles and series, and the Markdown headings. `scripts/build-display-font.mjs` regenerates it in `prebuild` whenever that character set changes. A glyph outside the subset falls back to the body face, silently. Any new source of display text (a new component heading, a new content field) must be added to that script, or it will render in the body face. Adaptation, 2026-10-03: full Noto Sans TC plus full Huninn webfonts produced 310 KB of render-blocking CSS and a 12 s mobile LCP. The subset plus a system CJK body brought LCP back to 2.7 s. Do not reintroduce a full CJK webfont.", "section": "typography" },
+      { "name": "The Numerals-Only Mono Rule", "body": "JetBrains Mono sets digits and code only. In \"6 分鐘\" the digit is mono and the CJK unit stays in the body face. Mono is never applied to a CJK string.", "section": "typography" },
+      { "name": "The Whole Word Rule", "body": "Display titles wrap on Chinese word boundaries, so \"物件\" never splits across lines. Each segmented word is an unbreakable inline block, and the text content is unchanged. Tables in zh-TW use `word-break: keep-all`.", "section": "typography" },
+      { "name": "The Calm Column Rule", "body": "Paragraphs, lists, headings, blockquotes and rules inside the article are capped at 44rem with a 1.25rem block rhythm. Tables and code blocks may run the full article width. A table always sits in a focusable, labelled scroll region (`tabindex=0`, `role=region`) with a thin pepperoni-on-cheese-soft scrollbar, so a wide table scrolls sideways instead of widening the page. Code blocks scroll horizontally inside their own frame.", "section": "layout" },
+      { "name": "The Ambient-Only Rule", "body": "Shadows are blurred, warm and offset downward only. No hard offset shadow (zero blur, solid-colour block) appears anywhere, and no surface gets a shadow just for being a card.", "section": "elevation" },
+      { "name": "The One Gingham Rule", "body": "The red-and-white check (1.25rem squares at 55% pepperoni over white, or 50% night pepperoni over crust at night) appears once per page, as a 1.25rem strip directly above the footer. It never becomes a background, a border elsewhere, or a section divider.", "section": "shapes" },
+      { "name": "The Price Line Rule", "body": "A post listing is a menu row with a dotted leader into the minutes. Posts are never shown as a grid of cards.", "section": "components" },
+      { "name": "The Slice Lift Rule", "body": "The system's one signature motion is a slice sliding 11px outward along its own bisector on hover or focus (320ms, cubic-bezier(0.16, 1, 0.3, 1)). Keyboard focus also strokes the wedge 4px crust. Under `prefers-reduced-motion` the slice does not move: its fill changes to pizza-glow with the crust stroke instead, and all frame transitions are removed.", "section": "components" }
+    ],
+    "dos": [
+      "**Do** open every page with the 64px masthead band and a cheese field holding the page's single H1.",
+      "**Do** keep the field, its red read button and the masthead identical in light and dark themes. Only the reading ground, column text and links change at night.",
+      "**Do** list posts as numbered menu rows with a dotted leader into the read time.",
+      "**Do** cap prose at 44rem and put every table in a focusable, labelled scroll region.",
+      "**Do** set code in shiki on oven-black (#231510) in both themes.",
+      "**Do** set digits in JetBrains Mono and keep CJK units (\"分鐘\") in the body face.",
+      "**Do** add any new source of display text to `scripts/build-display-font.mjs` so its glyphs are in the Huninn subset.",
+      "**Do** give interactive drawings real links and repeat them as plain links nearby.",
+      "**Do** start every animation from the visible state and give reduced-motion users a colour change instead of movement."
+    ],
+    "donts": [
+      "**Don't** put an eyebrow or kicker label above a heading. The heading carries its own meaning.",
+      "**Don't** use emoji or Unicode glyphs as icons. Interface icons are SVG line icons or drawn SVG (PizzaMark, brand icons).",
+      "**Don't** use colour gradients. The gingham check uses hard-stop `linear-gradient` syntax to draw a pattern, and that is its only sanctioned use.",
+      "**Don't** use hard offset shadows (zero-blur solid blocks) or shadows on ordinary cards.",
+      "**Don't** hide content until JavaScript runs, or start an animation from opacity 0 or an offset position.",
+      "**Don't** load a full CJK webfont for display or body text.",
+      "**Don't** repeat the gingham strip anywhere except once above the footer.",
+      "**Don't** lay posts out as a card grid, or turn the reading column cream or yellow."
+    ]
+  }
+}

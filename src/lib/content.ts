@@ -67,7 +67,9 @@ const estimateReadingMinutes = (body: string) => {
     .replace(/[㐀-鿿]/g, " ")
     .split(/\s+/)
     .filter((w) => /[A-Za-z0-9]/.test(w)).length;
-  return Math.max(1, Math.round(cjk / 400 + latin / 220));
+  // Code is read slowly: roughly a minute per 30 lines.
+  const codeLines = (body.match(/```[\s\S]*?```/g) ?? []).reduce((n, block) => n + block.split("\n").length - 2, 0);
+  return Math.max(1, Math.round(cjk / 400 + latin / 220 + codeLines / 30));
 };
 
 const asArray = (v: unknown): string[] => (Array.isArray(v) ? v.map(String) : []);
@@ -120,6 +122,12 @@ function load(locale: Locale): LocaleContent {
 // ---- posts ------------------------------------------------------------------
 
 export const getPosts = (locale: Locale) => load(locale).posts;
+
+/** Stable menu number: 1 is the oldest post, so numbers never change when a new post is published. */
+export const getPostNumber = (locale: Locale, post: Post) => {
+  const chronological = [...load(locale).posts].sort((a, b) => (a.publishedAt > b.publishedAt ? 1 : -1));
+  return chronological.findIndex((p) => p.topic === post.topic && p.slug === post.slug) + 1;
+};
 
 export const getPost = (locale: Locale, topic: string, slug: string) =>
   load(locale).posts.find((p) => p.topic === topic && p.slug === slug);

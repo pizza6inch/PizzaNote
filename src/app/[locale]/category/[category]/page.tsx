@@ -1,12 +1,13 @@
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import MainLayout from "@/components/MainLayout";
-import PostCard from "@/components/PostCard";
+import MenuRow from "@/components/MenuRow";
+import PageHeader from "@/components/PageHeader";
 import JsonLd from "@/components/JsonLd";
 import { locales, type Locale } from "@/i18n/config";
 import { getDictionary } from "@/i18n/dictionaries";
 import { localePaths, resolveLocale } from "@/i18n/server";
-import { getCategoriesWithPosts, getCategory, getSeriesGroups, getTopic } from "@/lib/content";
+import { getCategoriesWithPosts, getCategory, getPostNumber, getSeriesGroups, getTopic } from "@/lib/content";
 import { breadcrumbJsonLd, pageMetadata } from "@/lib/seo";
 import { paths } from "@/lib/urls";
 
@@ -44,32 +45,36 @@ export default async function CategoryPage({ params }: Props) {
   const dict = getDictionary(locale);
   const topic = getTopic(locale, category.topic);
   const groups = getSeriesGroups(locale, slug);
+  const crumbs = [
+    { title: dict.breadcrumb.home, links: paths.home(locale), isHome: true },
+    ...(topic ? [{ title: topic.title, links: paths.topic(locale, topic.slug) }] : []),
+  ];
 
   return (
     <MainLayout locale={locale} alternates={alternatesFor(slug)}>
       <JsonLd
         data={breadcrumbJsonLd([
-          { name: dict.breadcrumb.home, path: paths.home(locale) },
-          ...(topic ? [{ name: topic.title, path: paths.topic(locale, topic.slug) }] : []),
+          ...crumbs.map((c) => ({ name: c.title, path: c.links })),
           { name: category.title, path: paths.category(locale, slug) },
         ])}
       />
-      <div className="py-10 px-5 md:px-10 max-w-7xl mx-auto">
-        <h1 className="text-4xl font-bold mb-4">{category.title}</h1>
-        {category.description && (
-          <p className="mb-8 text-gray-600 dark:text-gray-400 max-w-3xl whitespace-pre-line">{category.description}</p>
-        )}
+      <PageHeader title={category.title} description={category.description} crumbs={crumbs} />
 
+      <div className="mx-auto max-w-[90rem] space-y-14 px-4 py-14 md:px-8 md:py-20">
         {groups.map((group) => (
-          <section key={group.title ?? "_"} className="mb-10">
-            {group.title && <h2 className="text-2xl font-bold mb-4">{group.title}</h2>}
-            <ul className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
+          <section key={group.title ?? "_"}>
+            {group.title && <h2 className="font-display text-[clamp(1.75rem,1.4rem+1.5vw,2.5rem)]">{group.title}</h2>}
+            <ol className="mt-6">
               {group.posts.map((post) => (
-                <li key={post.slug}>
-                  <PostCard locale={locale} post={post} headingLevel={group.title ? "h3" : "h2"} />
-                </li>
+                <MenuRow
+                  key={post.slug}
+                  locale={locale}
+                  post={post}
+                  number={getPostNumber(locale, post)}
+                  headingLevel={group.title ? "h3" : "h2"}
+                />
               ))}
-            </ul>
+            </ol>
           </section>
         ))}
       </div>

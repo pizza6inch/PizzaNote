@@ -1,13 +1,5 @@
-import {
-  Breadcrumb,
-  BreadcrumbItem,
-  BreadcrumbLink,
-  BreadcrumbList,
-  BreadcrumbPage,
-  BreadcrumbSeparator,
-} from "@/components/ui/breadcrumb";
-
-import { Pizza } from "lucide-react";
+import Link from "next/link";
+import { ChevronRight } from "lucide-react";
 import React from "react";
 
 export interface BreadcrumbEntry {
@@ -16,21 +8,20 @@ export interface BreadcrumbEntry {
   isHome?: boolean;
 }
 
+/** Breadcrumbs set in the field's crust ink; the last entry is the current location's parent. */
 export default function BreadcrumbLinks({ items }: { items: BreadcrumbEntry[] }) {
   return (
-    <Breadcrumb>
-      <BreadcrumbList>
+    <nav aria-label="Breadcrumb">
+      <ol className="flex flex-wrap items-center gap-1 text-sm font-semibold">
         {items.map((item, index) => (
-          <React.Fragment key={item.links}>
-            <BreadcrumbItem>
-              <BreadcrumbLink className=" hover:text-primary" href={item.links} aria-label={item.isHome ? item.title : undefined}>
-                {item.isHome ? <Pizza aria-hidden="true" /> : item.title}
-              </BreadcrumbLink>
-            </BreadcrumbItem>
-            {index !== items.length - 1 && <BreadcrumbSeparator className=" text-yellow" />}
-          </React.Fragment>
+          <li key={item.links} className="flex items-center gap-1">
+            <Link href={item.links} className="rounded-full px-1.5 py-0.5 underline-offset-4 hover:underline">
+              {item.title}
+            </Link>
+            {index !== items.length - 1 && <ChevronRight className="h-4 w-4 opacity-60" aria-hidden="true" />}
+          </li>
         ))}
-      </BreadcrumbList>
-    </Breadcrumb>
+      </ol>
+    </nav>
   );
 }
