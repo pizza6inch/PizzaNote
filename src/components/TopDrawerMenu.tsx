@@ -23,7 +23,15 @@ type menuContentType = {
   content: { links: string; text: string }[];
 }[];
 
-export default function TopDrawerMenu({ content }: { content: menuContentType }) {
+export default function TopDrawerMenu({
+  content,
+  title,
+  siteName,
+}: {
+  content: menuContentType;
+  title: string;
+  siteName: string;
+}) {
   // TODO: 用state來控制內容的開關
   const [openIndex, setOpenIndex] = useState<null | number>(null);
   const [open, setOpen] = useState(false);
@@ -39,14 +47,16 @@ export default function TopDrawerMenu({ content }: { content: menuContentType })
   return (
     <Drawer direction="bottom" open={open} onOpenChange={setOpen}>
       <DrawerTrigger asChild>
-        <Menu size={36} className="cursor-pointer" />
+        <button type="button" aria-label={title} className="cursor-pointer">
+          <Menu size={36} />
+        </button>
       </DrawerTrigger>
       <DrawerPortal>
         <DrawerOverlay className="fixed inset-0 bg-black/40" />
         <DrawerContent className="bg-background h-fit fixed bottom-0 left-0 right-0 outline-none">
           <DrawerHeader>
-            <DrawerTitle className="text-center text-2xl font-bold">菜單</DrawerTitle>
-            <DrawerDescription className="text-center text-sm text-muted-foreground">OWO</DrawerDescription>
+            <DrawerTitle className="text-center text-2xl font-bold">{title}</DrawerTitle>
+            <DrawerDescription className="sr-only">{title}</DrawerDescription>
           </DrawerHeader>
           <nav className="flex flex-col gap-4 p-6 text-lg">
             {content.map((item, index) => (
@@ -87,7 +97,7 @@ export default function TopDrawerMenu({ content }: { content: menuContentType })
             ))}
           </nav>
           <DrawerFooter className="p-4 flex flex-row justify-center items-center">
-            <Logo />
+            <Logo name={siteName} />
           </DrawerFooter>
         </DrawerContent>
       </DrawerPortal>

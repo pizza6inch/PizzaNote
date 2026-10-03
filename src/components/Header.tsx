@@ -2,119 +2,107 @@
 
 import React, { useState, useEffect } from "react";
 import Link from "next/link";
-import { Search, Menu, ChevronDown } from "lucide-react";
+import { Search } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { ThemeToggle } from "@/components/ThemeToggle";
 import TopDrawerMenu from "@/components/TopDrawerMenu";
-import { MainNav, CustomHoverNav } from "@/components/NavMenu";
+import { MainNav } from "@/components/NavMenu";
 import Logo from "./Logo";
-import { readClient } from "@/sanity/lib/client";
-import { ALL_POSTS_QUERY } from "@/sanity/lib/queries";
-
 import { motion, AnimatePresence } from "framer-motion";
 
-interface Post {
-  _id: string;
+export interface MenuItem {
   title: string;
-  slug: string;
-  description: string;
-  category: {
-    title: string;
-    slug: string;
-    topic: {
-      title: string;
-      slug: string;
-    };
-  };
-  publishedAt: string;
-  tags?: Array<{ title: string; slug: string }>;
+  links: string;
+  content: { links: string; text: string }[];
 }
 
-export default function Header() {
+export interface HeaderLabels {
+  siteName: string;
+  overview: string;
+  search: string;
+  menu: string;
+  language: string;
+  theme: string;
+  searchTitle: string;
+  searchPlaceholder: string;
+  searchLoading: string;
+  searchEmpty: string;
+  searchHint: string;
+  close: string;
+}
+
+export interface LocaleLink {
+  code: string;
+  label: string;
+  href: string;
+  current: boolean;
+}
+
+interface SearchEntry {
+  title: string;
+  description: string;
+  href: string;
+}
+
+interface HeaderProps {
+  homeHref: string;
+  searchIndexUrl: string;
+  menu: MenuItem[];
+  labels: HeaderLabels;
+  localeLinks: LocaleLink[];
+}
+
+export default function Header({ homeHref, searchIndexUrl, menu, labels, localeLinks }: HeaderProps) {
   const [isSearchOpen, setIsSearchOpen] = useState(false);
   const [searchQuery, setSearchQuery] = useState("");
-  const [allPosts, setAllPosts] = useState<Post[]>([]);
-  const [searchResults, setSearchResults] = useState<Post[]>([]);
-  const [isLoading, setIsLoading] = useState(false);
+  const [entries, setEntries] = useState<SearchEntry[] | null>(null);
 
   const toggleSearch = () => {
-    setIsSearchOpen(!isSearchOpen);
-    // Reset search when closing
-    if (isSearchOpen) {
-      setSearchQuery("");
-      setSearchResults([]);
-    }
+    setIsSearchOpen((open) => !open);
+    setSearchQuery("");
   };
 
-  const fetchAllPosts = async () => {
-    setIsLoading(true);
-    try {
-      const posts = await readClient.fetch<Post[]>(ALL_POSTS_QUERY);
-      setAllPosts(posts || []); // Ensure posts is an array
-    } catch (error) {
-      console.error("Failed to fetch posts:", error);
-      setAllPosts([]); // Set to empty array on error
-    }
-    setIsLoading(false);
-  };
-
-  const handleSearchChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    const query = event.target.value;
-    setSearchQuery(query);
-
-    if (query.trim() === "") {
-      setSearchResults([]);
-      return;
-    }
-
-    const filteredPosts = allPosts.filter((post) => {
-      const titleMatch = post.title?.toLowerCase().includes(query.toLowerCase());
-      const descriptionMatch = post.description?.toLowerCase().includes(query.toLowerCase());
-      return titleMatch || descriptionMatch;
-    });
-    setSearchResults(filteredPosts);
-  };
-
-  // Fetch posts when search is opened for the first time
-
+  // The index is a small static JSON file; it is only fetched the first time search opens.
+  const isLoading = isSearchOpen && entries === null;
   useEffect(() => {
-    if (isSearchOpen && allPosts.length === 0) {
-      fetchAllPosts();
-    }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [isSearchOpen]); // Removed allPosts from dependency array to prevent re-fetching
+    if (!isSearchOpen || entries !== null) return;
+    let cancelled = false;
+    fetch(searchIndexUrl)
+      .then((res) => (res.ok ? res.json() : []))
+      .catch(() => [])
+      .then((data: SearchEntry[]) => {
+        if (!cancelled) setEntries(data);
+      });
+    return () => {
+      cancelled = true;
+    };
+  }, [isSearchOpen, entries, searchIndexUrl]);
 
-  const menuContent = [
-    {
-      title: "前端",
-      links: "/front-end",
-      content: [
-        { links: "/front-end/Bundler", text: "打包工具" },
-        {
-          links: "/front-end/seo",
-          text: "SEO",
-        },
-      ],
-    },
-    {
-      title: "生活相關",
-      links: "/life",
-      content: [
-        { links: "/life/", text: "暫無" },
-        { links: "/life/", text: "暫無" },
-      ],
-    },
-    {
-      title: "所有文章",
-      links: "/posts",
-      content: [],
-    },
-    {
-      title: "關於我",
-      links: "/about",
-      content: [],
-    },
-  ];
+  const query = searchQuery.trim().toLowerCase();
+  const results =
+    query === ""
+      ? []
+      : (entries ?? []).filter(
+          (e) => e.title.toLowerCase().includes(query) || e.description.toLowerCase().includes(query),
+        );
+
+  const languageSwitch = (
+    <ul className="flex items-center gap-1 text-sm" aria-label={labels.language}>
+      {localeLinks.map((l) => (
+        <li key={l.code}>
+          {l.current ? (
+            <span className="px-2 py-1 font-bold text-primary" aria-current="true">
+              {l.label}
+            </span>
+          ) : (
+            <Link href={l.href} hrefLang={l.code} className="px-2 py-1 hover:text-primary">
+              {l.label}
+            </Link>
+          )}
+        </li>
+      ))}
+    </ul>
+  );
 
   return (
     <>
@@ -122,33 +110,34 @@ export default function Header() {
         <div className="container-fluid border-bottom fixed-top bg-background dark:border-border ">
           <div className="container nav-container">
             <nav className="flex items-end justify-between py-3 px-0">
-              <Link href="/" className="flex items-center space-x-4">
-                <Logo />
+              <Link href={homeHref} className="flex items-center space-x-4">
+                <Logo name={labels.siteName} />
               </Link>
 
-              <div className="hidden md:flex space-x-3">
-                <MainNav menuContent={menuContent} />
-                {/* <CustomHoverNav /> */}
+              <div className="hidden md:flex space-x-3 items-center">
+                <MainNav menuContent={menu} overviewLabel={labels.overview} />
 
                 <button
                   onClick={toggleSearch}
                   className=" text-foreground hover:bg-primary rounded-lg p-2"
-                  aria-label="Search"
+                  aria-label={labels.search}
                 >
                   <Search size={24} />
                 </button>
 
-                <ThemeToggle size={24} />
+                <ThemeToggle size={24} label={labels.theme} />
+                {languageSwitch}
               </div>
 
               <div className="md:hidden flex items-center gap-3 md:gap-6">
-                <ThemeToggle size={24} />
+                {languageSwitch}
+                <ThemeToggle size={24} label={labels.theme} />
 
-                <button onClick={toggleSearch} aria-label="Search" className="cursor-pointer">
+                <button onClick={toggleSearch} aria-label={labels.search} className="cursor-pointer">
                   <Search size={24} />
                 </button>
 
-                <TopDrawerMenu content={menuContent} />
+                <TopDrawerMenu content={menu} title={labels.menu} siteName={labels.siteName} />
               </div>
             </nav>
           </div>
@@ -166,20 +155,25 @@ export default function Header() {
               animate={{ opacity: 1 }}
               exit={{ opacity: 0 }}
               transition={{ duration: 0.2 }}
+              onClick={toggleSearch}
             />
 
             {/* 搜尋內容彈出動畫 */}
             <motion.div
-              className="fixed inset-0 z-50 flex items-start justify-center pt-20"
+              className="fixed inset-0 z-50 flex items-start justify-center pt-20 pointer-events-none"
               initial={{ scale: 0.8, opacity: 0, y: -20 }}
               animate={{ scale: 1, opacity: 1, y: 0 }}
               exit={{ scale: 0.8, opacity: 0, y: -20 }}
               transition={{ duration: 0.3, ease: "easeOut" }}
             >
-              <div className="bg-background dark:bg-card p-6 rounded-lg w-full max-w-2xl">
+              <div
+                role="dialog"
+                aria-label={labels.searchTitle}
+                className="bg-background dark:bg-card p-6 rounded-lg w-full max-w-2xl pointer-events-auto"
+              >
                 <div className="mb-4 flex justify-between items-center">
-                  <h3 className="text-lg font-medium">搜尋文章</h3>
-                  <Button variant="ghost" size="icon" onClick={toggleSearch}>
+                  <h2 className="text-lg font-medium">{labels.searchTitle}</h2>
+                  <Button variant="ghost" size="icon" onClick={toggleSearch} aria-label={labels.close}>
                     ✕
                   </Button>
                 </div>
@@ -187,29 +181,31 @@ export default function Header() {
                 <div className="relative">
                   <input
                     type="search"
-                    placeholder="輸入關鍵字"
+                    autoFocus
+                    placeholder={labels.searchPlaceholder}
+                    aria-label={labels.searchPlaceholder}
                     className="w-full p-3 border rounded-md dark:bg-card dark:border-border"
                     value={searchQuery}
-                    onChange={handleSearchChange}
+                    onChange={(e) => setSearchQuery(e.target.value)}
                   />
                 </div>
 
                 <div className="mt-4 h-64 overflow-y-auto border-t pt-4 dark:border-border">
                   {isLoading ? (
-                    <div className="text-center text-muted-foreground py-8">載入中...</div>
-                  ) : searchResults.length > 0 ? (
-                    searchResults.map((post) => (
-                      <Link key={post._id} href={`/${post.category.topic.slug}/${post.slug}`} onClick={toggleSearch}>
+                    <div className="text-center text-muted-foreground py-8">{labels.searchLoading}</div>
+                  ) : results.length > 0 ? (
+                    results.map((post) => (
+                      <Link key={post.href} href={post.href} onClick={toggleSearch}>
                         <div className="p-2 hover:bg-muted rounded-md cursor-pointer">
-                          <h4 className="font-medium">{post.title}</h4>
+                          <h3 className="font-medium">{post.title}</h3>
                           <p className="text-sm text-muted-foreground">{post.description.substring(0, 100)}...</p>
                         </div>
                       </Link>
                     ))
-                  ) : searchQuery.trim() !== "" && !isLoading ? (
-                    <div className="text-center text-muted-foreground py-8">找不到相關文章</div>
+                  ) : query !== "" ? (
+                    <div className="text-center text-muted-foreground py-8">{labels.searchEmpty}</div>
                   ) : (
-                    <div className="text-center text-muted-foreground py-8">請輸入關鍵字進行搜尋</div>
+                    <div className="text-center text-muted-foreground py-8">{labels.searchHint}</div>
                   )}
                 </div>
               </div>
