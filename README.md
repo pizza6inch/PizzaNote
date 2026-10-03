@@ -80,7 +80,7 @@ content/
 | 功能 | 環境變數 | 說明 |
 |---|---|---|
 | 留言（giscus） | `NEXT_PUBLIC_GISCUS_REPO_ID`、`NEXT_PUBLIC_GISCUS_CATEGORY_ID`（另有 `NEXT_PUBLIC_GISCUS_REPO`、`NEXT_PUBLIC_GISCUS_CATEGORY`） | 需在 GitHub repo 開啟 Discussions 並安裝 [giscus app](https://giscus.app) |
-| 瀏覽次數 | `UPSTASH_REDIS_REST_URL`、`UPSTASH_REDIS_REST_TOKEN` | 透過 Vercel Marketplace 加入 Upstash Redis；頁面本身仍是靜態的，數字由瀏覽器載入後取得 |
+| 瀏覽次數 | `KV_REST_API_URL`、`KV_REST_API_TOKEN`（也接受 `UPSTASH_REDIS_REST_URL/TOKEN`） | 透過 Vercel Marketplace 加入 Upstash Redis（`vercel integration add upstash/upstash-kv`），變數會自動注入；頁面本身仍是靜態的，數字由瀏覽器載入後取得 |
 | 正式網域 | `NEXT_PUBLIC_SITE_URL` | canonical、sitemap、Open Graph 都以它為準（預設 `https://pizzanote.dev`，不含 `www`） |
 
 ## 專案結構

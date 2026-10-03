@@ -9,7 +9,10 @@ export const dynamic = "force-dynamic";
 /** Keys are `topic/slug`; only keys that exist in the content tree are accepted. */
 const validKeys = new Set(getAllPostParams().map((p) => `${p.topic}/${p.post}`));
 
-const redis = process.env.UPSTASH_REDIS_REST_URL && process.env.UPSTASH_REDIS_REST_TOKEN ? Redis.fromEnv() : null;
+// The Vercel Marketplace integration injects KV_REST_API_*; a manually created database uses UPSTASH_REDIS_REST_*.
+const redisUrl = process.env.KV_REST_API_URL ?? process.env.UPSTASH_REDIS_REST_URL;
+const redisToken = process.env.KV_REST_API_TOKEN ?? process.env.UPSTASH_REDIS_REST_TOKEN;
+const redis = redisUrl && redisToken ? new Redis({ url: redisUrl, token: redisToken }) : null;
 
 const counterKey = (key: string) => `views:${key}`;
 const seedFor = (key: string) => (seed as Record<string, number>)[key] ?? 0;
