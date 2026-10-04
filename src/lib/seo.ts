@@ -2,7 +2,9 @@ import type { Metadata } from "next";
 import { locales, htmlLang, ogLocale, defaultLocale, type Locale } from "@/i18n/config";
 import { getDictionary } from "@/i18n/dictionaries";
 import { SITE_URL, absoluteUrl, siteConfig } from "@/lib/site";
-import type { Post } from "@/lib/content";
+import { paths } from "@/lib/urls";
+import { OG_SIZE } from "@/lib/og-size";
+import { getTag, type Post } from "@/lib/content";
 
 /** Path per locale for pages that exist in that locale, e.g. { "zh-tw": "/zh-tw/about/", en: "/en/about/" }. */
 export type LocalePaths = Partial<Record<Locale, string>>;
@@ -23,12 +25,15 @@ export interface PageMetaInput {
   noindex?: boolean;
   /** Path of a Markdown version of this page (advertised as an alternate for crawlers and LLMs). */
   markdownPath?: string;
+  /** Path of the share card. Defaults to the site card of the locale. */
+  imagePath?: string;
 }
 
 export function pageMetadata(input: PageMetaInput): Metadata {
   const { locale, path, title, description, alternates, type = "website" } = input;
   const dict = getDictionary(locale);
   const fullTitle = input.absoluteTitle ? title : `${title} | ${dict.site.name}`;
+  const image = { url: absoluteUrl(input.imagePath ?? paths.ogDefault(locale)), ...OG_SIZE, alt: title };
 
   const languages: Record<string, string> = {};
   for (const l of locales) {
@@ -56,12 +61,13 @@ export function pageMetadata(input: PageMetaInput): Metadata {
       title: fullTitle,
       description,
       locale: ogLocale[locale],
+      images: [image],
       alternateLocale: locales.filter((l) => l !== locale && alternates?.[l]).map((l) => ogLocale[l]),
       ...(type === "article"
         ? { publishedTime: input.publishedTime, modifiedTime: input.modifiedTime, authors: [siteConfig.author.name] }
         : {}),
     },
-    twitter: { card: "summary_large_image", title: fullTitle, description },
+    twitter: { card: "summary_large_image", title: fullTitle, description, images: [image] },
     ...(input.noindex ? { robots: { index: false, follow: false } } : {}),
   };
 }
@@ -84,39 +90,81 @@ export const breadcrumbJsonLd = (crumbs: Crumb[]) => ({
   })),
 });
 
+const AUTHOR_ID = `${SITE_URL}/#author`;
+const websiteId = (locale: Locale) => `${SITE_URL}/${locale}/#website`;
+
 export const websiteJsonLd = (locale: Locale) => {
   const dict = getDictionary(locale);
   return {
     "@context": "https://schema.org",
     "@type": "WebSite",
+    "@id": websiteId(locale),
     name: dict.site.name,
     url: absoluteUrl(`/${locale}/`),
     inLanguage: htmlLang[locale],
     description: dict.site.description,
-    publisher: { "@id": `${SITE_URL}/#author` },
+    publisher: { "@id": AUTHOR_ID },
   };
 };
 
-export const personJsonLd = () => ({
+/**
+ * The author. Search engines read each page on its own, so every page that names the author carries the full node,
+ * not only a reference to it.
+ */
+export const personJsonLd = (locale: Locale) => ({
   "@context": "https://schema.org",
   "@type": "Person",
-  "@id": `${SITE_URL}/#author`,
+  "@id": AUTHOR_ID,
   name: siteConfig.author.name,
-  url: SITE_URL,
+  alternateName: ["Ewan", "Pizza", "pizza6inch"],
+  url: absoluteUrl(paths.about(locale)),
+  image: absoluteUrl(siteConfig.author.avatar),
+  alumniOf: { "@type": "CollegeOrUniversity", name: siteConfig.author.alumniOf },
+  knowsAbout: siteConfig.author.knowsAbout,
   sameAs: [siteConfig.author.github, siteConfig.author.instagram],
 });
 
-export const articleJsonLd = (post: Post, locale: Locale, path: string) => ({
+/** The About page: a profile whose subject is the author. */
+export const profilePageJsonLd = (locale: Locale) => {
+  const { "@context": _context, ...person } = personJsonLd(locale);
+  return {
+    "@context": "https://schema.org",
+    "@type": "ProfilePage",
+    url: absoluteUrl(paths.about(locale)),
+    inLanguage: htmlLang[locale],
+    isPartOf: { "@id": websiteId(locale) },
+    mainEntity: person,
+  };
+};
+
+/** Listing pages (all posts, a topic, a category). */
+export const collectionPageJsonLd = (locale: Locale, name: string, description: string, path: string) => ({
   "@context": "https://schema.org",
-  "@type": "BlogPosting",
-  headline: post.title,
-  description: post.description,
-  inLanguage: htmlLang[locale],
-  datePublished: post.publishedAt,
-  dateModified: post.updatedAt,
-  mainEntityOfPage: { "@type": "WebPage", "@id": absoluteUrl(path) },
+  "@type": "CollectionPage",
+  name,
+  description,
   url: absoluteUrl(path),
-  author: { "@id": `${SITE_URL}/#author` },
-  publisher: { "@id": `${SITE_URL}/#author` },
-  keywords: post.tags.length ? post.tags.join(", ") : undefined,
+  inLanguage: htmlLang[locale],
+  isPartOf: { "@id": websiteId(locale) },
 });
+
+export const articleJsonLd = (post: Post, locale: Locale, path: string, section?: string) => {
+  const { "@context": _context, ...author } = personJsonLd(locale);
+  return {
+    "@context": "https://schema.org",
+    "@type": "BlogPosting",
+    headline: post.title,
+    description: post.description,
+    inLanguage: htmlLang[locale],
+    datePublished: post.publishedAt,
+    dateModified: post.updatedAt,
+    mainEntityOfPage: { "@type": "WebPage", "@id": absoluteUrl(path) },
+    url: absoluteUrl(path),
+    image: { "@type": "ImageObject", url: absoluteUrl(paths.ogPost(locale, post.topic, post.slug)), ...OG_SIZE },
+    author,
+    publisher: { "@id": AUTHOR_ID },
+    isPartOf: { "@id": websiteId(locale) },
+    articleSection: section,
+    keywords: post.tags.length ? post.tags.map((t) => getTag(locale, t)?.title ?? t).join(", ") : undefined,
+  };
+};

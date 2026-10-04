@@ -1,35 +1,25 @@
 ---
-title: "JS Fundamentals: The this Keyword, Part 2 (Controlling this Binding)"
-description: "The five ways this is bound in JavaScript: default, implicit, explicit, new and arrow function binding, with their priority rules and common pitfalls."
+title: "call vs apply vs bind: Explicit, new and Arrow Function Binding of this (Part 2)"
+seoTitle: "call vs apply vs bind and this Binding Priority"
+description: "The difference between call, apply and bind, with examples of explicit binding, new binding and arrow functions, and which binding of this wins when several apply."
 publishedAt: "2025-06-25T03:39:11.465Z"
-updatedAt: "2025-06-25T03:39:11.465Z"
+updatedAt: "2026-10-04T00:00:00.000Z"
 category: "javascript"
 series: "The this keyword"
 ---
 
-## Previously
-📚 The 5 ways this gets bound
+**call, apply and bind all set a function's `this`.** `call` and `apply` run the function immediately and differ only in how arguments are passed (one by one, or as an array); `bind` doesn't run it but returns a new function with `this` fixed.
 
-| Type         | Official name (Binding Type)   | Binding rule                                | Example                |
-| ---------- | -------------------- | ------------------------------------- | ----------------- |
-| 1️⃣ Default   | **Default Binding**  | Called directly → `this = window` / `global`   | `sayHi()`         |
-| 2️⃣ Implicit   | **Implicit Binding** | Called on an object → `this = that object`                  | `obj.sayHi()`     |
-| 3️⃣ Explicit   | **Explicit Binding** | `call` / `apply` / `bind` set `this` explicitly | `sayHi.call(obj)` |
-| 4️⃣ new | **New Binding**      | Inside a constructor → `this` is the newly created object                | `new Person()`    |
-| 5️⃣ Arrow   | **Lexical Binding**  | An arrow function is permanently bound to the scope where it was defined                    | `() => this.name` |
+[Part 1](/en/front-end/this-keyword-basics/) covered what `this` is and two of the five bindings: default and implicit. This post covers the other three, explicit binding, new binding and arrow functions, and then which one wins when they compete.
 
-The previous article covered 1 and 2. This one covers the remaining bindings.
- 
-## 3️⃣ Explicit Binding
- 
-| Method      | Runs immediately | Arguments | Purpose               |
-| ------- | ---- | ----- | ---------------- |
-| `call`  | ✅    | Passed one by one  | Calls immediately, changing `this`   |
-| `apply` | ✅    | Passed as an array  | Calls immediately, good when the arguments vary     |
-| `bind`  | ❌    | Passed one by one  | Does not run; **returns a new function** |
+## 3️⃣ Explicit binding: call vs apply vs bind
 
+| Method | Runs immediately | Arguments | Use |
+| --- | --- | --- | --- |
+| `call` | ✅ | One by one | Call now and set `this` |
+| `apply` | ✅ | As an array | Call now; handy when the arguments are already an array |
+| `bind` | ❌ | One by one (some can be fixed up front) | Doesn't run; **returns a new function** |
 
- 
 ```javascript
 const person = {
   name: "Alice",
@@ -43,34 +33,33 @@ const otherPerson = {
 };
 
 // call: runs immediately, arguments passed one by one
-person.greet.call(otherPerson, "Hello", "!"); 
+person.greet.call(otherPerson, "Hello", "!");
 // → Hello, I'm Bob!
 
 // apply: runs immediately, arguments passed as an array
-person.greet.apply(otherPerson, ["Hi", "!!"]); 
+person.greet.apply(otherPerson, ["Hi", "!!"]);
 // → Hi, I'm Bob!!
 
-// bind: does not run, returns a new bound function
+// bind: doesn't run; returns a new function with this bound
 const boundGreet = person.greet.bind(otherPerson, "Hey", "!!");
-boundGreet(); 
+boundGreet();
 // → Hey, I'm Bob!!
-
-
 ```
- 
-In short, `bind` defines a new function that differs from the original only in that `this` is fixed to a particular object.
 
-`call` and `apply` both set `this` at the moment the function is called. The difference:
+In short, `bind` creates a new function that differs from the original only in that `this` is fixed to a given object.
+
+`call` and `apply` set `this` at the moment you call the function. The difference:
+
 - `call` takes the arguments one by one
 - `apply` takes an array of arguments
 
-### A scenario for bind:
+### When to use bind: passing a method as a callback
 
 ```javascript
 function Button(callback) {
   // simulate a click
   callback();
-  // callback is called with default binding here; without bind, this points to window
+  // callback() is a direct call (default binding): without bind, this isn't app
 }
 
 const app = {
@@ -79,17 +68,18 @@ const app = {
     console.log(`${this.name} was clicked`);
   },
   sayHello() {
-      console.log(`hello ${this.name}!`)
-  }
+    console.log(`hello ${this.name}!`);
+  },
 };
 
-Button(app.clickHandler.bind(app)); // without bind, this would be undefined
-setTimeout(app.sayHello.bind(app),1000); // the callback needs bind for this
+Button(app.clickHandler.bind(app)); // MyApp was clicked
+setTimeout(app.sayHello.bind(app), 1000); // hello MyApp!
 ```
-When you **pass a function as an argument (a callback)**, you need to bind it. Even if the function was written with its owning object in front of it, once it is passed along, `this` is lost.
- 
-### A scenario for call and apply
- 
+
+**When you pass a function as an argument (a callback), you need to bind it.** Only the function itself is passed; the `app.` caller doesn't travel with it, so even though you wrote `app.clickHandler`, `this` is lost when it's called: `window` in sloppy mode (`this.name` reads `window.name`), `undefined` in strict mode, which throws.
+
+### When to use call and apply
+
 ```javascript
 function printFullName(preMessage) {
   console.log(`${preMessage} ${this.firstName} ${this.lastName}`);
@@ -103,75 +93,82 @@ const user1 = {
 const user2 = {
   firstName: "Pizza",
   lastName: "6inch",
-}
+};
 
-printFullName.call(user1,"Hi"); // → Hi Ada Lovelace
-printFullName.apply(user2,["Hi"]) // -> Hi Pizza 6inch
+printFullName.call(user1, "Hi");    // → Hi Ada Lovelace
+printFullName.apply(user2, ["Hi"]); // → Hi Pizza 6inch
 ```
-When calling third-party functions or tools, use `call` / `apply` when you need to change `this` according to the situation at the moment of the call.
- 
- 
-## 4️⃣ New Binding
- 
-When you call a function with the `new` keyword, that function is treated as a constructor, and **`this` is bound to the newly created object itself**.
- 
+
+Use call / apply to run one function against different objects, or to set `this` when calling third-party functions.
+
+## 4️⃣ New binding
+
+When you call a function with `new`, it's treated as a constructor function, and **`this` is bound to the newly created object**.
+
 ```javascript
 function Person(name) {
-  this.name = name; // with new, this is bound to user
+  this.name = name; // with new, this is the new object
 }
 
 const user = new Person("Ada");
 console.log(user.name); // Ada
 
-const user2 = Person("Ada"); // without new
-console.log(user2);          // undefined
-console.log(window.name);    // "Ada" (bound to window in non-strict mode)
+const user2 = Person("Ada"); // without new it's an ordinary call (default binding)
+console.log(user2);          // undefined (the function returns nothing)
+console.log(window.name);    // "Ada" (this is window in sloppy mode)
 ```
 
-## 5️⃣ Lexical Binding (arrow functions)
+A `new` call does the following:
 
-One of the biggest characteristics of arrow functions is this:
+1. Creates a new empty object
+2. Sets its prototype to `Person.prototype`
+3. Binds `this` to that object and runs the function body
+4. Returns the new object, unless the function returns a different object
 
-They don't have their own `this`. **Instead they inherit the `this` of the enclosing scope where they were defined (static binding).**
+## 5️⃣ Arrow functions (lexical binding)
 
-This is different from regular functions. **For a regular function, `this` is decided when it runs**, whereas **for an arrow function, `this` is decided when it is defined**.
+One of the defining traits of arrow functions:
 
-> - Because of this I often get caught out when solving coding problems 😭
-> - I'm so used to arrow functions that I had no idea how they differ from traditional functions 😂
+they have no `this` of their own, **and use the `this` of the scope they were defined in (static binding)**.
+
+That's different from regular functions: **a regular function's `this` is decided when it runs**, while **an arrow function's `this` is fixed when it's defined**.
+
+> - This trips me up all the time when doing coding exercises QQ
+> - I use arrow functions so habitually that I'd forgotten how they differ from regular functions XD
 
 ```javascript
 const obj = {
   name: "Alice",
   greet: function () {
-    // sayHi is an arrow function
-    // this is bound to obj at the point of declaration
+    // sayHi is an arrow function: it uses greet's this, which is obj
     const sayHi = () => {
       console.log(`Hi, I'm ${this.name}`);
     };
-    sayHi(); // bound to this even without obj. in front of it
+    sayHi(); // no obj. in front, but this is still obj
   },
 };
 
 obj.greet(); // Hi, I'm Alice
 ```
-A traditional function loses `this`:
+
+With a regular function, `this` gets lost:
+
 ```javascript
 const obj = {
   name: "Bob",
   greet: function () {
-    // traditional function
+    // regular function
     const sayHi = function () {
       console.log(`Hi, I'm ${this.name}`);
     };
-    sayHi(); // default binding here, this === window
+    sayHi(); // direct call, default binding: this is window
   },
 };
 
-obj.greet(); // Hi, I'm undefined
+obj.greet(); // Hi, I'm  (window.name is usually an empty string)
 ```
 
-### In practice
-Keeping `this` consistent in event handlers:
+### In practice: keeping this in event handlers
 
 ```javascript
 class Button {
@@ -186,33 +183,52 @@ class Button {
 const btn = new Button("Submit");
 document.querySelector("button").addEventListener("click", btn.handleClick);
 ```
-If an arrow function were not used here, `this` would point to the button DOM element, causing a bug.
+
+If `handleClick` were a regular method, the browser would call the handler with `this` set to the DOM element that fired the event (the `<button>`), and `this.label` would be `undefined`. An arrow function (or `this.handleClick = this.handleClick.bind(this)` in the constructor) keeps `this` pointing at the Button instance.
 
 ## Binding priority
 
-There are five kinds of binding in total. When two or more of them conflict, the priority is:
+When several bindings apply at once, which one wins?
 
-Default < Implicit < Explicit < new ≈ Arrow (mutually exclusive, highest priority)
+**new binding > explicit binding (call / apply / bind) > implicit binding > default binding**
 
-A constructor has to be a traditional function; in other words an arrow function can't be called with `new`, so the two never conflict.
+Arrow functions sit outside this ranking: they have no `this` of their own, so call, apply and bind can't change it, and they can't be called with `new` (that throws a `TypeError`).
 
-- Using `bind`, `call` or `apply` on an arrow function or on a `new` call has no effect on `this`
-- Using `bind`, `call` or `apply` on `obj.function` rebinds `this`
-- With no binding at all, `this` points to `window`
+```javascript
+function Person(name) {
+  this.name = name;
+}
+
+const objA = {};
+
+// explicit > implicit: call's this overrides obj.
+const obj = { name: "obj", whoAmI() { return this.name; } };
+console.log(obj.whoAmI.call({ name: "call" })); // call
+
+// new > bind: calling a bound function with new gives the new object, not objA
+const BoundPerson = Person.bind(objA);
+const p = new BoundPerson("Ada");
+console.log(p.name);    // Ada
+console.log(objA.name); // undefined
+
+// arrow functions: call can't change this
+const arrow = () => this;
+console.log(arrow.call(objA) === objA); // false
+```
+
+- bind, call and apply have no effect on an arrow function's `this`
+- Binding an already-bound function again does nothing; the first bind wins
+- call / apply / bind on `obj.method` set a new `this`
+- With no binding at all, `this` is the global object (`undefined` in strict mode)
 
 ## Summary
 
-Finally, here is the summary table again:
+| Type | Binding | How it works | Example |
+| --- | --- | --- | --- |
+| 1️⃣ Default | **Default Binding** | Direct call → `this = window` / `globalThis` (`undefined` in strict mode) | `sayHi()` |
+| 2️⃣ Implicit | **Implicit Binding** | Called on an object → `this = that object` | `obj.sayHi()` |
+| 3️⃣ Explicit | **Explicit Binding** | `call` / `apply` / `bind` set `this` explicitly | `sayHi.call(obj)` |
+| 4️⃣ new | **New Binding** | Inside a constructor → `this` is the newly created object | `new Person()` |
+| 5️⃣ Arrow | **Lexical Binding** | Arrow functions have no `this` of their own and use the `this` of the scope they were defined in | `() => this.name` |
 
-📚 The 5 ways this gets bound
-
-| Type         | Official name (Binding Type)   | Binding rule                                | Example                |
-| ---------- | -------------------- | ------------------------------------- | ----------------- |
-| 1️⃣ Default   | **Default Binding**  | Called directly → `this = window` / `global`   | `sayHi()`         |
-| 2️⃣ Implicit   | **Implicit Binding** | Called on an object → `this = that object`                  | `obj.sayHi()`     |
-| 3️⃣ Explicit   | **Explicit Binding** | `call` / `apply` / `bind` set `this` explicitly | `sayHi.call(obj)` |
-| 4️⃣ new | **New Binding**      | Inside a constructor → `this` is the newly created object                | `new Person()`    |
-| 5️⃣ Arrow   | **Lexical Binding**  | An arrow function is permanently bound to the scope where it was defined                    | `() => this.name` |
-
- 
-These notes drew on: [kuro's Blog](https://kuro.tw/posts/2017/10/12/What-is-THIS-in-JavaScript-%E4%B8%8A/), [ExplainThis](https://www.explainthis.io/zh-hans/swe/what-is-this#this-5), and ChatGPT.
+References: [MDN: this](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/this), [MDN: Function.prototype.bind()](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Function/bind), [kuro's Blog](https://kuro.tw/posts/2017/10/12/What-is-THIS-in-JavaScript-%E4%B8%8A/), [ExplainThis](https://www.explainthis.io/zh-hans/swe/what-is-this#this-5)

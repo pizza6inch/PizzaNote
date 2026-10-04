@@ -35,6 +35,8 @@ export interface Post {
   category: string;
   series?: string;
   title: string;
+  /** Shorter title for search results and share cards when `title` is too long (optional frontmatter). */
+  seoTitle?: string;
   description: string;
   publishedAt: string;
   updatedAt: string;
@@ -102,6 +104,7 @@ function load(locale: Locale): LocaleContent {
         category: String(data.category),
         series: data.series ? String(data.series) : undefined,
         title: String(data.title),
+        seoTitle: data.seoTitle ? String(data.seoTitle) : undefined,
         description: String(data.description),
         publishedAt: new Date(data.publishedAt).toISOString(),
         updatedAt: new Date(data.updatedAt).toISOString(),

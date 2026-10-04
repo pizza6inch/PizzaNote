@@ -9,7 +9,7 @@
     {
       "slug": "front-end",
       "title": "Front-end",
-      "description": "My personal front-end development experience.",
+      "description": "Front-end development notes: JavaScript fundamentals (the this keyword), Webpack, SEO in Next.js, and deploying a site with Vercel and Namecheap.",
       "updatedAt": "2025-06-23T00:54:00.000Z"
     }
   ],

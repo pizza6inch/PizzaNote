@@ -5,12 +5,17 @@ export const SITE_URL = (process.env.NEXT_PUBLIC_SITE_URL || "https://pizzanote.
 
 export const siteConfig = {
   launchDate: "2025-04-08T03:25:00.000Z",
+  /** Last real edit of the About page (bump it when the About copy changes; used for the sitemap). */
+  aboutUpdatedAt: "2026-10-03",
   author: {
     name: "Ewan (Pizza)",
     url: "https://github.com/pizza6inch",
     github: "https://github.com/pizza6inch",
     instagram: "https://www.instagram.com/pg206206/",
     email: "pizza6inch@gmail.com",
+    avatar: "/avatar.png",
+    alumniOf: "National Taipei University of Technology",
+    knowsAbout: ["Front-end development", "JavaScript", "React", "Next.js", "SEO"],
   },
   /** Topics whose slug would collide with a fixed route. */
   reservedTopicSlugs: ["about", "posts", "category", "tags", "feed.xml", "search-index.json", "llms.txt"],

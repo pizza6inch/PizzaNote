@@ -8,8 +8,9 @@ import { locales, type Locale } from "@/i18n/config";
 import { getDictionary } from "@/i18n/dictionaries";
 import { localePaths, resolveLocale } from "@/i18n/server";
 import { getCategoriesWithPosts, getCategory, getPostNumber, getSeriesGroups, getTopic } from "@/lib/content";
-import { breadcrumbJsonLd, pageMetadata } from "@/lib/seo";
+import { breadcrumbJsonLd, collectionPageJsonLd, pageMetadata } from "@/lib/seo";
 import { paths } from "@/lib/urls";
+import { summarize } from "@/lib/utils";
 
 export const dynamicParams = false;
 
@@ -31,7 +32,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
     locale,
     path: paths.category(locale, slug),
     title: category.title,
-    description: category.description.replace(/\s+/g, " ").slice(0, 160),
+    description: summarize(category.description),
     alternates: alternatesFor(slug),
   });
 }
@@ -53,10 +54,13 @@ export default async function CategoryPage({ params }: Props) {
   return (
     <MainLayout locale={locale} alternates={alternatesFor(slug)}>
       <JsonLd
-        data={breadcrumbJsonLd([
-          ...crumbs.map((c) => ({ name: c.title, path: c.links })),
-          { name: category.title, path: paths.category(locale, slug) },
-        ])}
+        data={[
+          collectionPageJsonLd(locale, category.title, category.description, paths.category(locale, slug)),
+          breadcrumbJsonLd([
+            ...crumbs.map((c) => ({ name: c.title, path: c.links })),
+            { name: category.title, path: paths.category(locale, slug) },
+          ]),
+        ]}
       />
       <PageHeader title={category.title} description={category.description} crumbs={crumbs} />
 

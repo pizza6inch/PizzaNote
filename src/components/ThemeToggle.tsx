@@ -11,7 +11,7 @@ export function ThemeToggle({ size, label }: { size: number; label: string }) {
     <button
       type="button"
       aria-label={label}
-      className="masthead-link inline-flex items-center"
+      className="masthead-link"
       onClick={() => setTheme(theme === "dark" ? "light" : "dark")}
     >
       <Moon size={size} aria-hidden="true" className="dark:hidden" />

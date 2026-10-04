@@ -8,9 +8,10 @@ import JsonLd from "@/components/JsonLd";
 import { GithubIcon, InstagramIcon } from "@/components/BrandIcons";
 import { getDictionary } from "@/i18n/dictionaries";
 import { localePaths, resolveLocale } from "@/i18n/server";
-import { breadcrumbJsonLd, pageMetadata, personJsonLd } from "@/lib/seo";
+import { breadcrumbJsonLd, pageMetadata, profilePageJsonLd } from "@/lib/seo";
 import { siteConfig } from "@/lib/site";
 import { paths } from "@/lib/urls";
+import { summarize } from "@/lib/utils";
 
 type Props = { params: Promise<{ locale: string }> };
 
@@ -23,13 +24,13 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
     locale,
     path: paths.about(locale),
     title: dict.about.title,
-    description: dict.about.intro.slice(0, 150),
+    description: summarize(dict.about.intro),
     alternates: alternates(),
   });
 }
 
 const contact =
-  "inline-flex items-center gap-2 rounded-full border-2 border-[var(--crust)] px-4 py-2 font-bold text-[var(--crust)] transition-colors hover:border-[var(--pepperoni)] hover:bg-[var(--pepperoni)] hover:text-white";
+  "inline-flex items-center gap-2 rounded-full border-2 border-[var(--crust)] px-4 py-2 font-bold text-[var(--crust)] transition-colors hover:border-[var(--pepperoni-surface)] hover:bg-[var(--pepperoni-surface)] hover:text-white";
 
 export default async function AboutPage({ params }: Props) {
   const locale = await resolveLocale(params);
@@ -39,7 +40,7 @@ export default async function AboutPage({ params }: Props) {
     <MainLayout locale={locale} alternates={alternates()} currentPath={paths.about(locale)}>
       <JsonLd
         data={[
-          personJsonLd(),
+          profilePageJsonLd(locale),
           breadcrumbJsonLd([
             { name: dict.breadcrumb.home, path: paths.home(locale) },
             { name: dict.about.title, path: paths.about(locale) },

@@ -1,0 +1,13 @@
+{
+  "detector": {
+    "ignoreRules": [],
+    "ignoreFiles": [],
+    "ignoreValues": [
+      {
+        "rule": "design-system-font",
+        "value": "huninn",
+        "createdAt": "2026-10-03T15:52:20.678Z"
+      }
+    ]
+  }
+}

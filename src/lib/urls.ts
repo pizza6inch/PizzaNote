@@ -12,4 +12,7 @@ export const paths = {
   tag: (l: Locale, tag: string) => `/${l}/tags/${tag}/`,
   feed: (l: Locale) => `/${l}/feed.xml`,
   searchIndex: (l: Locale) => `/${l}/search-index.json`,
+  /** Share cards (Open Graph / Twitter), rendered at build time. */
+  ogDefault: (l: Locale) => `/og/${l}/`,
+  ogPost: (l: Locale, topic: string, slug: string) => `/og/${l}/${topic}/${slug}/`,
 };

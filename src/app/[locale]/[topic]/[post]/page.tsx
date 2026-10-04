@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
+import Image from "next/image";
 import Link from "next/link";
 import { ArrowLeft, ArrowRight } from "lucide-react";
 import CjkText from "@/components/CjkText";
@@ -50,13 +51,14 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   return pageMetadata({
     locale,
     path: paths.post(locale, topic, slug),
-    title: post.title,
+    title: post.seoTitle ?? post.title,
     description: post.description,
     type: "article",
     publishedTime: post.publishedAt,
     modifiedTime: post.updatedAt,
     alternates: alternatesFor(topic, slug),
     markdownPath: paths.postMarkdown(locale, topic, slug),
+    imagePath: paths.ogPost(locale, topic, slug),
   });
 }
 
@@ -91,7 +93,7 @@ export default async function PostPage({ params }: Props) {
     <MainLayout locale={locale} alternates={alternatesFor(topicSlug, slug)}>
       <JsonLd
         data={[
-          articleJsonLd(post, locale, path),
+          articleJsonLd(post, locale, path, category?.title),
           breadcrumbJsonLd([...crumbs.map((c) => ({ name: c.title, path: c.links })), { name: post.title, path }]),
         ]}
       />
@@ -108,6 +110,14 @@ export default async function PostPage({ params }: Props) {
               <dt className="sr-only">No.</dt>
               <dd className="rounded-full bg-[var(--crust)] px-3 py-1 font-mono text-[var(--cheese)]" data-numeric>
                 No.{String(getPostNumber(locale, post)).padStart(2, "0")}
+              </dd>
+            </div>
+            <div className="flex items-baseline gap-2">
+              <dt>{dict.post.by}</dt>
+              <dd>
+                <Link href={paths.about(locale)} rel="author" className="underline decoration-2 underline-offset-4">
+                  {siteConfig.author.name}
+                </Link>
               </dd>
             </div>
             <div className="flex items-baseline gap-2">
@@ -133,6 +143,26 @@ export default async function PostPage({ params }: Props) {
       <div className="mx-auto grid max-w-[90rem] gap-12 px-4 py-12 md:px-8 md:py-16 lg:grid-cols-[minmax(0,1fr)_20rem] lg:gap-16">
         <article className="min-w-0">
           <MarkdownBlock content={post.body} tableLabel={dict.post.table} />
+
+          <section aria-labelledby="about-author" className="ticket mt-16 flex flex-col gap-5 sm:flex-row sm:items-center">
+            <Image
+              src={siteConfig.author.avatar}
+              alt=""
+              width={88}
+              height={88}
+              className="h-22 w-22 shrink-0 rounded-full border-4 border-[var(--crust)] object-cover"
+            />
+            <div>
+              <h2 id="about-author" className="font-display text-2xl">
+                {dict.post.aboutAuthor}
+              </h2>
+              <p className="mt-1 font-bold">{siteConfig.author.name}</p>
+              <p className="mt-2 leading-relaxed">{dict.post.authorBio}</p>
+              <Link href={paths.about(locale)} rel="author" className="mt-3 inline-flex min-h-11 items-center font-bold underline decoration-2 underline-offset-4">
+                {dict.post.moreAboutAuthor}
+              </Link>
+            </div>
+          </section>
 
           <nav aria-label={`${dict.post.prev} / ${dict.post.next}`} className="mt-16 grid gap-4 sm:grid-cols-2">
             {prev ? (

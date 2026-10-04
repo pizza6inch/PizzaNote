@@ -13,6 +13,8 @@ const LOCALES = ["zh-tw", "en"];
 const RESERVED = ["about", "posts", "category", "tags", "feed.xml", "search-index.json", "llms.txt", "md", "api"];
 const REQUIRED = ["title", "description", "publishedAt", "updatedAt", "category"];
 const DRIFT_DAYS = 3;
+const SUFFIX = { "zh-tw": " | 披薩筆記", en: " | PizzaNote" };
+const width = (text) => [...String(text)].reduce((n, ch) => n + (/[⺀-鿿＀-￯]/.test(ch) ? 2 : 1), 0);
 
 const errors = [];
 const warnings = [];
@@ -63,9 +65,13 @@ for (const locale of LOCALES) {
         if (!fs.existsSync(path.join(ROOT, "public", m[1]))) err(`${rel}: image not found: ${m[1]}`);
       }
 
-      if (String(data.title ?? "").length > 70) warn(`${rel}: title is ${data.title.length} chars (will be truncated in results)`);
-      if (String(data.description ?? "").length > 160) warn(`${rel}: description is ${data.description.length} chars (>160)`);
-      if (String(data.description ?? "").length < 50) warn(`${rel}: description is short (<50 chars)`);
+      // Search results cut by pixel width: a CJK character is about two Latin ones. The page title also carries the
+      // site-name suffix, so the check measures what is actually shown.
+      const shownTitle = `${data.seoTitle ?? data.title ?? ""}${SUFFIX[locale]}`;
+      if (width(shownTitle) > 62) warn(`${rel}: title "${shownTitle}" is ${width(shownTitle)} units wide (>62); add a shorter seoTitle`);
+      const desc = String(data.description ?? "");
+      if (width(desc) > 165) warn(`${rel}: description is ${width(desc)} units wide (>165)`);
+      if (width(desc) < 100) warn(`${rel}: description is short (${width(desc)} units, <100)`);
 
       posts[locale].set(`${entry.name}/${slug}`, data);
     }

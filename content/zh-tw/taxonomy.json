@@ -9,7 +9,7 @@
     {
       "slug": "front-end",
       "title": "前端",
-      "description": "個人的前端開發經驗~",
+      "description": "前端開發的學習筆記：JavaScript 核心觀念（this 綁定）、Webpack 打包工具、Next.js SEO，以及用 Vercel 與 Namecheap 部署網站的實作紀錄。",
       "updatedAt": "2025-06-23T00:54:00.000Z"
     }
   ],
@@ -52,7 +52,7 @@
     },
     {
       "slug": "nextjs",
-      "title": "nextJS"
+      "title": "Next.js"
     },
     {
       "slug": "sanity",

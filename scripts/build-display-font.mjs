@@ -2,6 +2,8 @@
 // UI strings, taxonomy names, post titles and series, and Markdown headings. A full CJK webfont costs hundreds of
 // kilobytes of render-blocking CSS plus dozens of glyph files; this subset is a single woff2 (about 75 KB for the current headings).
 //
+// A TrueType copy of the same subset is saved for the Open Graph images (next/og cannot read woff2).
+//
 // The output is committed. The script only goes to the network when the character set changes, and if the
 // network is unavailable it keeps the existing file (any missing glyph falls back to the body font).
 import fs from "node:fs";
@@ -11,6 +13,7 @@ import crypto from "node:crypto";
 const ROOT = process.cwd();
 const OUT_DIR = path.join(ROOT, "src", "fonts");
 const FONT_FILE = path.join(OUT_DIR, "huninn-subset.woff2");
+const TTF_FILE = path.join(OUT_DIR, "huninn-subset.ttf");
 const STAMP_FILE = path.join(OUT_DIR, "huninn-subset.chars");
 const FAMILY = "Huninn";
 
@@ -41,7 +44,7 @@ for (const locale of fs.readdirSync(contentDir, { withFileTypes: true }).filter(
 const list = [...chars].sort().join("");
 const digest = crypto.createHash("sha256").update(list).digest("hex");
 
-if (fs.existsSync(FONT_FILE) && fs.existsSync(STAMP_FILE) && fs.readFileSync(STAMP_FILE, "utf8").split("\n")[0] === digest) {
+if (fs.existsSync(FONT_FILE) && fs.existsSync(TTF_FILE) && fs.existsSync(STAMP_FILE) && fs.readFileSync(STAMP_FILE, "utf8").split("\n")[0] === digest) {
   console.log(`display font: up to date (${chars.size} characters)`);
   process.exit(0);
 }
@@ -54,12 +57,18 @@ try {
   const fontUrl = css.match(/url\((https:[^)]+)\)\s*format\('woff2'\)/)?.[1];
   if (!fontUrl) throw new Error("no woff2 URL in the Google Fonts response");
   const font = Buffer.from(await (await fetch(fontUrl)).arrayBuffer());
+  // Without a browser user agent the API answers with TrueType.
+  const ttfCss = await (await fetch(cssUrl)).text();
+  const ttfUrl = ttfCss.match(/url\((https:[^)]+)\)\s*format\('truetype'\)/)?.[1];
+  if (!ttfUrl) throw new Error("no truetype URL in the Google Fonts response");
+  const ttf = Buffer.from(await (await fetch(ttfUrl)).arrayBuffer());
   fs.mkdirSync(OUT_DIR, { recursive: true });
   fs.writeFileSync(FONT_FILE, font);
+  fs.writeFileSync(TTF_FILE, ttf);
   fs.writeFileSync(STAMP_FILE, `${digest}\n${list}\n`);
   console.log(`display font: rebuilt ${path.relative(ROOT, FONT_FILE)} (${chars.size} characters, ${font.length} bytes)`);
 } catch (error) {
-  if (fs.existsSync(FONT_FILE)) {
+  if (fs.existsSync(FONT_FILE) && fs.existsSync(TTF_FILE)) {
     console.warn(`display font: could not refresh (${error.message}); keeping the existing subset`);
   } else {
     console.error(`display font: could not build the subset and none exists yet: ${error.message}`);
