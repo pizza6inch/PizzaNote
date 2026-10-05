@@ -1,0 +1,2 @@
+# Written by scripts/build-display-font.mjs with LF endings; keep it LF so rebuilds do not warn about CRLF conversion.
+src/fonts/huninn-subset.chars text eol=lf
