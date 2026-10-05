@@ -26,8 +26,9 @@ export interface Dictionary {
     authorBio: string;
     moreAboutAuthor: string;
   };
-  about: { title: string; intro: string; experience: string };
+  about: { title: string; seoTitle: string; intro: string; experience: string; services: string };
   experience: { date: string; title: string; description: string }[];
+  services: { title: string; items: string[] }[];
   footer: { follow: string; rights: string; alive: (days: number) => string };
   search: { title: string; placeholder: string; loading: string; empty: string; hint: string; close: string };
   notFound: { title: string; body: string; home: string };
@@ -84,19 +85,32 @@ const zhTw: Dictionary = {
     table: "表格",
     by: "作者",
     aboutAuthor: "關於作者",
-    authorBio: "北科資工出身的前端開發者，把實作中踩過的坑與解法整理成筆記，主題涵蓋前端、JavaScript 與 SEO。",
+    authorBio: "網站與 SEO 工程師，替台灣與美國客戶開發網站、優化搜尋表現，也導入 AI 自動化。把實作中踩過的坑與解法整理成筆記。",
     moreAboutAuthor: "更多關於我",
   },
   about: {
     title: "關於我",
+    seoTitle: "關於我｜網站與 SEO 工程師 Ewan",
     intro:
-      "我是 Ewan（Pizza），北科資工大四生，目前在易遊網實習。這個部落格紀錄的不只是技術，更是成長的足跡。我想把學習中的困惑與突破、實作中的靈感與反思，真實分享給正在努力的你。希望這裡的內容能陪你一起前進，一起成長，為未來點亮更多可能！",
+      "我是 Ewan（張匯吾），網路上的代號是 Pizza，一名網站與 SEO 工程師。目前在博媒網路科技（BMG）擔任軟體工程師，替台灣與美國客戶開發和維護網站：從 WordPress、HubSpot 到客製化全端系統，從網站上線一路做到 Core Web Vitals、GA4 與搜尋排名。我也常用 MCP、Skill 和 AI Agent 把重複的工作自動化。這個部落格是我把實作中踩過的坑和找到的解法整理下來的地方。如果你有網站、SEO 或自動化的需求，歡迎來信聊聊。",
     experience: "經歷",
+    services: "可以找我做什麼",
   },
   experience: [
     {
-      date: "2024.7 ~ Now",
-      title: "易遊網實習生",
+      date: "2026.2 ~ Now",
+      title: "軟體工程師 · 博媒網路科技（BMG）",
+      description:
+        "為台灣與美國客戶開發與維護 CMS 網站（WordPress、HubSpot CMS 模組與行銷 workflow），負責 SEO 工程（Core Web Vitals、關鍵字、GA4、GSC），以及客製化 B2B dashboard 與網站的全端開發。打造 Slack AI Agent，讓同事下指令就能修 bug、更新內容、開發簡單功能；也帶同事導入 MCP 與 Skills，直接從後台取得資料、簡化工作流程。",
+    },
+    {
+      date: "2025.8 ~ 2025.9",
+      title: "全端工程師 · 璽樂科技（i-daka）",
+      description: "負責物聯網資料流串接、人臉辨識資料處理與雲端儲存，使用 AWS（S3、Lambda）與 GCP（Cloud Run、Cloud Build）建置與部署。",
+    },
+    {
+      date: "2024.7 ~ 2025.7",
+      title: "前端實習生 · 易遊網",
       description: "協助開發易遊網的前端功能，包括商品分類、訂單詳情、訂購驗證、靜態SEO頁面等。",
     },
     {
@@ -105,6 +119,19 @@ const zhTw: Dictionary = {
       description: "協助開發年會官方網站及大地遊戲系統。",
     },
     { date: "2021.8 ~ 2025.6", title: "國立台北科技大學", description: "資訊工程學系" },
+  ],
+  services: [
+    {
+      title: "網站開發",
+      items: ["UI/UX 設計", "Next.js / React", "WordPress", "HubSpot CMS", "客製化 B2B dashboard", "API 整合"],
+    },
+    { title: "部署與監控", items: ["AWS", "GCP", "Vercel", "系統監控", "流量分析"] },
+    {
+      title: "SEO / AIO",
+      items: ["技術 SEO", "Core Web Vitals", "結構化資料", "關鍵字研究", "Google Search Console", "AI 搜尋最佳化"],
+    },
+    { title: "廣告與行銷技術", items: ["廣告投放與成效追蹤", "GA4 轉換追蹤", "HubSpot 行銷 workflow"] },
+    { title: "AI 自動化與 Agent 串接", items: ["MCP", "Skills", "Slack AI Agent", "工作流程自動化"] },
   ],
   footer: { follow: "追蹤", rights: "All Rights Reserved.", alive: (days) => `本站已營業 ${days} 天` },
   search: {
@@ -176,21 +203,35 @@ const en: Dictionary = {
     by: "By",
     aboutAuthor: "About the author",
     authorBio:
-      "A front-end developer with a Computer Science background from National Taipei University of Technology, writing hands-on notes on front-end, JavaScript and SEO from real projects.",
+      "A web and SEO engineer who builds websites and improves search performance for clients in Taiwan and the US, and brings AI automation into the workflow. Writes hands-on notes on the problems and fixes found along the way.",
     moreAboutAuthor: "More about me",
   },
   about: {
     title: "About me",
+    seoTitle: "About Ewan, Web & SEO Engineer",
     intro:
-      "I'm Ewan (Pizza), a senior in Computer Science at National Taipei University of Technology, currently interning at ezTravel (易遊網). This blog records more than technology; it is a trail of growth. I want to share the confusion and breakthroughs of learning, and the ideas and reflections of building things, with anyone who is working hard. I hope what you find here helps you move forward, grow together, and light up more possibilities for the future.",
+      "I'm Ewan (張匯吾), known online as Pizza, a web and SEO engineer. I work as a software engineer at BMG (博媒網路科技), building and maintaining websites for clients in Taiwan and the US: from WordPress and HubSpot to custom full-stack systems, and from launch day through Core Web Vitals, GA4 and search rankings. I also use MCP, Skills and AI agents to automate repetitive work. This blog is where I write down the problems I hit and the fixes I found. If you need help with a website, SEO or automation, feel free to email me.",
     experience: "Experience",
+    services: "What I can help with",
   },
   experience: [
     {
-      date: "2024.7 ~ Now",
+      date: "2026.2 ~ Now",
+      title: "Software Engineer, BMG (博媒網路科技)",
+      description:
+        "Building and maintaining CMS websites for clients in Taiwan and the US (WordPress, HubSpot CMS modules and marketing workflows), handling SEO engineering (Core Web Vitals, keywords, GA4, Search Console), and full-stack development of custom B2B dashboards and websites. Built a Slack AI agent that lets colleagues fix bugs, update content and ship small features from a chat command, and helped the team adopt MCP and Skills to pull data from back-office tools and simplify their workflows.",
+    },
+    {
+      date: "2025.8 ~ 2025.9",
+      title: "Full-stack Engineer, i-daka (璽樂科技)",
+      description:
+        "Worked on IoT data pipelines, facial-recognition data processing and cloud storage, building and deploying on AWS (S3, Lambda) and GCP (Cloud Run, Cloud Build).",
+    },
+    {
+      date: "2024.7 ~ 2025.7",
       title: "Front-end intern, ezTravel (易遊網)",
       description:
-        "Helping build front-end features including product categories, order details, order validation and static SEO pages.",
+        "Helped build front-end features including product categories, order details, order validation and static SEO pages.",
     },
     {
       date: "2025.1 ~ 2025.3",
@@ -202,6 +243,19 @@ const en: Dictionary = {
       title: "National Taipei University of Technology",
       description: "B.S. in Computer Science and Information Engineering",
     },
+  ],
+  services: [
+    {
+      title: "Web development",
+      items: ["UI/UX design", "Next.js / React", "WordPress", "HubSpot CMS", "Custom B2B dashboards", "API integration"],
+    },
+    { title: "Deployment & monitoring", items: ["AWS", "GCP", "Vercel", "System monitoring", "Traffic analytics"] },
+    {
+      title: "SEO / AIO",
+      items: ["Technical SEO", "Core Web Vitals", "Structured data", "Keyword research", "Google Search Console", "AI search optimization"],
+    },
+    { title: "Ads & marketing tech", items: ["Ad campaigns & performance tracking", "GA4 conversion tracking", "HubSpot marketing workflows"] },
+    { title: "AI automation & agents", items: ["MCP", "Skills", "Slack AI agent", "Workflow automation"] },
   ],
   footer: { follow: "Follow", rights: "All Rights Reserved.", alive: (days) => `Open for ${days} days` },
   search: {

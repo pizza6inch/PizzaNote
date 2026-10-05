@@ -116,12 +116,14 @@ export const personJsonLd = (locale: Locale) => ({
   "@type": "Person",
   "@id": AUTHOR_ID,
   name: siteConfig.author.name,
-  alternateName: ["Ewan", "Pizza", "pizza6inch"],
+  alternateName: ["Ewan", "Pizza", "pizza6inch", siteConfig.author.legalName],
   url: absoluteUrl(paths.about(locale)),
   image: absoluteUrl(siteConfig.author.avatar),
+  jobTitle: siteConfig.author.jobTitle,
+  worksFor: { "@type": "Organization", name: siteConfig.author.worksFor },
   alumniOf: { "@type": "CollegeOrUniversity", name: siteConfig.author.alumniOf },
   knowsAbout: siteConfig.author.knowsAbout,
-  sameAs: [siteConfig.author.github, siteConfig.author.instagram],
+  sameAs: [siteConfig.author.linkedin, siteConfig.author.github, siteConfig.author.instagram],
 });
 
 /** The About page: a profile whose subject is the author. */
