@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import Image from "next/image";
 import Link from "next/link";
-import { Mail, Utensils } from "lucide-react";
+import { BriefcaseBusiness, Mail, Utensils } from "lucide-react";
 import MainLayout from "@/components/MainLayout";
 import PageHeader from "@/components/PageHeader";
 import JsonLd from "@/components/JsonLd";
@@ -116,7 +116,8 @@ export default async function AboutPage({ params }: Props) {
         </section>
 
         <section className="max-w-4xl" aria-labelledby="experience">
-          <h2 id="experience" className="font-display text-[clamp(1.75rem,1.4rem+1.5vw,2.75rem)]">
+          <h2 id="experience" className="flex items-center gap-3 font-display text-[clamp(1.75rem,1.4rem+1.5vw,2.75rem)]">
+            <BriefcaseBusiness className="h-[0.9em] w-[0.9em] shrink-0 text-[var(--pepperoni)]" aria-hidden="true" />
             {dict.about.experience}
           </h2>
           <ol className="mt-8 border-t-2 border-[hsl(var(--foreground))]">
