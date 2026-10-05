@@ -130,7 +130,7 @@ const zhTw: Dictionary = {
   services: [
     {
       title: "網站開發",
-      items: ["UI/UX 設計", "Next.js / React", "WordPress", "HubSpot CMS", "API 整合"],
+      items: ["UI/UX 設計", "Next.js / React", "WordPress", "HubSpot CMS", "CRM", "ERP", "API 整合"],
     },
     {
       title: "後端與雲端",
@@ -271,7 +271,7 @@ const en: Dictionary = {
   services: [
     {
       title: "Web development",
-      items: ["UI/UX design", "Next.js / React", "WordPress", "HubSpot CMS", "API integration"],
+      items: ["UI/UX design", "Next.js / React", "WordPress", "HubSpot CMS", "CRM", "ERP", "API integration"],
     },
     {
       title: "Back end & cloud",
