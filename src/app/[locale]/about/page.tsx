@@ -5,13 +5,12 @@ import { Mail } from "lucide-react";
 import MainLayout from "@/components/MainLayout";
 import PageHeader from "@/components/PageHeader";
 import JsonLd from "@/components/JsonLd";
-import { GithubIcon, InstagramIcon } from "@/components/BrandIcons";
+import { GithubIcon, InstagramIcon, LinkedinIcon } from "@/components/BrandIcons";
 import { getDictionary } from "@/i18n/dictionaries";
 import { localePaths, resolveLocale } from "@/i18n/server";
 import { breadcrumbJsonLd, pageMetadata, profilePageJsonLd } from "@/lib/seo";
 import { siteConfig } from "@/lib/site";
 import { paths } from "@/lib/urls";
-import { summarize } from "@/lib/utils";
 
 type Props = { params: Promise<{ locale: string }> };
 
@@ -23,8 +22,8 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   return pageMetadata({
     locale,
     path: paths.about(locale),
-    title: dict.about.title,
-    description: summarize(dict.about.intro),
+    title: dict.about.seoTitle,
+    description: dict.about.description,
     alternates: alternates(),
   });
 }
@@ -60,30 +59,61 @@ export default async function AboutPage({ params }: Props) {
           <div>
             <p className="max-w-3xl text-lg leading-[1.9] text-[var(--crust)]">{dict.about.intro}</p>
             <ul className="mt-6 flex flex-wrap gap-3">
-                <li>
-                  <Link href={siteConfig.author.github} target="_blank" rel="noopener" className={contact}>
-                    <GithubIcon className="h-5 w-5" />
-                    GitHub
-                  </Link>
-                </li>
-                <li>
-                  <Link href={siteConfig.author.instagram} target="_blank" rel="noopener" className={contact}>
-                    <InstagramIcon className="h-5 w-5" />
-                    Instagram
-                  </Link>
-                </li>
-                <li>
-                  <Link href={`mailto:${siteConfig.author.email}`} className={contact}>
-                    <Mail className="h-5 w-5" aria-hidden="true" />
-                    Email
-                  </Link>
-                </li>
-              </ul>
+              <li>
+                <Link href={siteConfig.author.linkedin} target="_blank" rel="noopener" className={contact}>
+                  <LinkedinIcon className="h-5 w-5" />
+                  LinkedIn
+                </Link>
+              </li>
+              <li>
+                <Link href={`mailto:${siteConfig.author.email}`} className={contact}>
+                  <Mail className="h-5 w-5" aria-hidden="true" />
+                  Email
+                </Link>
+              </li>
+              <li>
+                <Link href={siteConfig.author.github} target="_blank" rel="noopener" className={contact}>
+                  <GithubIcon className="h-5 w-5" />
+                  GitHub
+                </Link>
+              </li>
+              <li>
+                <Link href={siteConfig.author.instagram} target="_blank" rel="noopener" className={contact}>
+                  <InstagramIcon className="h-5 w-5" />
+                  Instagram
+                </Link>
+              </li>
+            </ul>
           </div>
         </div>
       </PageHeader>
 
-      <div className="mx-auto grid max-w-[90rem] gap-12 px-4 py-14 md:px-8 md:py-20 ">
+      <div className="mx-auto grid max-w-[90rem] gap-16 px-4 py-14 md:px-8 md:py-20">
+        <section className="max-w-4xl" aria-labelledby="services">
+          <h2 id="services" className="font-display text-[clamp(1.75rem,1.4rem+1.5vw,2.75rem)]">
+            {dict.about.services}
+          </h2>
+          <dl className="mt-8 border-t-2 border-[hsl(var(--foreground))]">
+            {dict.services.map((group) => (
+              <div
+                key={group.title}
+                className="grid gap-x-8 gap-y-3 border-b border-[hsl(var(--border))] py-6 sm:grid-cols-[11rem_minmax(0,1fr)]"
+              >
+                <dt className="font-display text-xl">{group.title}</dt>
+                <dd>
+                  <ul className="flex flex-wrap gap-2">
+                    {group.items.map((item) => (
+                      <li key={item} className="rounded-full border border-[hsl(var(--border))] px-3 py-1 text-sm text-muted-foreground">
+                        {item}
+                      </li>
+                    ))}
+                  </ul>
+                </dd>
+              </div>
+            ))}
+          </dl>
+        </section>
+
         <section className="max-w-4xl" aria-labelledby="experience">
           <h2 id="experience" className="font-display text-[clamp(1.75rem,1.4rem+1.5vw,2.75rem)]">
             {dict.about.experience}

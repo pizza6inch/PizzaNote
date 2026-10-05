@@ -33,6 +33,7 @@ ${siteConfig.author.name}: ${getDictionary("en").post.authorBio}
 
 - [About (zh-TW)](${absoluteUrl(paths.about("zh-tw"))})
 - [About (en)](${absoluteUrl(paths.about("en"))})
+- [LinkedIn](${siteConfig.author.linkedin})
 - [GitHub](${siteConfig.author.github})
 
 ${sections}

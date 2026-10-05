@@ -119,9 +119,10 @@ export const personJsonLd = (locale: Locale) => ({
   alternateName: ["Ewan", "Pizza", "pizza6inch"],
   url: absoluteUrl(paths.about(locale)),
   image: absoluteUrl(siteConfig.author.avatar),
+  jobTitle: siteConfig.author.jobTitle,
   alumniOf: { "@type": "CollegeOrUniversity", name: siteConfig.author.alumniOf },
   knowsAbout: siteConfig.author.knowsAbout,
-  sameAs: [siteConfig.author.github, siteConfig.author.instagram],
+  sameAs: [siteConfig.author.linkedin, siteConfig.author.github, siteConfig.author.instagram],
 });
 
 /** The About page: a profile whose subject is the author. */
