@@ -220,7 +220,7 @@ const en: Dictionary = {
       "Ewan (Pizza) is a web and SEO engineer building WordPress, HubSpot and custom full-stack sites for clients in Taiwan and the US, plus SEO and AI automation.",
     intro:
       "I'm Ewan (Pizza), a web and SEO engineer. I work as a software engineer at BMG (博媒網路科技), building and maintaining websites for clients in Taiwan and the US with WordPress, HubSpot and custom full-stack code, and handling SEO work such as Core Web Vitals, GA4 and Search Console. I also use MCP, Skills and AI agents to automate repetitive work. If you need help with a website, SEO or automation, feel free to email me.",
-    experience: "The daily grind",
+    experience: "9-to-6 life",
     services: "Tools of the trade",
   },
   experience: [
