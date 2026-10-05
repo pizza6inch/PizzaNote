@@ -335,7 +335,9 @@ li:first-child > .menu-row {
   color: var(--link);
   text-decoration: underline;
   text-decoration-thickness: 2px;
-  text-underline-offset: 0.2em;
+  /* Huninn sits low in its em box: a shallower offset runs through the glyphs, and skip-ink erases the line under every CJK glyph. */
+  text-underline-offset: 0.35em;
+  text-decoration-skip-ink: none;
 }
 .menu-no {
   grid-area: no;

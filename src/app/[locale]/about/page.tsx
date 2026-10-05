@@ -131,7 +131,15 @@ export default async function AboutPage({ params }: Props) {
                 </span>
                 <div>
                   <h3 className="font-display text-xl">{item.title}</h3>
-                  <p className="mt-2 leading-relaxed text-muted-foreground">{item.description}</p>
+                  {Array.isArray(item.description) ? (
+                    <ul className="mt-2 list-disc space-y-1 pl-5 leading-relaxed text-muted-foreground marker:text-[var(--pepperoni)]">
+                      {item.description.map((line) => (
+                        <li key={line}>{line}</li>
+                      ))}
+                    </ul>
+                  ) : (
+                    <p className="mt-2 leading-relaxed text-muted-foreground">{item.description}</p>
+                  )}
                 </div>
               </li>
             ))}

@@ -171,7 +171,7 @@ export default async function PostPage({ params }: Props) {
                   <ArrowLeft className="h-4 w-4" aria-hidden="true" />
                   {dict.post.prev}
                 </span>
-                <span className="font-display text-lg leading-snug group-hover:underline">{prev.title}</span>
+                <span className="font-display text-lg leading-snug underline-offset-[0.35em] [text-decoration-skip-ink:none] group-hover:underline">{prev.title}</span>
               </Link>
             ) : (
               <span aria-hidden="true" />
@@ -182,7 +182,7 @@ export default async function PostPage({ params }: Props) {
                   {dict.post.next}
                   <ArrowRight className="h-4 w-4" aria-hidden="true" />
                 </span>
-                <span className="font-display text-lg leading-snug group-hover:underline">{next.title}</span>
+                <span className="font-display text-lg leading-snug underline-offset-[0.35em] [text-decoration-skip-ink:none] group-hover:underline">{next.title}</span>
               </Link>
             )}
           </nav>
