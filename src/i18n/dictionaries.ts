@@ -95,7 +95,7 @@ const zhTw: Dictionary = {
     intro:
       "我是 Ewan（Pizza），網站與 SEO 工程師。目前在博媒網路科技（BMG）擔任軟體工程師，替台灣與美國客戶開發和維護網站，包含 WordPress、HubSpot 與客製化全端系統，也負責 Core Web Vitals、GA4、GSC 等 SEO 工程。平常會用 MCP、Skills 和 AI Agent 自動化重複的工作。有網站、SEO 或自動化需求，歡迎來信。",
     experience: "經歷",
-    services: "可以找我做什麼",
+    services: "吃飯工具",
   },
   experience: [
     {
@@ -221,7 +221,7 @@ const en: Dictionary = {
     intro:
       "I'm Ewan (Pizza), a web and SEO engineer. I work as a software engineer at BMG (博媒網路科技), building and maintaining websites for clients in Taiwan and the US with WordPress, HubSpot and custom full-stack code, and handling SEO work such as Core Web Vitals, GA4 and Search Console. I also use MCP, Skills and AI agents to automate repetitive work. If you need help with a website, SEO or automation, feel free to email me.",
     experience: "Experience",
-    services: "What I can help with",
+    services: "Tools of the trade",
   },
   experience: [
     {

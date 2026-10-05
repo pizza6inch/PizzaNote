@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import Image from "next/image";
 import Link from "next/link";
-import { Mail } from "lucide-react";
+import { Mail, Utensils } from "lucide-react";
 import MainLayout from "@/components/MainLayout";
 import PageHeader from "@/components/PageHeader";
 import JsonLd from "@/components/JsonLd";
@@ -90,7 +90,8 @@ export default async function AboutPage({ params }: Props) {
 
       <div className="mx-auto grid max-w-[90rem] gap-16 px-4 py-14 md:px-8 md:py-20">
         <section className="max-w-4xl" aria-labelledby="services">
-          <h2 id="services" className="font-display text-[clamp(1.75rem,1.4rem+1.5vw,2.75rem)]">
+          <h2 id="services" className="flex items-center gap-3 font-display text-[clamp(1.75rem,1.4rem+1.5vw,2.75rem)]">
+            <Utensils className="h-[0.9em] w-[0.9em] shrink-0 text-[var(--pepperoni)]" aria-hidden="true" />
             {dict.about.services}
           </h2>
           <dl className="mt-8 border-t-2 border-[hsl(var(--foreground))]">
