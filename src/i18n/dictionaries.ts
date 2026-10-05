@@ -138,11 +138,11 @@ const zhTw: Dictionary = {
     },
     {
       title: "數據分析與視覺化",
-      items: ["客製化 B2B dashboard", "GA4 資料串接與流量分析", "Bronze / Silver 資料分層架構", "資料視覺化（表格、折線圖、圓餅圖）", "互動篩選器"],
+      items: ["客製化 B2B dashboard", "Bronze / Silver 資料分層架構", "資料視覺化（表格、折線圖、圓餅圖）", "互動篩選器"],
     },
     {
       title: "SEO / AIO",
-      items: ["技術 SEO", "Core Web Vitals", "結構化資料", "關鍵字研究", "Google Search Console", "AI 搜尋最佳化"],
+      items: ["技術 SEO", "Core Web Vitals", "結構化資料", "關鍵字研究", "Google Search Console", "GA4 資料串接與流量分析", "AI 搜尋最佳化"],
     },
     {
       title: "廣告與行銷追蹤",
@@ -281,7 +281,6 @@ const en: Dictionary = {
       title: "Data analytics & visualization",
       items: [
         "Custom B2B dashboards",
-        "GA4 data integration & traffic analysis",
         "Bronze / Silver data layers",
         "Data visualization (tables, line and pie charts)",
         "Interactive filters",
@@ -289,7 +288,7 @@ const en: Dictionary = {
     },
     {
       title: "SEO / AIO",
-      items: ["Technical SEO", "Core Web Vitals", "Structured data", "Keyword research", "Google Search Console", "AI search optimization"],
+      items: ["Technical SEO", "Core Web Vitals", "Structured data", "Keyword research", "Google Search Console", "GA4 data integration & traffic analysis", "AI search optimization"],
     },
     {
       title: "Ad tracking & marketing tech",
