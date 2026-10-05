@@ -27,7 +27,8 @@ export interface Dictionary {
     moreAboutAuthor: string;
   };
   about: { title: string; seoTitle: string; description: string; intro: string; experience: string; services: string };
-  experience: { date: string; title: string; description: string }[];
+  /** A string renders as a paragraph; an array renders as a bullet list. */
+  experience: { date: string; title: string; description: string | string[] }[];
   services: { title: string; items: string[] }[];
   footer: { follow: string; rights: string; alive: (days: number) => string };
   search: { title: string; placeholder: string; loading: string; empty: string; hint: string; close: string };
@@ -101,8 +102,13 @@ const zhTw: Dictionary = {
     {
       date: "2026.2 ~ Now",
       title: "軟體工程師 · 博媒網路科技（BMG）",
-      description:
-        "為台灣與美國客戶開發與維護 CMS 網站（WordPress、HubSpot CMS 模組與行銷 workflow），負責 SEO 工程（Core Web Vitals、關鍵字、GA4、GSC），以及客製化網站與 B2B dashboard 的全端開發（例如串接 GA4 等資料做流量分析與資料視覺化）。打造 Slack AI Agent，讓同事下指令就能修 bug、更新內容、開發簡單功能；也帶同事導入 MCP 與 Skills，直接從後台取得資料、簡化工作流程。",
+      description: [
+        "為台灣與美國客戶開發與維護 CMS 網站：WordPress、HubSpot CMS 模組與行銷 workflow",
+        "SEO 工程：Core Web Vitals、關鍵字、GA4、GSC",
+        "客製化網站與 B2B dashboard 的全端開發，串接 GA4 等資料做流量分析與資料視覺化",
+        "打造 Slack AI Agent，讓同事下指令就能修 bug、更新內容、開發簡單功能",
+        "帶同事導入 MCP 與 Skills，直接從後台取得資料、簡化工作流程",
+      ],
     },
     {
       date: "2025.8 ~ 2025.9",
@@ -231,8 +237,13 @@ const en: Dictionary = {
     {
       date: "2026.2 ~ Now",
       title: "Software Engineer, BMG (博媒網路科技)",
-      description:
-        "Building and maintaining CMS websites for clients in Taiwan and the US (WordPress, HubSpot CMS modules and marketing workflows), handling SEO engineering (Core Web Vitals, keywords, GA4, Search Console), and full-stack development of custom websites and B2B dashboards (for example, pulling GA4 and other data into traffic analysis and visualizations). Built a Slack AI agent that lets colleagues fix bugs, update content and ship small features from a chat command, and helped the team adopt MCP and Skills to pull data from back-office tools and simplify their workflows.",
+      description: [
+        "Building and maintaining CMS websites for clients in Taiwan and the US: WordPress, HubSpot CMS modules and marketing workflows",
+        "SEO engineering: Core Web Vitals, keywords, GA4, Search Console",
+        "Full-stack development of custom websites and B2B dashboards, pulling GA4 and other data into traffic analysis and visualizations",
+        "Built a Slack AI agent that lets colleagues fix bugs, update content and ship small features from a chat command",
+        "Helped the team adopt MCP and Skills to pull data from back-office tools and simplify their workflows",
+      ],
     },
     {
       date: "2025.8 ~ 2025.9",

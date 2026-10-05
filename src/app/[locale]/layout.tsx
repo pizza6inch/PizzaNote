@@ -15,8 +15,8 @@ const display = localFont({ src: "../../fonts/huninn-subset.woff2", display: "sw
 const latin = Noto_Sans({ subsets: ["latin"], weight: ["400", "700"], display: "swap", variable: "--font-latin" });
 const code = JetBrains_Mono({ subsets: ["latin"], display: "swap", variable: "--font-jetbrains" });
 
-// Applies the saved (or default light) theme before first paint so dark-mode visitors never see a light flash.
-const themeInitScript = `(function(){try{var t=localStorage.getItem("theme")||"light";if(t==="system"){t=window.matchMedia("(prefers-color-scheme: dark)").matches?"dark":"light"}var r=document.documentElement;r.classList.remove("light","dark");r.classList.add(t)}catch(e){}})();`;
+// Applies the saved (or default dark) theme before first paint so visitors never see a flash of the other theme.
+const themeInitScript = `(function(){try{var t=localStorage.getItem("theme")||"dark";if(t==="system"){t=window.matchMedia("(prefers-color-scheme: dark)").matches?"dark":"light"}var r=document.documentElement;r.classList.remove("light","dark");r.classList.add(t)}catch(e){}})();`;
 
 export const dynamicParams = false;
 
@@ -38,11 +38,11 @@ export default async function LocaleLayout({
   const locale = await resolveLocale(params);
 
   return (
-    <html lang={htmlLang[locale]} className={`${display.variable} ${latin.variable} ${code.variable}`} suppressHydrationWarning>
+    <html lang={htmlLang[locale]} className={`dark ${display.variable} ${latin.variable} ${code.variable}`} suppressHydrationWarning>
       <head>
         <script dangerouslySetInnerHTML={{ __html: themeInitScript }} />
       </head>
-      <ThemeProvider defaultTheme="light">
+      <ThemeProvider defaultTheme="dark">
         <ClientBody>{children}</ClientBody>
       </ThemeProvider>
     </html>
