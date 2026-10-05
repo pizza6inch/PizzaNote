@@ -30,6 +30,8 @@ export const siteConfig = {
       "Google Cloud",
       "Google Tag Manager",
       "Google Analytics 4",
+      "Data analytics",
+      "Data visualization",
       "AI automation",
       "Model Context Protocol",
     ],

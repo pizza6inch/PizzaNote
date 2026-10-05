@@ -102,7 +102,7 @@ const zhTw: Dictionary = {
       date: "2026.2 ~ Now",
       title: "軟體工程師 · 博媒網路科技（BMG）",
       description:
-        "為台灣與美國客戶開發與維護 CMS 網站（WordPress、HubSpot CMS 模組與行銷 workflow），負責 SEO 工程（Core Web Vitals、關鍵字、GA4、GSC），以及客製化 B2B dashboard 與網站的全端開發。打造 Slack AI Agent，讓同事下指令就能修 bug、更新內容、開發簡單功能；也帶同事導入 MCP 與 Skills，直接從後台取得資料、簡化工作流程。",
+        "為台灣與美國客戶開發與維護 CMS 網站（WordPress、HubSpot CMS 模組與行銷 workflow），負責 SEO 工程（Core Web Vitals、關鍵字、GA4、GSC），以及客製化網站與 B2B dashboard 的全端開發（例如串接 GA4 等資料做流量分析與資料視覺化）。打造 Slack AI Agent，讓同事下指令就能修 bug、更新內容、開發簡單功能；也帶同事導入 MCP 與 Skills，直接從後台取得資料、簡化工作流程。",
     },
     {
       date: "2025.8 ~ 2025.9",
@@ -124,11 +124,15 @@ const zhTw: Dictionary = {
   services: [
     {
       title: "網站開發",
-      items: ["UI/UX 設計", "Next.js / React", "WordPress", "HubSpot CMS", "客製化 B2B dashboard", "API 整合"],
+      items: ["UI/UX 設計", "Next.js / React", "WordPress", "HubSpot CMS", "API 整合"],
     },
     {
       title: "後端與雲端",
       items: ["Node.js", "Python", "PHP", "PostgreSQL", "MySQL", "AWS", "GCP", "Vercel", "系統監控", "流量分析"],
+    },
+    {
+      title: "數據分析與視覺化",
+      items: ["客製化 B2B dashboard", "GA4 資料串接與流量分析", "Bronze / Silver 資料分層架構", "資料視覺化（表格、折線圖、圓餅圖）", "互動篩選器"],
     },
     {
       title: "SEO / AIO",
@@ -220,7 +224,7 @@ const en: Dictionary = {
       "Ewan (Pizza) is a web and SEO engineer building WordPress, HubSpot and custom full-stack sites for clients in Taiwan and the US, plus SEO and AI automation.",
     intro:
       "I'm Ewan (Pizza), a web and SEO engineer. I work as a software engineer at BMG (博媒網路科技), building and maintaining websites for clients in Taiwan and the US with WordPress, HubSpot and custom full-stack code, and handling SEO work such as Core Web Vitals, GA4 and Search Console. I also use MCP, Skills and AI agents to automate repetitive work. If you need help with a website, SEO or automation, feel free to email me.",
-    experience: "9-to-6 life",
+    experience: "9-to-5 life",
     services: "Tools of the trade",
   },
   experience: [
@@ -228,7 +232,7 @@ const en: Dictionary = {
       date: "2026.2 ~ Now",
       title: "Software Engineer, BMG (博媒網路科技)",
       description:
-        "Building and maintaining CMS websites for clients in Taiwan and the US (WordPress, HubSpot CMS modules and marketing workflows), handling SEO engineering (Core Web Vitals, keywords, GA4, Search Console), and full-stack development of custom B2B dashboards and websites. Built a Slack AI agent that lets colleagues fix bugs, update content and ship small features from a chat command, and helped the team adopt MCP and Skills to pull data from back-office tools and simplify their workflows.",
+        "Building and maintaining CMS websites for clients in Taiwan and the US (WordPress, HubSpot CMS modules and marketing workflows), handling SEO engineering (Core Web Vitals, keywords, GA4, Search Console), and full-stack development of custom websites and B2B dashboards (for example, pulling GA4 and other data into traffic analysis and visualizations). Built a Slack AI agent that lets colleagues fix bugs, update content and ship small features from a chat command, and helped the team adopt MCP and Skills to pull data from back-office tools and simplify their workflows.",
     },
     {
       date: "2025.8 ~ 2025.9",
@@ -256,11 +260,21 @@ const en: Dictionary = {
   services: [
     {
       title: "Web development",
-      items: ["UI/UX design", "Next.js / React", "WordPress", "HubSpot CMS", "Custom B2B dashboards", "API integration"],
+      items: ["UI/UX design", "Next.js / React", "WordPress", "HubSpot CMS", "API integration"],
     },
     {
       title: "Back end & cloud",
       items: ["Node.js", "Python", "PHP", "PostgreSQL", "MySQL", "AWS", "GCP", "Vercel", "System monitoring", "Traffic analytics"],
+    },
+    {
+      title: "Data analytics & visualization",
+      items: [
+        "Custom B2B dashboards",
+        "GA4 data integration & traffic analysis",
+        "Bronze / Silver data layers",
+        "Data visualization (tables, line and pie charts)",
+        "Interactive filters",
+      ],
     },
     {
       title: "SEO / AIO",
