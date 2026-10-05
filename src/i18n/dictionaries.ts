@@ -26,7 +26,7 @@ export interface Dictionary {
     authorBio: string;
     moreAboutAuthor: string;
   };
-  about: { title: string; seoTitle: string; intro: string; experience: string; services: string };
+  about: { title: string; seoTitle: string; description: string; intro: string; experience: string; services: string };
   experience: { date: string; title: string; description: string }[];
   services: { title: string; items: string[] }[];
   footer: { follow: string; rights: string; alive: (days: number) => string };
@@ -85,14 +85,15 @@ const zhTw: Dictionary = {
     table: "表格",
     by: "作者",
     aboutAuthor: "關於作者",
-    authorBio: "網站與 SEO 工程師，替台灣與美國客戶開發網站、優化搜尋表現，也導入 AI 自動化。把實作中踩過的坑與解法整理成筆記。",
+    authorBio: "網站與 SEO 工程師，替台灣與美國客戶開發網站、優化搜尋表現，也導入 AI 自動化。",
     moreAboutAuthor: "更多關於我",
   },
   about: {
     title: "關於我",
     seoTitle: "關於我｜網站與 SEO 工程師 Ewan",
+    description: "網站與 SEO 工程師 Ewan（Pizza），替台灣與美國客戶開發 WordPress、HubSpot 與客製化網站，也負責 Core Web Vitals、GA4 等 SEO 工程與 AI 自動化。",
     intro:
-      "我是 Ewan（張匯吾），網路上的代號是 Pizza，一名網站與 SEO 工程師。目前在博媒網路科技（BMG）擔任軟體工程師，替台灣與美國客戶開發和維護網站：從 WordPress、HubSpot 到客製化全端系統，從網站上線一路做到 Core Web Vitals、GA4 與搜尋排名。我也常用 MCP、Skill 和 AI Agent 把重複的工作自動化。這個部落格是我把實作中踩過的坑和找到的解法整理下來的地方。如果你有網站、SEO 或自動化的需求，歡迎來信聊聊。",
+      "我是 Ewan（Pizza），網站與 SEO 工程師。目前在博媒網路科技（BMG）擔任軟體工程師，替台灣與美國客戶開發和維護網站，包含 WordPress、HubSpot 與客製化全端系統，也負責 Core Web Vitals、GA4、GSC 等 SEO 工程。平常會用 MCP、Skills 和 AI Agent 自動化重複的工作。有網站、SEO 或自動化需求，歡迎來信。",
     experience: "經歷",
     services: "可以找我做什麼",
   },
@@ -105,7 +106,7 @@ const zhTw: Dictionary = {
     },
     {
       date: "2025.8 ~ 2025.9",
-      title: "全端工程師 · 璽樂科技（i-daka）",
+      title: "全端工程師 · 璽樂科技（i-Daka）",
       description: "負責物聯網資料流串接、人臉辨識資料處理與雲端儲存，使用 AWS（S3、Lambda）與 GCP（Cloud Run、Cloud Build）建置與部署。",
     },
     {
@@ -125,13 +126,19 @@ const zhTw: Dictionary = {
       title: "網站開發",
       items: ["UI/UX 設計", "Next.js / React", "WordPress", "HubSpot CMS", "客製化 B2B dashboard", "API 整合"],
     },
-    { title: "部署與監控", items: ["AWS", "GCP", "Vercel", "系統監控", "流量分析"] },
+    {
+      title: "後端與雲端",
+      items: ["Node.js", "Python", "PHP", "PostgreSQL", "MySQL", "AWS", "GCP", "Vercel", "系統監控", "流量分析"],
+    },
     {
       title: "SEO / AIO",
       items: ["技術 SEO", "Core Web Vitals", "結構化資料", "關鍵字研究", "Google Search Console", "AI 搜尋最佳化"],
     },
-    { title: "廣告與行銷技術", items: ["廣告投放與成效追蹤", "GA4 轉換追蹤", "HubSpot 行銷 workflow"] },
-    { title: "AI 自動化與 Agent 串接", items: ["MCP", "Skills", "Slack AI Agent", "工作流程自動化"] },
+    {
+      title: "廣告與行銷追蹤",
+      items: ["Google Ads 轉換設定（搜尋、多媒體、成效最大化）", "Meta 廣告追蹤（Facebook / Instagram）", "GTM 埋碼", "GA4 轉換追蹤", "HubSpot 行銷 workflow"],
+    },
+    { title: "AI 自動化與 Agent 串接", items: ["Claude API", "Agent SDK", "MCP", "Skills", "Slack AI Agent", "工作流程自動化"] },
   ],
   footer: { follow: "追蹤", rights: "All Rights Reserved.", alive: (days) => `本站已營業 ${days} 天` },
   search: {
@@ -203,14 +210,16 @@ const en: Dictionary = {
     by: "By",
     aboutAuthor: "About the author",
     authorBio:
-      "A web and SEO engineer who builds websites and improves search performance for clients in Taiwan and the US, and brings AI automation into the workflow. Writes hands-on notes on the problems and fixes found along the way.",
+      "A web and SEO engineer who builds websites and improves search performance for clients in Taiwan and the US, and brings AI automation into the workflow.",
     moreAboutAuthor: "More about me",
   },
   about: {
     title: "About me",
     seoTitle: "About Ewan, Web & SEO Engineer",
+    description:
+      "Ewan (Pizza) is a web and SEO engineer building WordPress, HubSpot and custom full-stack sites for clients in Taiwan and the US, plus SEO and AI automation.",
     intro:
-      "I'm Ewan (張匯吾), known online as Pizza, a web and SEO engineer. I work as a software engineer at BMG (博媒網路科技), building and maintaining websites for clients in Taiwan and the US: from WordPress and HubSpot to custom full-stack systems, and from launch day through Core Web Vitals, GA4 and search rankings. I also use MCP, Skills and AI agents to automate repetitive work. This blog is where I write down the problems I hit and the fixes I found. If you need help with a website, SEO or automation, feel free to email me.",
+      "I'm Ewan (Pizza), a web and SEO engineer. I work as a software engineer at BMG (博媒網路科技), building and maintaining websites for clients in Taiwan and the US with WordPress, HubSpot and custom full-stack code, and handling SEO work such as Core Web Vitals, GA4 and Search Console. I also use MCP, Skills and AI agents to automate repetitive work. If you need help with a website, SEO or automation, feel free to email me.",
     experience: "Experience",
     services: "What I can help with",
   },
@@ -223,7 +232,7 @@ const en: Dictionary = {
     },
     {
       date: "2025.8 ~ 2025.9",
-      title: "Full-stack Engineer, i-daka (璽樂科技)",
+      title: "Full-stack Engineer, i-Daka (璽樂科技)",
       description:
         "Worked on IoT data pipelines, facial-recognition data processing and cloud storage, building and deploying on AWS (S3, Lambda) and GCP (Cloud Run, Cloud Build).",
     },
@@ -249,13 +258,25 @@ const en: Dictionary = {
       title: "Web development",
       items: ["UI/UX design", "Next.js / React", "WordPress", "HubSpot CMS", "Custom B2B dashboards", "API integration"],
     },
-    { title: "Deployment & monitoring", items: ["AWS", "GCP", "Vercel", "System monitoring", "Traffic analytics"] },
+    {
+      title: "Back end & cloud",
+      items: ["Node.js", "Python", "PHP", "PostgreSQL", "MySQL", "AWS", "GCP", "Vercel", "System monitoring", "Traffic analytics"],
+    },
     {
       title: "SEO / AIO",
       items: ["Technical SEO", "Core Web Vitals", "Structured data", "Keyword research", "Google Search Console", "AI search optimization"],
     },
-    { title: "Ads & marketing tech", items: ["Ad campaigns & performance tracking", "GA4 conversion tracking", "HubSpot marketing workflows"] },
-    { title: "AI automation & agents", items: ["MCP", "Skills", "Slack AI agent", "Workflow automation"] },
+    {
+      title: "Ad tracking & marketing tech",
+      items: [
+        "Google Ads conversion setup (Search, Display, Performance Max)",
+        "Meta ads tracking (Facebook / Instagram)",
+        "Google Tag Manager",
+        "GA4 conversion tracking",
+        "HubSpot marketing workflows",
+      ],
+    },
+    { title: "AI automation & agents", items: ["Claude API", "Agent SDK", "MCP", "Skills", "Slack AI agent", "Workflow automation"] },
   ],
   footer: { follow: "Follow", rights: "All Rights Reserved.", alive: (days) => `Open for ${days} days` },
   search: {

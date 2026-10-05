@@ -9,7 +9,6 @@ export const siteConfig = {
   aboutUpdatedAt: "2026-10-05",
   author: {
     name: "Ewan (Pizza)",
-    legalName: "張匯吾",
     url: "https://github.com/pizza6inch",
     github: "https://github.com/pizza6inch",
     instagram: "https://www.instagram.com/pg206206/",
@@ -18,7 +17,6 @@ export const siteConfig = {
     avatar: "/avatar.png",
     alumniOf: "National Taipei University of Technology",
     jobTitle: "Software Engineer",
-    worksFor: "BMG (博媒網路科技有限公司)",
     knowsAbout: [
       "Web development",
       "Full-stack development",
@@ -30,6 +28,8 @@ export const siteConfig = {
       "React",
       "AWS",
       "Google Cloud",
+      "Google Tag Manager",
+      "Google Analytics 4",
       "AI automation",
       "Model Context Protocol",
     ],

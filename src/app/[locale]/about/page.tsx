@@ -11,7 +11,6 @@ import { localePaths, resolveLocale } from "@/i18n/server";
 import { breadcrumbJsonLd, pageMetadata, profilePageJsonLd } from "@/lib/seo";
 import { siteConfig } from "@/lib/site";
 import { paths } from "@/lib/urls";
-import { summarize } from "@/lib/utils";
 
 type Props = { params: Promise<{ locale: string }> };
 
@@ -24,7 +23,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
     locale,
     path: paths.about(locale),
     title: dict.about.seoTitle,
-    description: summarize(dict.about.intro),
+    description: dict.about.description,
     alternates: alternates(),
   });
 }
