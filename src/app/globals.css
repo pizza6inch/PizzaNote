@@ -111,6 +111,13 @@
     scroll-padding-top: 5rem;
   }
 
+  /* Anchor links (the post contents, footnotes) glide to their target; people who ask for less motion still jump. */
+  @media (prefers-reduced-motion: no-preference) {
+    html {
+      scroll-behavior: smooth;
+    }
+  }
+
   body {
     background: hsl(var(--background));
     color: hsl(var(--foreground));
