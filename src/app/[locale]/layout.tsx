@@ -6,7 +6,8 @@ import ClientBody from "@/components/ClientBody";
 import { ThemeProvider } from "@/components/ThemeProvider";
 import { locales, htmlLang } from "@/i18n/config";
 import { resolveLocale } from "@/i18n/server";
-import { SITE_URL } from "@/lib/site";
+import { GoogleAnalytics } from "@next/third-parties/google";
+import { SITE_URL, siteConfig } from "@/lib/site";
 
 // Display face: a ~75 KB subset of Huninn holding only the characters headings use (scripts/build-display-font.mjs).
 // Body text uses the visitor's own CJK system font, so no large webfont blocks the first paint.
@@ -45,6 +46,7 @@ export default async function LocaleLayout({
       <ThemeProvider defaultTheme="dark">
         <ClientBody>{children}</ClientBody>
       </ThemeProvider>
+      {siteConfig.gaId && <GoogleAnalytics gaId={siteConfig.gaId} />}
     </html>
   );
 }

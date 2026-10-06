@@ -44,6 +44,8 @@ export const siteConfig = {
     category: process.env.NEXT_PUBLIC_GISCUS_CATEGORY || "Comments",
     categoryId: process.env.NEXT_PUBLIC_GISCUS_CATEGORY_ID || "",
   },
+  /** GA4 measurement ID (G-…); analytics stays off when unset, e.g. in local dev. */
+  gaId: process.env.NEXT_PUBLIC_GA_ID || "",
 } as const;
 
 export const absoluteUrl = (path: string) => `${SITE_URL}${path.startsWith("/") ? path : `/${path}`}`;

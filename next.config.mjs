@@ -1,14 +1,14 @@
 import { legacyRedirects } from "./config/legacy-redirects.mjs";
 
 // Static pages carry Next's inline bootstrap scripts, so scripts allow 'unsafe-inline' (no per-request nonce on a
-// prerendered site). The policy still pins every other source: comments come from giscus, nothing else is external.
+// prerendered site). The policy still pins every other source: comments come from giscus, analytics from GA4.
 const contentSecurityPolicy = [
   "default-src 'self'",
-  "script-src 'self' 'unsafe-inline'",
+  "script-src 'self' 'unsafe-inline' https://www.googletagmanager.com",
   "style-src 'self' 'unsafe-inline'",
   "img-src 'self' data: https:",
   "font-src 'self'",
-  "connect-src 'self'",
+  "connect-src 'self' https://*.google-analytics.com https://*.analytics.google.com https://*.googletagmanager.com",
   "frame-src https://giscus.app",
   "frame-ancestors 'self'",
   "base-uri 'self'",
