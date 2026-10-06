@@ -11,6 +11,12 @@
       "title": "Front-end",
       "description": "Front-end development notes: JavaScript fundamentals (the this keyword), Webpack, SEO in Next.js, and deploying a site with Vercel and Namecheap.",
       "updatedAt": "2025-06-23T00:54:00.000Z"
+    },
+    {
+      "slug": "ai",
+      "title": "AI",
+      "description": "Notes on building with AI: splitting work with agents like Claude Code, which decisions to keep for yourself, and lessons from heavy daily use.",
+      "updatedAt": "2026-10-06T00:00:00.000Z"
     }
   ],
   "categories": [
@@ -39,6 +45,14 @@
       "description": "A bundler is an indispensable front-end tool that combines many modules (JavaScript, CSS, images, fonts and other assets) into one or a few files a browser can run. Common bundlers include Webpack, Vite and Parcel. Bundling improves site performance and reduces load time, while supporting modular development and asset optimisation (minification, splitting, caching and more).",
       "topic": "front-end",
       "updatedAt": "2025-06-09T08:18:59.257Z"
+    },
+    {
+      "slug": "ai",
+      "aliases": [],
+      "title": "AI",
+      "description": "Notes on working with AI: cognitive surrender vs. offloading, and how I keep control when using agents for development and SEO work.",
+      "topic": "ai",
+      "updatedAt": "2026-10-06T00:00:00.000Z"
     }
   ],
   "tags": [

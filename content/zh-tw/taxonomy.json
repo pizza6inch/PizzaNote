@@ -11,6 +11,12 @@
       "title": "前端",
       "description": "前端開發的學習筆記：JavaScript 核心觀念（this 綁定）、Webpack 打包工具、Next.js SEO，以及用 Vercel 與 Namecheap 部署網站的實作紀錄。",
       "updatedAt": "2025-06-23T00:54:00.000Z"
+    },
+    {
+      "slug": "ai",
+      "title": "AI",
+      "description": "用 AI 寫程式、做網站的心得：怎麼跟 Claude Code 這類 agent 分工、哪些決定一定要自己做，還有身為 AI 重度使用者踩過的坑。",
+      "updatedAt": "2026-10-06T00:00:00.000Z"
     }
   ],
   "categories": [
@@ -39,6 +45,14 @@
       "description": "打包工具是一種前端開發中不可或缺的工具，用來將多個模組（例如 JavaScript、CSS、圖片、字型等資源）整合成瀏覽器可以執行的單一或數個檔案。常見的打包工具有 Webpack、Vite、Parcel 等。透過打包，可以提升網站效能、減少載入時間，同時支援模組化開發與資源優化（如壓縮、分割、快取等）。",
       "topic": "front-end",
       "updatedAt": "2025-06-09T08:18:59.257Z"
+    },
+    {
+      "slug": "ai",
+      "aliases": [],
+      "title": "AI",
+      "description": "跟 AI 協作的筆記：認知投降和認知卸載的差別，還有實際用 agent 做開發和 SEO 時，我怎麼把主控權留在自己手上。",
+      "topic": "ai",
+      "updatedAt": "2026-10-06T00:00:00.000Z"
     }
   ],
   "tags": [

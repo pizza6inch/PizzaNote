@@ -1,0 +1,52 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="720" height="772" viewBox="0 0 720 772" role="img" aria-labelledby="t d" lang="en" font-family="'PingFang TC','Noto Sans TC','Microsoft JhengHei','Heiti TC',system-ui,sans-serif">
+  <title id="t">One audit, two ways to run it</title>
+  <desc id="d">Two ways to run the same SEO audit. Cognitive surrender: hand the URL to AI, keep pressing continue, ship whatever it finishes, and never know if it is right. Cognitive offloading: set scope, done criteria and constraints, let AI report issues while you decide, verify and test before shipping, and stand behind the result.</desc>
+  <rect width="720" height="772" rx="24" fill="#231510" stroke="#4a2c20" stroke-width="2"/>
+  <text x="360.0" y="60" text-anchor="middle" font-size="28" fill="#fff4d6">One audit, two ways to run it</text>
+  <text x="185.0" y="118" text-anchor="middle" font-size="25" font-weight="700" fill="#e5483b">Cognitive surrender</text>
+  <text x="535.0" y="118" text-anchor="middle" font-size="25" font-weight="700" fill="#ffc72c">Cognitive offloading</text>
+  <text x="185.0" y="148" text-anchor="middle" font-size="17" fill="#cdbda2">AI holds the wheel</text>
+  <text x="535.0" y="148" text-anchor="middle" font-size="17" fill="#cdbda2">You hold the wheel</text>
+  <line x1="185.0" y1="204" x2="185.0" y2="636" stroke="#e5483b" stroke-opacity="0.45" stroke-width="2" stroke-dasharray="6 6"/>
+  <line x1="535.0" y1="204" x2="535.0" y2="636" stroke="#ffc72c" stroke-opacity="0.45" stroke-width="2" stroke-dasharray="6 6"/>
+  <text x="360.0" y="186" text-anchor="middle" font-size="16" letter-spacing="1" fill="#cdbda2">Before starting</text>
+  <rect x="30" y="204" width="310" height="92" rx="14" fill="#2e1a10" stroke="#e5483b" stroke-width="1.5"/>
+  <circle cx="70" cy="250.0" r="21" fill="#e5483b"/>
+  <text x="70" y="256.0" text-anchor="middle" font-size="16" font-weight="700" fill="#fff4d6">AI</text>
+  <text x="106" y="244" text-anchor="start" font-size="20" fill="#fff4d6">Hand the URL to AI,</text>
+  <text x="106" y="274" text-anchor="start" font-size="20" fill="#fff4d6">start right away</text>
+  <rect x="380" y="204" width="310" height="92" rx="14" fill="#2e1a10" stroke="#ffc72c" stroke-width="1.5"/>
+  <circle cx="420" cy="250.0" r="21" fill="#ffc72c"/>
+  <text x="420" y="256.0" text-anchor="middle" font-size="16" font-weight="700" fill="#2a140c">You</text>
+  <text x="456" y="244" text-anchor="start" font-size="20" fill="#fff4d6">Set scope, done criteria,</text>
+  <text x="456" y="274" text-anchor="start" font-size="20" fill="#fff4d6">and constraints</text>
+  <text x="360.0" y="330" text-anchor="middle" font-size="16" letter-spacing="1" fill="#cdbda2">While it runs</text>
+  <rect x="30" y="348" width="310" height="92" rx="14" fill="#2e1a10" stroke="#e5483b" stroke-width="1.5"/>
+  <circle cx="70" cy="394.0" r="21" fill="#e5483b"/>
+  <text x="70" y="400.0" text-anchor="middle" font-size="16" font-weight="700" fill="#fff4d6">AI</text>
+  <text x="106" y="388" text-anchor="start" font-size="20" fill="#fff4d6">Keep pressing continue,</text>
+  <text x="106" y="418" text-anchor="start" font-size="20" fill="#fff4d6">lose track of the AI</text>
+  <rect x="380" y="348" width="310" height="92" rx="14" fill="#2e1a10" stroke="#ffc72c" stroke-width="1.5"/>
+  <circle cx="420" cy="394.0" r="21" fill="#ffc72c"/>
+  <text x="420" y="400.0" text-anchor="middle" font-size="16" font-weight="700" fill="#2a140c">You</text>
+  <text x="456" y="388" text-anchor="start" font-size="20" fill="#fff4d6">AI reports issues,</text>
+  <text x="456" y="418" text-anchor="start" font-size="20" fill="#fff4d6">you decide each one</text>
+  <text x="360.0" y="474" text-anchor="middle" font-size="16" letter-spacing="1" fill="#cdbda2">Before delivery</text>
+  <rect x="30" y="492" width="310" height="92" rx="14" fill="#2e1a10" stroke="#e5483b" stroke-width="1.5"/>
+  <circle cx="70" cy="538.0" r="21" fill="#e5483b"/>
+  <text x="70" y="544.0" text-anchor="middle" font-size="16" font-weight="700" fill="#fff4d6">AI</text>
+  <text x="106" y="532" text-anchor="start" font-size="20" fill="#fff4d6">AI finishes,</text>
+  <text x="106" y="562" text-anchor="start" font-size="20" fill="#fff4d6">ship it as is</text>
+  <rect x="380" y="492" width="310" height="92" rx="14" fill="#2e1a10" stroke="#ffc72c" stroke-width="1.5"/>
+  <circle cx="420" cy="538.0" r="21" fill="#ffc72c"/>
+  <text x="420" y="544.0" text-anchor="middle" font-size="16" font-weight="700" fill="#2a140c">You</text>
+  <text x="456" y="532" text-anchor="start" font-size="20" fill="#fff4d6">You verify and test,</text>
+  <text x="456" y="562" text-anchor="start" font-size="20" fill="#fff4d6">then ship</text>
+  <text x="360.0" y="618" text-anchor="middle" font-size="16" letter-spacing="1" fill="#cdbda2">Result</text>
+  <rect x="30" y="636" width="310" height="92" rx="14" fill="#2e1a10" stroke="#e5483b" stroke-width="3"/>
+  <text x="185.0" y="676" text-anchor="middle" font-size="20" fill="#fff4d6">Correct? What was</text>
+  <text x="185.0" y="706" text-anchor="middle" font-size="20" fill="#fff4d6">asked for? No idea</text>
+  <rect x="380" y="636" width="310" height="92" rx="14" fill="#2e1a10" stroke="#ffc72c" stroke-width="3"/>
+  <text x="535.0" y="676" text-anchor="middle" font-size="20" fill="#fff4d6">You can stand</text>
+  <text x="535.0" y="706" text-anchor="middle" font-size="20" fill="#fff4d6">behind the report</text>
+</svg>

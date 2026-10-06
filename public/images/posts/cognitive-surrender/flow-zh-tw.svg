@@ -1,0 +1,52 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="720" height="772" viewBox="0 0 720 772" role="img" aria-labelledby="t d" lang="zh-Hant-TW" font-family="'PingFang TC','Noto Sans TC','Microsoft JhengHei','Heiti TC',system-ui,sans-serif">
+  <title id="t">同一份稽核報告，兩種做法</title>
+  <desc id="d">同一份 SEO 稽核報告的兩種做法。認知投降：網址丟給 AI 直接開工，一路按繼續，AI 做完直接交出去，結果不知道對不對。認知卸載：先講清楚範圍、完成標準和限制，AI 回報問題由人決定，人驗證測試後才交出去，人能為報告負責。</desc>
+  <rect width="720" height="772" rx="24" fill="#231510" stroke="#4a2c20" stroke-width="2"/>
+  <text x="360.0" y="60" text-anchor="middle" font-size="28" fill="#fff4d6">同一份稽核報告，兩種做法</text>
+  <text x="185.0" y="118" text-anchor="middle" font-size="25" font-weight="700" fill="#e5483b">認知投降</text>
+  <text x="535.0" y="118" text-anchor="middle" font-size="25" font-weight="700" fill="#ffc72c">認知卸載</text>
+  <text x="185.0" y="148" text-anchor="middle" font-size="17" fill="#cdbda2">方向盤在 AI 手上</text>
+  <text x="535.0" y="148" text-anchor="middle" font-size="17" fill="#cdbda2">方向盤在人手上</text>
+  <line x1="185.0" y1="204" x2="185.0" y2="636" stroke="#e5483b" stroke-opacity="0.45" stroke-width="2" stroke-dasharray="6 6"/>
+  <line x1="535.0" y1="204" x2="535.0" y2="636" stroke="#ffc72c" stroke-opacity="0.45" stroke-width="2" stroke-dasharray="6 6"/>
+  <text x="360.0" y="186" text-anchor="middle" font-size="16" letter-spacing="1" fill="#cdbda2">開工前</text>
+  <rect x="30" y="204" width="310" height="92" rx="14" fill="#2e1a10" stroke="#e5483b" stroke-width="1.5"/>
+  <circle cx="70" cy="250.0" r="21" fill="#e5483b"/>
+  <text x="70" y="256.0" text-anchor="middle" font-size="16" font-weight="700" fill="#fff4d6">AI</text>
+  <text x="106" y="244" text-anchor="start" font-size="20" fill="#fff4d6">網址丟給 AI</text>
+  <text x="106" y="274" text-anchor="start" font-size="20" fill="#fff4d6">直接開工</text>
+  <rect x="380" y="204" width="310" height="92" rx="14" fill="#2e1a10" stroke="#ffc72c" stroke-width="1.5"/>
+  <circle cx="420" cy="250.0" r="21" fill="#ffc72c"/>
+  <text x="420" y="256.0" text-anchor="middle" font-size="16" font-weight="700" fill="#2a140c">人</text>
+  <text x="456" y="244" text-anchor="start" font-size="20" fill="#fff4d6">先講清楚範圍、</text>
+  <text x="456" y="274" text-anchor="start" font-size="20" fill="#fff4d6">完成標準和限制</text>
+  <text x="360.0" y="330" text-anchor="middle" font-size="16" letter-spacing="1" fill="#cdbda2">執行中</text>
+  <rect x="30" y="348" width="310" height="92" rx="14" fill="#2e1a10" stroke="#e5483b" stroke-width="1.5"/>
+  <circle cx="70" cy="394.0" r="21" fill="#e5483b"/>
+  <text x="70" y="400.0" text-anchor="middle" font-size="16" font-weight="700" fill="#fff4d6">AI</text>
+  <text x="106" y="388" text-anchor="start" font-size="20" fill="#fff4d6">一路按繼續</text>
+  <text x="106" y="418" text-anchor="start" font-size="20" fill="#fff4d6">不知道 AI 在忙什麼</text>
+  <rect x="380" y="348" width="310" height="92" rx="14" fill="#2e1a10" stroke="#ffc72c" stroke-width="1.5"/>
+  <circle cx="420" cy="394.0" r="21" fill="#ffc72c"/>
+  <text x="420" y="400.0" text-anchor="middle" font-size="16" font-weight="700" fill="#2a140c">人</text>
+  <text x="456" y="388" text-anchor="start" font-size="20" fill="#fff4d6">AI 回報問題</text>
+  <text x="456" y="418" text-anchor="start" font-size="20" fill="#fff4d6">人一個一個決定</text>
+  <text x="360.0" y="474" text-anchor="middle" font-size="16" letter-spacing="1" fill="#cdbda2">交付前</text>
+  <rect x="30" y="492" width="310" height="92" rx="14" fill="#2e1a10" stroke="#e5483b" stroke-width="1.5"/>
+  <circle cx="70" cy="538.0" r="21" fill="#e5483b"/>
+  <text x="70" y="544.0" text-anchor="middle" font-size="16" font-weight="700" fill="#fff4d6">AI</text>
+  <text x="106" y="532" text-anchor="start" font-size="20" fill="#fff4d6">AI 做完</text>
+  <text x="106" y="562" text-anchor="start" font-size="20" fill="#fff4d6">直接交出去</text>
+  <rect x="380" y="492" width="310" height="92" rx="14" fill="#2e1a10" stroke="#ffc72c" stroke-width="1.5"/>
+  <circle cx="420" cy="538.0" r="21" fill="#ffc72c"/>
+  <text x="420" y="544.0" text-anchor="middle" font-size="16" font-weight="700" fill="#2a140c">人</text>
+  <text x="456" y="532" text-anchor="start" font-size="20" fill="#fff4d6">人驗證、測試</text>
+  <text x="456" y="562" text-anchor="start" font-size="20" fill="#fff4d6">再交出去</text>
+  <text x="360.0" y="618" text-anchor="middle" font-size="16" letter-spacing="1" fill="#cdbda2">結果</text>
+  <rect x="30" y="636" width="310" height="92" rx="14" fill="#2e1a10" stroke="#e5483b" stroke-width="3"/>
+  <text x="185.0" y="676" text-anchor="middle" font-size="20" fill="#fff4d6">對不對、是不是要的</text>
+  <text x="185.0" y="706" text-anchor="middle" font-size="20" fill="#fff4d6">都不知道</text>
+  <rect x="380" y="636" width="310" height="92" rx="14" fill="#2e1a10" stroke="#ffc72c" stroke-width="3"/>
+  <text x="535.0" y="676" text-anchor="middle" font-size="20" fill="#fff4d6">人能為這份報告</text>
+  <text x="535.0" y="706" text-anchor="middle" font-size="20" fill="#fff4d6">負責</text>
+</svg>
