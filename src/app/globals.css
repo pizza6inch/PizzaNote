@@ -295,7 +295,8 @@
   background: var(--cheese);
   color: var(--crust);
 }
-.ticket-link[aria-current="page"] {
+.ticket-link[aria-current="page"],
+.ticket-link[aria-current="location"] {
   background: var(--pepperoni-surface);
   color: var(--on-masthead);
   font-weight: 600;
@@ -306,7 +307,8 @@
   padding-top: 0.2rem;
   opacity: 0.8;
 }
-.ticket-link[aria-current="page"] .ticket-no {
+.ticket-link[aria-current="page"] .ticket-no,
+.ticket-link[aria-current="location"] .ticket-no {
   opacity: 1;
 }
 

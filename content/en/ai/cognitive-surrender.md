@@ -7,6 +7,8 @@ updatedAt: "2026-10-06T00:00:00.000Z"
 category: "ai"
 ---
 
+## Intro
+
 In the software world today, building without reading the code seems to have become the norm. Back when models were less mature, people still stressed checking things yourself. Now that models keep getting stronger, our brains have gone on vacation🫠.
 
 I used to often paste a client's requirements straight into Claude Code and let it figure things out. It writes a plan, writes a spec, and I don't read either. I'm next to it scrolling Instagram. Once I even scrolled past a short video of an engineer doing exactly that: sitting in his chair, head down on his phone, with a terminal running an agent in front of him.

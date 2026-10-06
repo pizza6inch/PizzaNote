@@ -8,6 +8,7 @@ import MainLayout from "@/components/MainLayout";
 import MarkdownBlock from "@/components/MarkdownBlock";
 import BreadcrumbLinks from "@/components/BreadcrumbLinks";
 import SeriesNav from "@/components/SeriesNav";
+import PostToc from "@/components/PostToc";
 import CommentSection from "@/components/CommentSection";
 import ViewCounter from "@/components/ViewCounter";
 import JsonLd from "@/components/JsonLd";
@@ -23,6 +24,7 @@ import {
   getTopic,
   hasPostTranslation,
 } from "@/lib/content";
+import { getHeadings } from "@/lib/headings";
 import { articleJsonLd, breadcrumbJsonLd, pageMetadata } from "@/lib/seo";
 import { siteConfig } from "@/lib/site";
 import { paths } from "@/lib/urls";
@@ -72,6 +74,7 @@ export default async function PostPage({ params }: Props) {
   const topic = getTopic(locale, topicSlug);
   const category = getCategory(locale, post.category);
   const groups = getSeriesGroups(locale, post.category);
+  const headings = getHeadings(post.body);
 
   // Previous / next follow the reading order of the category (series first, oldest first).
   const ordered = groups.flatMap((g) => g.posts);
@@ -188,16 +191,24 @@ export default async function PostPage({ params }: Props) {
           </nav>
         </article>
 
-        {category && (
-          <aside className="lg:sticky lg:top-24 lg:max-h-[calc(100vh-7rem)] lg:self-start lg:overflow-y-auto">
-            <SeriesNav
-              locale={locale}
-              heading={dict.post.toc}
-              overviewLabel={dict.post.overview}
-              category={{ slug: category.slug, title: category.title }}
-              groups={groups}
-              currentSlug={post.slug}
-            />
+        {(category || headings.length > 1) && (
+          <aside className="flex flex-col gap-8 lg:sticky lg:top-24 lg:max-h-[calc(100vh-7rem)] lg:self-start lg:overflow-y-auto">
+            {/* The section list only helps beside the text; on mobile the aside comes after the article. */}
+            {headings.length > 1 && (
+              <div className="hidden lg:block">
+                <PostToc heading={dict.post.toc} headings={headings} />
+              </div>
+            )}
+            {category && (
+              <SeriesNav
+                locale={locale}
+                heading={dict.post.series}
+                overviewLabel={dict.post.overview}
+                category={{ slug: category.slug, title: category.title }}
+                groups={groups}
+                currentSlug={post.slug}
+              />
+            )}
           </aside>
         )}
       </div>

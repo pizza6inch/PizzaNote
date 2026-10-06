@@ -10,6 +10,7 @@ export interface Dictionary {
   tag: { title: (name: string) => string; description: (name: string, count: number) => string };
   post: {
     toc: string;
+    series: string;
     overview: string;
     prev: string;
     next: string;
@@ -73,6 +74,7 @@ const zhTw: Dictionary = {
   },
   post: {
     toc: "目錄",
+    series: "同分類文章",
     overview: "總覽",
     prev: "上一篇",
     next: "下一篇",
@@ -206,6 +208,7 @@ const en: Dictionary = {
   },
   post: {
     toc: "Contents",
+    series: "In this category",
     overview: "Overview",
     prev: "Previous",
     next: "Next",
